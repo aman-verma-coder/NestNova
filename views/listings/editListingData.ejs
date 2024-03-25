@@ -1,0 +1,70 @@
+<% layout("/layout/boilerplate") -%>
+
+        <body>
+                <div class="row mt-4">
+                        <div class="col-8 offset-2">
+                                <h2>Edit Your Listed Data</h2>
+                                <h3 name="title" class="form-text">Title: <%= editNeeded.title %>
+                                </h3>
+                                <form method="post" action="/listings/<%= editNeeded.id %>/edit?_method=PUT" novalidate
+                                        class="needs-validation" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                                <label for="edit-description" class="form-label"
+                                                        aria-colcount="form-label">Description:</label>
+                                                <textarea name="description" id="edit-description"
+                                                        placeholder="Enter Edited Description" class="form-control"
+                                                        required><%= editNeeded.description %></textarea>
+                                                <div class="valid-feedback">Description is valid</div>
+                                                <div class="invalid-feedback">Invalid Description</div>
+                                        </div>
+                                        <div class="mb-3">
+                                                Original Listing Image: <br>
+                                                <img src="<%= originalImageUrl %>"
+                                                        class="card-img-top show-img" alt="#"
+                                                        style="width: 25% !important; height:max-content;">
+                                                <!-- <label for="original-image" class="form-label">Image:</label>
+                                                <input type="file" name="image" id="original-image" class="form-control"> -->
+                                        </div>
+                                        <div class="mb-3">
+                                                <label for="edit-image" class="form-label">Upload New Image:</label>
+                                                <input type="file" name="image" id="edit-image" class="form-control">
+                                                <!-- <textarea name="image" id="edit-image"
+                                                        placeholder="Enter Edited Image URL" class="form-control"
+                                                        required><%= editNeeded.image %></textarea> -->
+                                                <div class="valid-feedback">Image is valid</div>
+                                                <!-- <div class="invalid-feedback">Invalid Image Link / URL</div> -->
+                                        </div>
+                                        <div class="row">
+                                                <div class="mb-3 col-md-4">
+                                                        <label for="price" id="edit-price"
+                                                                class="form-label">Price:</label>
+                                                        <input type="number" name="price" id="edit-price"
+                                                                placeholder="Enter Edited Price"
+                                                                value="<%= editNeeded.price %>" class="form-control"
+                                                                required>
+                                                        <div class="valid-feedback">Price is valid</div>
+                                                        <div class="invalid-feedback">Invalid Price</div>
+                                                </div>
+                                                <div class="mb-3 col-md-8">
+                                                        <label for="location" class="form-label">Location:</label>
+                                                        <input type="text" name="location" id="location"
+                                                                placeholder="Enter Edited Location"
+                                                                value="<%= editNeeded.location %>" class="form-control"
+                                                                required>
+                                                        <div class="valid-feedback">Location is valid</div>
+                                                        <div class="invalid-feedback">Invalid Location</div>
+                                                </div>
+                                        </div>
+                                        <div class="mb-3">
+                                                <label for="country" class="form-label">Country:</label>
+                                                <input type="text" name="country" id="country"
+                                                        placeholder="Enter Edited Country"
+                                                        value="<%= editNeeded.country %>" class="form-control" required>
+                                                <div class="valid-feedback">Country is valid</div>
+                                                <div class="invalid-feedback">Invalid Country</div>
+                                        </div>
+                                        <button class="btn btn-dark edit-btn mt-4 mb-4">Save</button>
+                                </form>
+                        </div>
+                </div>
+        </body>

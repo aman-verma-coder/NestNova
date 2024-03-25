@@ -1,0 +1,115 @@
+<% layout("/layout/boilerplate") -%>
+    <script>
+        const mapToken = "<%= process.env.MAP_TOKEN %>";
+        const coordinates = <%- JSON.stringify (showData.geometry.coordinates) %>;
+        const location2 = <%- JSON.stringify (showData.location) %>;
+    </script>
+
+    <body>
+        <div class="row col-md-7 col-sm-6 col-6 data-show-page">
+            <div class="col-8 offset-5 mt-4">
+                <h2 class="show-data-title">
+                    <%= showData.title %>
+                </h2>
+            </div>
+            <div class="card data-info" style="width: 100vh;">
+                <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
+                    style="width: 90% !important; height:max-content;">
+                <div class="card-body">
+                    <p class="card-text offset-5" style="width: 100%;">
+                        Listed by: <%= showData.owner.username %> <br>
+                            <%= showData.description %> <br>
+                                Price: ₹<%= showData.price.toLocaleString("en-IN") %>/night <br>
+                                    Location: <%= showData.location %> <br>
+                                        Country: <%= showData.country %>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <% if (currentUser && currentUser._id.equals(showData.owner._id)) { %>
+            <div class="btns btn-show-page">
+                <div class="col-sm-1 col-lg-3 col-md-3 col-sm-3 col-3">
+                    <form method="get" action="/listings/<%= showData.id %>/edit">
+                        <button class="btn btn-dark show-btn mt-4 mb-5 offset-10">Edit</button>
+                    </form>
+                </div>
+                <div class="col-sm-1 col-lg-2 col-md-6 col-sm-8 col-8">
+                    <form method="post" action="/listings/<%= showData.id %>/delete?_method=DELETE">
+                        <button class="btn btn-dark show-btn mt-4 mb-5 offset-2 delbtn">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <% } %>
+                <hr>
+                <% if (currentUser) { %>
+                    <div class="col-8 offset-2">
+                        <h2>Add a review</h2>
+                        <form method="post" action="/listings/<%= showData.id %>/review" novalidate
+                            class="needs-validation">
+                            <input type="hidden" name="id" value="<%= showData.id %>">
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Comment:</label>
+                                <textarea type="text" name="review[comment]" placeholder="Leave a Review" id="comment"
+                                    class="form-control" required></textarea>
+                                <div class="valid-feedback">Comment valid</div>
+                                <div class="invalid-feedback">Invalid Comment</div>
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="rating" class="form-label">Rate It!:</label>
+                                <input type="range" name="review[rating]" class="form-range" min="1" max="5" id="rating"
+                                    required>
+                                <div class="valid-feedback">Valid Rating</div>
+                                <div class="invalid-feedback">Invalid Rating</div>
+                            </div> -->
+                            <div class="mb-3">
+                                <fieldset class="starability-heartbeat">
+                                    <legend>Rate It!:</legend>
+                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                        value="1" checked aria-label="No rating." />
+                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                    <label for="first-rate1" title="Terrible">1 star</label>
+                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                    <label for="first-rate2" title="Not good">2 stars</label>
+                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                    <label for="first-rate3" title="Average">3 stars</label>
+                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                    <label for="first-rate4" title="Very good">4 stars</label>
+                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                    <label for="first-rate5" title="Amazing">5 stars</label>
+                                </fieldset>
+                            </div><br>
+                            <button type="submit" class="btn btn-outline-success mb-3">Submit</button>
+                        </form>
+                    </div>
+                    <hr>
+                    <% } %>
+                        <% if (showData.review.lengthen) { %>
+                            <div class="cards row">
+                                <h3>Reviews:</h3>
+                                <% for (const review of showData.review) { %>
+                                    <div class=" card col-5 ms-2 review-card" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@<%= review.author.username %>
+                                            </h5>
+                                            <p class="card-text starability-result" data-rating="<%= review.rating %>">
+                                            </p>
+                                            <p class="card-subtitle mb-2 text-body-secondary">
+                                                <%= review.comment %>
+                                            </p>
+                                            <form method="post"
+                                                action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
+                                                <input type="hidden" name="id" value="<%= showData.id %>">
+                                                <input type="hidden" name="reviewid" value="<%= review.id %>">
+                                                <button type="submit" class="btn btn-sm btn-dark mb-3">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                            <% } %>
+                                <div class="col-8 offset-2 mt-2 mb-4 map">
+                                    <h3>Where you'll be</h3>
+                                    <div id="map"></div>
+                                </div>
+    </body>
+    <script src="/Js/map.js"></script>
