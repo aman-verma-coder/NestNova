@@ -35,6 +35,7 @@ module.exports.show = async (req, res) => {
         res.redirect("/listings");
     }
     // console.log(showData.geometry.coordinates);
+    console.log(showData);
     res.render("listings/show.ejs", { showData });
 };
 
