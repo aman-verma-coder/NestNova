@@ -70,9 +70,9 @@ const sessionOptions = {
     }
 };
 
-// app.get("/", (req, res) => {
-//     res.send("Response Received");
-// });
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
 
 // function getObjectKey(object) {
 //     for (let prop in object) {
