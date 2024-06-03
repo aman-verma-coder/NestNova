@@ -2,6 +2,7 @@
 
     <body>
         <div id="filters">
+            <!-- <div class="filter-width"> -->
             <form action="/listings" method="get">
                 <div class="filter-data">
                     <label for="Trending">
@@ -81,13 +82,14 @@
                     <input type="radio" id="Arctic" name="Arctic" style="display: none;" />
                 </div>
                 <button id="categorysubmitbtn" style="display: none;">Submit</button>
-                <div class="tax-toggle">
-                    <div class="form-check form-switch form-check-reverse">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
-                        <label class="form-check-label" for="flexSwitchCheckReverse">Display Total Before Taxes</label>
-                    </div>
-                </div>
             </form>
+            <!-- </div> -->
+        </div>
+        <div class="tax-toggle">
+            <div class="form-check form-switch form-check-reverse">
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
+                <label class="form-check-label" for="flexSwitchCheckReverse">Display Total Before Taxes</label>
+            </div>
         </div>
         <%= success %>
             <h2 class="show-page">All listings</h2>
