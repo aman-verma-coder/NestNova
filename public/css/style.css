@@ -53,11 +53,33 @@ body {
     margin-right: 1.5rem !important;
 }
 
+#faceb,
+#insta,
+#link {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+}
+
 footer {
     height: 10rem;
     width: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #ebebeb;
+    /* add background color here */
+}
+
+.footer-made-by {
+    background-color: #ebebeb;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.footer-made-by a {
+    color: inherit;
+    text-decoration: none;
 }
 
 .f-info-links a {
@@ -65,6 +87,7 @@ footer {
     color: black;
     margin-right: 1.25rem;
 }
+
 
 .f-info-links a:hover {
     text-decoration: underline;
@@ -589,7 +612,7 @@ footer {
         overflow: scroll !important;
     }
 
-    #filters form{
+    #filters form {
         display: flex;
         align-items: center;
         margin-bottom: -16px;
