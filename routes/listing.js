@@ -28,4 +28,9 @@ router
 
 router.delete("/:id/delete", isLoggedIn, isOwner, wrapAsync(listingController.deleteListing));
 
+//about page
+router.get("/about", (req, res) => {
+    res.render("./pages/about.ejs");
+})
+
 module.exports = router;

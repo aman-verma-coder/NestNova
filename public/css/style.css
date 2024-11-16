@@ -115,6 +115,17 @@ footer {
     text-decoration: none;
 }
 
+/* Add this code around line 117 */
+#navbar .navbar-nav .nav-link {
+    margin-right: 1rem;
+    /* Adjust the value for more or less space */
+}
+
+/* Optional: to remove margin from the last item */
+#navbar .navbar-nav .nav-link:last-child {
+    margin-right: 0;
+}
+
 .card {
     border: none !important;
     margin-bottom: 2rem;
@@ -640,3 +651,116 @@ footer {
     overflow-x: scroll;
     background-color: #fe424d;
 } */
+
+/* About Section */
+#about-section {
+    padding: 3rem 1.5rem;
+    background-color: #f8f9fa;
+    text-align: center;
+    margin-top: 2rem;
+    /* Spacing from navbar */
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 1.5rem;
+}
+
+.about-description {
+    font-size: 1.2rem;
+    color: #555555;
+    line-height: 1.8;
+    margin: 0 auto 2rem;
+    max-width: 800px;
+}
+
+.about-values {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.value-item {
+    background-color: white;
+    padding: 1.5rem;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.value-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.value-icon {
+    font-size: 2rem;
+    color: #fe424d;
+    margin-bottom: 0.5rem;
+}
+
+.value-item h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 0.5rem;
+}
+
+.value-item p {
+    font-size: 1rem;
+    color: #555555;
+    line-height: 1.6;
+}
+
+/* Contact Info */
+.contact-info {
+    margin-top: 3rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #222222;
+    margin-bottom: 1rem;
+}
+
+.contact-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.1rem;
+    color: #555555;
+    display: flex;
+    justify-content: space-evenly;
+    /* Aligns items horizontally */
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.contact-list li {
+    margin-right: 2rem;
+    /* Adds space between contact items */
+}
+
+.contact-list a {
+    color: #fe424d;
+    text-decoration: none;
+}
+
+.contact-list a:hover {
+    text-decoration: underline;
+}
