@@ -764,3 +764,184 @@ footer {
 .contact-list a:hover {
     text-decoration: underline;
 }
+
+/* Footer Pages */
+main {
+    padding: 2rem 1.5rem;
+    background-color: #ffffff;
+    color: #222222;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    max-width: 800px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fe424d;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+main h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #222222;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #ebebeb;
+    padding-bottom: 0.5rem;
+}
+
+main p {
+    color: #555555;
+    margin-bottom: 1rem;
+}
+
+/* privacy */
+/* Unique Privacy Page Container */
+/* Privacy Policy Page Header */
+.unique-privacy-header {
+    font-size: 3rem;
+    /* Adjust size as needed */
+    font-weight: 700;
+    /* Bold text */
+    color: #fe424d;
+    /* Accent color */
+    text-align: center;
+    /* Centers text horizontally */
+    margin: 2rem 0;
+    /* Adds spacing above and below */
+}
+
+
+.privacy-container-unique {
+    max-width: 850px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #333333;
+    line-height: 1.8;
+}
+
+/* Unique Header Styling */
+.privacy-header-unique h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fe424d;
+}
+
+/* Unique Section Headers */
+.privacy-section-unique h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #444444;
+    border-bottom: 3px solid #fe424d;
+    padding-bottom: 0.5rem;
+}
+
+/* Unique Paragraph Styling */
+.privacy-section-unique p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #555555;
+}
+
+/* Unique List Styling */
+.privacy-section-unique ul {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    list-style-type: circle;
+}
+
+.privacy-section-unique ul li {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: #444444;
+}
+
+/* Unique Strong Text */
+.privacy-section-unique ul li strong {
+    color: #222222;
+}
+
+/* Unique Links */
+.privacy-section-unique a {
+    color: #fe424d;
+    text-decoration: none;
+}
+
+.privacy-section-unique a:hover {
+    text-decoration: underline;
+}
+
+/* Refunds and Cancellations */
+/* Refunds & Cancellations Section */
+.refunds-section {
+    padding: 2rem;
+    background-color: #f7f7f7;
+    /* Light background */
+    max-width: 900px;
+    margin: 2rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+/* Section Header */
+.refunds-header {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Refund and Cancellation Policy Sections */
+.refund-policy,
+.cancellation-policy {
+    margin-bottom: 2rem;
+}
+
+/* Policy Subheading */
+.refund-policy h2,
+.cancellation-policy h2 {
+    font-size: 1.8rem;
+    color: #fe424d;
+    /* Accent color */
+    margin-bottom: 1rem;
+}
+
+/* Policy Paragraphs */
+.refund-policy p,
+.cancellation-policy p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+/* List Styling */
+.refund-policy ul,
+.cancellation-policy ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
+
+.refund-policy li,
+.cancellation-policy li {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+}

@@ -19,6 +19,7 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const footerRouter = require("./routes/footer.js");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -140,6 +141,7 @@ const validateReview = (req, res, next) => {
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/review", reviewRouter);
+app.use("/", footerRouter);
 app.use("/", userRouter);
 
 // app.get("/listings", wrapAsync(async (req, res) => {
