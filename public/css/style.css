@@ -945,3 +945,71 @@ main p {
     color: #666;
     margin-bottom: 0.8rem;
 }
+
+/* Hide default anchor tag styles and apply theme */
+.theme-link {
+    text-decoration: none;
+    /* Removes underline */
+    color: #555555;
+    /* Neutral text color */
+    font-weight: 500;
+    /* Slightly bold for visibility */
+    transition: color 0.3s ease;
+    /* Smooth hover effect */
+}
+
+.theme-link:hover {
+    color: #fe424d;
+    /* Highlight color matching theme */
+    text-decoration: underline;
+    /* Optional: adds underline on hover */
+}
+
+/* The rest of the unique styles for the contact page */
+#contact-page-wrapper {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f9f9f9;
+}
+
+.unique-contact-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.unique-contact-info {
+    width: 100%;
+    max-width: 700px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.unique-contact-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.unique-contact-list li {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #555555;
+    margin-bottom: 1.2rem;
+}
+
+.unique-contact-list li i {
+    font-size: 1.8rem;
+    color: #fe424d;
+    margin-right: 1rem;
+}

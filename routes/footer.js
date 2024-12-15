@@ -12,4 +12,7 @@ router.get("/privacy", (req, res) => {
 router.get("/rnc", (req, res) => {
     res.render("./pages/rnc.ejs");
 });
+router.get("/contact", (req, res) => {
+    res.render("./pages/contact.ejs");
+});
 module.exports = router;
