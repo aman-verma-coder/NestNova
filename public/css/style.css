@@ -1013,3 +1013,224 @@ main p {
     color: #fe424d;
     margin-right: 1rem;
 }
+
+/* Rent It Button Styling */
+#rent-it-btn {
+    background-color: #fe424d;
+    color: white;
+    font-size: 0.875rem;
+    /* Smaller font size */
+    padding: 0.5rem 1rem;
+    /* Reduced padding */
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+#rent-it-btn:hover {
+    background-color: #dc3741;
+    /* Slightly darker on hover */
+    transform: scale(1.05);
+    /* Slight hover effect */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+#rent-it-btn:active {
+    transform: scale(0.95);
+    /* Pressed effect */
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    width: 60%;
+    max-width: 700px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Close Button */
+.cancel-payment-btn {
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cancel-payment-btn:hover {
+    background-color: #FF3D00;
+    transform: scale(1.05);
+}
+
+/* Pay Now Button */
+.pay-now-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pay-now-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Payment Method Options */
+.payment-methods {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.payment-method-btn {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 2px solid #ddd;
+    padding: 20px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+.payment-method-btn:hover {
+    background-color: #e2e2e2;
+    transform: scale(1.05);
+}
+
+.payment-method-btn img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* Input Fields */
+.payment-details input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border 0.3s ease;
+}
+
+.payment-details input:focus {
+    border-color: #4CAF50;
+}
+
+/* UPI QR Code */
+.qr-code img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+/* Modal Header */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Footer Styling */
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .payment-methods {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .payment-method-btn {
+        width: 80%;
+        padding: 15px;
+    }
+}
+
+.qr-code {
+    text-align: center;
+    /* Centers the QR code */
+    margin: 1rem 0;
+    /* Adds some spacing */
+}
+
+.qr-code img {
+    max-width: 300px;
+    /* Adjust as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+    /* Ensure the image is visible */
+    margin: 0 auto;
+    /* Center image */
+    border: 2px solid #ddd;
+    /* Optional: Add a border */
+    border-radius: 10px;
+    /* Optional: Add rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional: Add shadow */
+}

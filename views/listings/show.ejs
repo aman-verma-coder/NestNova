@@ -43,14 +43,87 @@
                 <!-- payment -->
                 <div>
                     <% if(currentUser) { %>
-                        <form class="pay-form">
+                        <!-- <form class="pay-form">
                             <input type="hidden" name="name" value="<%= showData.title %>" />
                             <input type="hidden" name="amount" value="<%= showData.price %>" />
                             <input type="hidden" name="description" value="<%= showData.description %>" />
                             <button type="submit" value="Pay Now" class="btn btn-success mx-auto" id="booking-btn">Rent
-                                It</button>
-                            <!-- <input type="submit" value="Pay Now" /> -->
-                        </form>
+                                It</button> -->
+                        <!-- <input type="submit" value="Pay Now" /> -->
+                        <!-- </form> -->
+                        <div class="rent-it-container">
+                            <button id="rent-it-btn" class="btn-rent-it">Rent It</button>
+                        </div>
+
+                        <!-- Payment Modal -->
+                        <div id="payment-modal" class="modal">
+                            <div class="modal-content">
+                                <!-- Cancel Payment Button -->
+                                <h2>Payment Form</h2>
+                                <form class="pay-form">
+                                    <input type="hidden" name="name" value="<%= showData.title %>" />
+                                    <input type="hidden" name="amount" value="<%= showData.price %>" />
+                                    <input type="hidden" name="description" value="<%= showData.description %>" />
+
+                                    <!-- Payment Methods -->
+                                    <div class="payment-methods">
+                                        <button type="button" class="payment-method-btn" id="credit-card-btn">Credit
+                                            Card</button>
+                                        <button type="button" class="payment-method-btn" id="debit-card-btn">Debit
+                                            Card</button>
+                                        <button type="button" class="payment-method-btn" id="net-banking-btn">Net
+                                            Banking</button>
+                                        <button type="button" class="payment-method-btn" id="upi-btn">UPI</button>
+                                    </div>
+
+                                    <!-- Credit/Debit Card Details -->
+                                    <div id="card-details" class="payment-details" style="display:none;">
+                                        <label for="card-name">Name on Card:</label>
+                                        <input type="text" id="card-name" name="card-name" class="form-control"
+                                            required />
+                                        <label for="card-number">Card Number:</label>
+                                        <input type="text" id="card-number" name="card-number" class="form-control"
+                                            required />
+                                        <label for="expiry-date">Expiry Date:</label>
+                                        <input type="month" id="expiry-date" name="expiry-date" class="form-control"
+                                            required />
+                                        <label for="cvv">CVV:</label>
+                                        <input type="text" id="cvv" name="cvv" class="form-control" required />
+                                    </div>
+
+                                    <!-- Net Banking Details -->
+                                    <div id="net-banking-details" class="payment-details" style="display:none;">
+                                        <label for="bank-name">Bank Name:</label>
+                                        <input type="text" id="bank-name" name="bank-name" class="form-control"
+                                            required />
+                                        <label for="bank-user-id">User ID:</label>
+                                        <input type="text" id="bank-user-id" name="bank-user-id" class="form-control"
+                                            required />
+                                    </div>
+
+                                    <!-- UPI Details -->
+                                    <div id="upi-details" class="payment-details" style="display:none;">
+                                        <!-- Label for UPI ID -->
+                                        <label for="upi-id">UPI ID:</label>
+                                        <input type="text" id="upi-id" name="upi-id" class="form-control" required />
+
+                                        <!-- QR Code Section -->
+                                        <div class="qr-code">
+                                            <label>Scan QR Code to Pay:</label>
+                                            <img src="https://i.postimg.cc/q7R6PjTR/payQrc.jpg" alt="UPI QR Code"
+                                                width="200" />
+                                        </div>
+                                    </div>
+                                    <!-- Modal Footer with buttons -->
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-success pay-now-btn">Pay ₹<%=
+                                                showData.price.toLocaleString("en-IN") %></button>
+                                        <button type="button" id="cancel-payment"
+                                            class="btn btn-danger cancel-payment-btn">Cancel Payment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <% } %>
                 </div>
                 <!-- payment -->
@@ -132,6 +205,54 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
+        // Get modal and button elements
+        const rentItBtn = document.getElementById("rent-it-btn");
+        const paymentModal = document.getElementById("payment-modal");
+        const closeModal = document.querySelector(".close"); // Assuming you have a close (X) button in your modal
+
+        // Open modal when "Rent It" is clicked
+        rentItBtn.addEventListener("click", () => {
+            paymentModal.style.display = "block";
+        });
+
+        // Close modal when "X" (close button) is clicked
+        closeModal?.addEventListener("click", () => {
+            paymentModal.style.display = "none";
+        });
+
+        // Get the Cancel Payment button
+        const cancelPaymentButton = document.getElementById("cancel-payment");
+
+        // Close the modal when the Cancel Payment button is clicked
+        cancelPaymentButton.addEventListener("click", () => {
+            paymentModal.style.display = "none";
+        });
+
+        // Payment Method Button Logic
+        const paymentMethodBtns = document.querySelectorAll('.payment-method-btn');
+        const cardDetails = document.getElementById("card-details");
+        const netBankingDetails = document.getElementById("net-banking-details");
+        const upiDetails = document.getElementById("upi-details");
+
+        paymentMethodBtns.forEach(btn => {
+            btn.addEventListener("click", function () {
+                const method = this.id.split('-')[0]; // Get payment method from button ID
+
+                // Hide all payment details
+                cardDetails.style.display = "none";
+                netBankingDetails.style.display = "none";
+                upiDetails.style.display = "none";
+
+                // Show relevant payment method details
+                if (method === "credit" || method === "debit") {
+                    cardDetails.style.display = "block";
+                } else if (method === "net") {
+                    netBankingDetails.style.display = "block";
+                } else if (method === "upi") {
+                    upiDetails.style.display = "block";
+                }
+            });
+        });
         $(document).ready(function () {
             $(".pay-form").submit(function (e) {
                 e.preventDefault();
