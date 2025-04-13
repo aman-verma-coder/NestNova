@@ -1,7 +1,4 @@
 * {
-    /* background-color: white !important; */
-    /* width: 100%; */
-    /* height: 100%; */
     margin: 0;
     padding: 0;
 }
@@ -16,9 +13,7 @@ body {
 
 body {
     -ms-overflow-style: none;
-    /* IE and Edge */
     scrollbar-width: none;
-    /* Firefox */
 }
 
 .container {
@@ -34,10 +29,6 @@ body {
     align-items: center;
     display: flex;
 }
-
-/* .nav-link {
-    background-color: white !important;
-} */
 
 .navbar-nav {
     background-color: white !important;
@@ -67,7 +58,6 @@ footer {
     display: flex;
     flex-direction: column;
     background-color: #ebebeb;
-    /* add background color here */
 }
 
 .footer-made-by {
@@ -87,7 +77,6 @@ footer {
     color: black;
     margin-right: 1.25rem;
 }
-
 
 .f-info-links a:hover {
     text-decoration: underline;
@@ -115,13 +104,10 @@ footer {
     text-decoration: none;
 }
 
-/* Add this code around line 117 */
 #navbar .navbar-nav .nav-link {
     margin-right: 1rem;
-    /* Adjust the value for more or less space */
 }
 
-/* Optional: to remove margin from the last item */
 #navbar .navbar-nav .nav-link:last-child {
     margin-right: 0;
 }
@@ -165,7 +151,11 @@ footer {
 }
 
 .show-img {
-    height: 60vh;
+    max-height: 60vh;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
 }
 
 .show-btn {
@@ -176,10 +166,6 @@ footer {
 .btns {
     display: flex !important;
 }
-
-/* .delbtn{
-    margin-left: 1rem !important;
-} */
 
 .show-page-main {
     width: 95% !important;
@@ -200,303 +186,9 @@ footer {
     right: 10rem !important;
 }
 
-@media (width<2000px) {
-    .show-page {
-        position: relative !important;
-        right: 3.25rem !important;
-    }
-}
-
-@media (width<1650px) {
-    .show-page {
-        position: relative !important;
-        left: 2rem !important;
-    }
-}
-
-@media (width<1195px) {
-    .show-page {
-        position: relative !important;
-        right: 5rem !important;
-    }
-}
-
-@media (width<775px) {
-    .show-page {
-        position: relative !important;
-        left: 5rem !important;
-    }
-}
-
-@media (width<450px) {
-    .show-page {
-        position: relative !important;
-        left: 6rem !important;
-    }
-}
-
 .show-data-title {
     margin-bottom: 1.5rem !important;
     margin-top: 0.5rem;
-}
-
-@media (width<2500px) {
-    /* .show-page-main {
-        width: 95% !important;
-    } */
-
-    .data-show-page {
-        width: 95% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 22rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 20rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 9.5rem !important;
-    }
-}
-
-@media (width<2250px) {
-    /* .show-page-main {
-        width: 90% !important;
-    } */
-
-    .data-show-page {
-        width: 95% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 24.5rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 22.5rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 11.95rem !important;
-    }
-}
-
-@media (width<1400px) {
-    /* .show-page-main {
-        width: 90% !important;
-    } */
-
-    .data-show-page {
-        width: 95% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 23.25rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 22.5rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 12.5rem !important;
-    }
-}
-
-@media (width<1200px) {
-    /* .show-page-main {
-        width: 90% !important;
-    } */
-
-    .data-show-page {
-        width: 95% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 21.75rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 21rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 13.25rem !important;
-    }
-}
-
-@media(max-width:990px) {
-
-    HTML,
-    body {
-        width: 100%;
-        /* overflow-x: scroll; */
-        offset: none;
-    }
-}
-
-@media (width<990px) {
-    .data-show-page {
-        width: 95% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 15.75rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 15rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 10rem !important;
-    }
-}
-
-@media (width<752px) {
-    .data-show-page {
-        width: 100% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 13.75rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 13.15rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 9.5rem !important;
-    }
-}
-
-@media (width<606px) {
-    .data-show-page {
-        width: 97.5% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 11.5rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 11rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 7.75rem !important;
-    }
-}
-
-@media (width<515px) {
-    .data-show-page {
-        width: 99% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 10.65rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 10rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 6.925rem !important;
-    }
-}
-
-@media (width<460px) {
-    .data-show-page {
-        width: 99% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 9.25rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 8.5rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 6.15rem !important;
-    }
-}
-
-@media (width<400px) {
-    .data-show-page {
-        width: 99% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 8rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 7.25rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 5.65rem !important;
-    }
-}
-
-@media (width<350px) {
-
-    .data-show-page {
-        width: 99% !important;
-    }
-
-    .show-data-title {
-        position: relative !important;
-        right: 6.5rem !important;
-    }
-
-    .data-info {
-        position: relative !important;
-        right: 6rem !important;
-    }
-
-    .btn-show-page>div>form>button {
-        position: relative !important;
-        right: 1.75rem !important;
-        margin-left: 1rem;
-    }
 }
 
 .abcd>div>.fa-compass {
@@ -519,8 +211,6 @@ footer {
     height: 400px;
     border-radius: 2.5%;
 }
-
-/* Filters*/
 
 #filter {
     width: 100vh !important;
@@ -582,7 +272,6 @@ footer {
     margin-right: 0.75rem;
     margin-left: 0.75rem;
     height: 1.25rem;
-    /* background-color: #212529; */
     margin-top: 0.7rem;
     margin-bottom: 0.7rem;
 }
@@ -614,51 +303,16 @@ footer {
     height: auto;
 }
 
-@media (max-width: 768px) {
-
-    html,
-    body {
-        height: 100%;
-        width: 100%;
-        overflow: scroll !important;
-    }
-
-    #filters form {
-        display: flex;
-        align-items: center;
-        margin-bottom: -16px;
-        margin-top: 13px;
-        width: 100%;
-        height: 96px;
-        overflow-xa: scroll !important;
-        /* background-color: red; */
-    }
-
-    /* even number liya kr  bro */
-}
-
-/* #filters::-webkit-scrollbar {
-    display: none;
-} */
-
 #filters .filter-data {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
 }
 
-/* .filter-width{
-    display: flex !important;
-    overflow-x: scroll;
-    background-color: #fe424d;
-} */
-
-/* About Section */
 #about-section {
     padding: 3rem 1.5rem;
     background-color: #f8f9fa;
     text-align: center;
     margin-top: 2rem;
-    /* Spacing from navbar */
 }
 
 .about-container {
@@ -723,7 +377,6 @@ footer {
     line-height: 1.6;
 }
 
-/* Contact Info */
 .contact-info {
     margin-top: 3rem;
     padding: 2rem;
@@ -746,14 +399,12 @@ footer {
     color: #555555;
     display: flex;
     justify-content: space-evenly;
-    /* Aligns items horizontally */
     text-align: left;
     margin-bottom: 1.5rem;
 }
 
 .contact-list li {
     margin-right: 2rem;
-    /* Adds space between contact items */
 }
 
 .contact-list a {
@@ -765,7 +416,6 @@ footer {
     text-decoration: underline;
 }
 
-/* Footer Pages */
 main {
     padding: 2rem 1.5rem;
     background-color: #ffffff;
@@ -802,22 +452,13 @@ main p {
     margin-bottom: 1rem;
 }
 
-/* privacy */
-/* Unique Privacy Page Container */
-/* Privacy Policy Page Header */
 .unique-privacy-header {
     font-size: 3rem;
-    /* Adjust size as needed */
     font-weight: 700;
-    /* Bold text */
     color: #fe424d;
-    /* Accent color */
     text-align: center;
-    /* Centers text horizontally */
     margin: 2rem 0;
-    /* Adds spacing above and below */
 }
-
 
 .privacy-container-unique {
     max-width: 850px;
@@ -831,7 +472,6 @@ main p {
     line-height: 1.8;
 }
 
-/* Unique Header Styling */
 .privacy-header-unique h1 {
     font-size: 2.8rem;
     font-weight: 700;
@@ -840,7 +480,6 @@ main p {
     color: #fe424d;
 }
 
-/* Unique Section Headers */
 .privacy-section-unique h2 {
     font-size: 2rem;
     font-weight: 600;
@@ -850,14 +489,12 @@ main p {
     padding-bottom: 0.5rem;
 }
 
-/* Unique Paragraph Styling */
 .privacy-section-unique p {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
     color: #555555;
 }
 
-/* Unique List Styling */
 .privacy-section-unique ul {
     margin-left: 2rem;
     margin-bottom: 2rem;
@@ -871,12 +508,10 @@ main p {
     color: #444444;
 }
 
-/* Unique Strong Text */
 .privacy-section-unique ul li strong {
     color: #222222;
 }
 
-/* Unique Links */
 .privacy-section-unique a {
     color: #fe424d;
     text-decoration: none;
@@ -886,20 +521,15 @@ main p {
     text-decoration: underline;
 }
 
-/* Refunds and Cancellations */
-/* Refunds & Cancellations Section */
 .refunds-section {
     padding: 2rem;
     background-color: #f7f7f7;
-    /* Light background */
     max-width: 900px;
     margin: 2rem auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
 }
 
-/* Section Header */
 .refunds-header {
     text-align: center;
     font-size: 2.5rem;
@@ -908,22 +538,18 @@ main p {
     margin-bottom: 1.5rem;
 }
 
-/* Refund and Cancellation Policy Sections */
 .refund-policy,
 .cancellation-policy {
     margin-bottom: 2rem;
 }
 
-/* Policy Subheading */
 .refund-policy h2,
 .cancellation-policy h2 {
     font-size: 1.8rem;
     color: #fe424d;
-    /* Accent color */
     margin-bottom: 1rem;
 }
 
-/* Policy Paragraphs */
 .refund-policy p,
 .cancellation-policy p {
     font-size: 1rem;
@@ -932,7 +558,6 @@ main p {
     margin-bottom: 1rem;
 }
 
-/* List Styling */
 .refund-policy ul,
 .cancellation-policy ul {
     list-style-type: disc;
@@ -946,26 +571,18 @@ main p {
     margin-bottom: 0.8rem;
 }
 
-/* Hide default anchor tag styles and apply theme */
 .theme-link {
     text-decoration: none;
-    /* Removes underline */
     color: #555555;
-    /* Neutral text color */
     font-weight: 500;
-    /* Slightly bold for visibility */
     transition: color 0.3s ease;
-    /* Smooth hover effect */
 }
 
 .theme-link:hover {
     color: #fe424d;
-    /* Highlight color matching theme */
     text-decoration: underline;
-    /* Optional: adds underline on hover */
 }
 
-/* The rest of the unique styles for the contact page */
 #contact-page-wrapper {
     font-family: 'Plus Jakarta Sans', sans-serif;
     display: flex;
@@ -1014,14 +631,11 @@ main p {
     margin-right: 1rem;
 }
 
-/* Rent It Button Styling */
 #rent-it-btn {
     background-color: #fe424d;
     color: white;
     font-size: 0.875rem;
-    /* Smaller font size */
     padding: 0.5rem 1rem;
-    /* Reduced padding */
     border: none;
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1031,18 +645,14 @@ main p {
 
 #rent-it-btn:hover {
     background-color: #dc3741;
-    /* Slightly darker on hover */
     transform: scale(1.05);
-    /* Slight hover effect */
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
 #rent-it-btn:active {
     transform: scale(0.95);
-    /* Pressed effect */
 }
 
-/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -1080,7 +690,6 @@ main p {
     }
 }
 
-/* Close Button */
 .cancel-payment-btn {
     background-color: #FF5733;
     color: white;
@@ -1099,7 +708,6 @@ main p {
     transform: scale(1.05);
 }
 
-/* Pay Now Button */
 .pay-now-btn {
     background-color: #28a745;
     color: white;
@@ -1118,7 +726,6 @@ main p {
     transform: scale(1.05);
 }
 
-/* Payment Method Options */
 .payment-methods {
     display: flex;
     justify-content: space-around;
@@ -1152,7 +759,6 @@ main p {
     margin-right: 10px;
 }
 
-/* Input Fields */
 .payment-details input {
     width: 100%;
     padding: 12px;
@@ -1168,14 +774,12 @@ main p {
     border-color: #4CAF50;
 }
 
-/* UPI QR Code */
 .qr-code img {
     max-width: 100%;
     height: auto;
     margin-top: 10px;
 }
 
-/* Modal Header */
 h2 {
     font-size: 24px;
     font-weight: bold;
@@ -1184,7 +788,6 @@ h2 {
     text-align: center;
 }
 
-/* Footer Styling */
 .modal-footer {
     display: flex;
     justify-content: space-between;
@@ -1192,45 +795,17 @@ h2 {
     margin-top: 20px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .modal-content {
-        width: 90%;
-        padding: 20px;
-    }
-
-    .payment-methods {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .payment-method-btn {
-        width: 80%;
-        padding: 15px;
-    }
-}
-
 .qr-code {
     text-align: center;
-    /* Centers the QR code */
     margin: 1rem 0;
-    /* Adds some spacing */
 }
 
 .qr-code img {
     max-width: 300px;
-    /* Adjust as needed */
     height: auto;
-    /* Maintain aspect ratio */
     display: block;
-    /* Ensure the image is visible */
     margin: 0 auto;
-    /* Center image */
     border: 2px solid #ddd;
-    /* Optional: Add a border */
     border-radius: 10px;
-    /* Optional: Add rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Optional: Add shadow */
 }
