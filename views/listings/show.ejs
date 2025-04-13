@@ -16,12 +16,16 @@
                 <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
                     style="width: 90% !important; height:max-content;">
                 <div class="card-body">
-                    <p class="card-text offset-5" style="width: 100%;">
-                        Listed by: <%= showData.owner.username %> <br>
-                            <%= showData.description %> <br>
-                                Price: ₹<%= showData.price.toLocaleString("en-IN") %>/night <br>
-                                    Location: <%= showData.location %> <br>
-                                        Country: <%= showData.country %>
+                    <p class="card-text offset-5" style="width: 100%; padding-left: 2rem;">
+                        <strong>Hosted by</strong>
+                        <%= showData.owner.username %> <br><br>
+                            <strong>Description :</strong>
+                            <%= showData.description %> <br><br>
+                                <strong>Cost :</strong> ₹<%= showData.price.toLocaleString("en-IN") %> / night <br><br>
+                                    <strong>Category :</strong>
+                                    <%= showData.category %> <br><br>
+                                        <strong>Place :</strong> 📍 <%= showData.location %> <br><br>
+                                            <strong>Country :</strong> 🌐 <%= showData.country %>
                     </p>
                 </div>
             </div>
