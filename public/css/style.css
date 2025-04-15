@@ -34,6 +34,29 @@ body {
     background-color: white !important;
 }
 
+.nav-item.dropdown .btn-success {
+    background-color: #15B5B0 !important;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+}
+
+.dropdown-item i {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
 .fa-compass {
     color: #fe424d;
     font-size: 2.25rem;
@@ -183,7 +206,10 @@ footer {
 
 .show-data-title {
     position: relative;
-    right: 10rem !important;
+    right: 0 !important;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .show-data-title {
@@ -196,20 +222,73 @@ footer {
 }
 
 .review-card {
-    width: 20rem !important;
-    margin-bottom: 1rem !important;
-    margin-left: 1rem !important;
+    margin: 1rem;
+    padding: 1.5rem;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
     background-color: aliceblue !important;
+    border: 1px solid #d1e3f3;
+}
+
+
+
+.review-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.review-card .card-title::before {
+    content: "\f007";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #3498db;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.review-card .card-text {
+    margin: 1rem 0;
+}
+
+.review-card .card-subtitle {
+    color: #636e72;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.cards.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    max-width: calc(18rem * 3 + 2rem);
+    gap: 1.5rem;
+    padding: 1rem;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.cards.row h3 {
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+    color: #2d3436;
+    font-weight: 600;
+    text-align: center;
 }
 
 .map {
     width: 100%;
+    margin: 0 auto;
 }
 
 #map {
     width: 100%;
-    height: 400px;
+    height: 440px;
     border-radius: 2.5%;
+    margin: 0 auto;
 }
 
 #filter {
@@ -817,3 +896,12 @@ h2 {
     border: 2px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    .card-text {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-right: 2rem !important;
+        white-space: normal !important;
+        word-wrap: break-word !important;
+    }
+}

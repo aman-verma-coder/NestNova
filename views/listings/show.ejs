@@ -16,7 +16,8 @@
                 <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
                     style="width: 90% !important; height:max-content;">
                 <div class="card-body">
-                    <p class="card-text offset-5" style="width: 100%; padding-left: 2rem;">
+                    <p class="card-text offset-5"
+                        style="width: 90% !important; max-width: 90% !important; padding-right: 2rem !important; white-space: normal !important; word-wrap: break-word !important;">
                         <strong>Hosted by</strong>
                         <%= showData.owner.username %> <br><br>
                             <strong>Description :</strong>
@@ -191,7 +192,7 @@
                                                 action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
                                                 <input type="hidden" name="id" value="<%= showData.id %>">
                                                 <input type="hidden" name="reviewid" value="<%= review.id %>">
-                                                <button type="submit" class="btn btn-sm btn-dark mb-3">Delete</button>
+                                                <button type="submit" class="btn btn-sm btn-danger mb-3">Delete</button>
                                             </form>
                                         </div>
                                     </div>
