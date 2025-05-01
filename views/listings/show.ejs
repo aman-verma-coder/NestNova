@@ -1,8 +1,8 @@
 <% layout("/layout/boilerplate") -%>
     <script>
         const mapToken = "<%= process.env.MAP_TOKEN %>";
-        const coordinates = <%- JSON.stringify(showData.geometry.coordinates) %>;
-        const location2 = <%- JSON.stringify(showData.location) %>;
+        const coordinates = <% - JSON.stringify(showData.geometry.coordinates) %>;
+        const location2 = <% - JSON.stringify(showData.location) %>;
     </script>
 
     <body>
@@ -57,7 +57,8 @@
                         <!-- <input type="submit" value="Pay Now" /> -->
                         <!-- </form> -->
                         <div class="rent-it-container">
-                            <button id="rent-it-btn" class="btn-rent-it">Rent It</button>
+                            <button id="rent-it-btn" class="btn-rent-it" disabled
+                                style="opacity: 0.6; cursor: not-allowed;">Rent It</button>
                         </div>
 
                         <!-- Payment Modal -->
@@ -210,6 +211,7 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
+        /* Payment functionality commented out
         // Get modal and button elements
         const rentItBtn = document.getElementById("rent-it-btn");
         const paymentModal = document.getElementById("payment-modal");
@@ -306,4 +308,5 @@
                 });
             });
         });
+        */
     </script>
