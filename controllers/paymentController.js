@@ -20,11 +20,19 @@ const renderProductPage = async (req, res) => {
 
 const createOrder = async (req, res) => {
     try {
-        const amount = req.body.amount * 100
+        if (!req.user) {
+            return res.status(401).send({ success: false, msg: 'Please login to continue' });
+        }
+
+        const amount = req.body.amount * 100;
         const options = {
             amount: amount,
             currency: 'INR',
-            receipt: 'razorUser@gmail.com'
+            receipt: req.user.email,
+            notes: {
+                listingId: req.body.listingId,
+                userId: req.user._id
+            }
         }
 
         razorpayInstance.orders.create(options,
@@ -38,12 +46,11 @@ const createOrder = async (req, res) => {
                         key_id: RAZORPAY_ID_KEY,
                         product_name: req.body.name,
                         description: req.body.description,
-                        contact: "6289190768",
-                        name: "Aman Vermar",
-                        email: "9330nama@gmail.com"
+                        contact: req.user.phone || '',
+                        name: req.user.username,
+                        email: req.user.email
                     });
-                }
-                else {
+                } else {
                     res.status(400).send({ success: false, msg: 'Something went wrong!' });
                 }
             }

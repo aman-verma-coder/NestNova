@@ -372,12 +372,169 @@ footer {
     background-color: #fe424f !important;
     border-radius: 25px !important;
     padding: 0 1rem 0 1rem !important;
+    height: 38px !important;
+    display: flex;
+    align-items: center;
 }
 
 .search-box {
     border-radius: 25px !important;
     width: 27.5rem !important;
     padding: 0.5rem 2.5rem 0.5rem 2.5rem !important;
+}
+
+@media (max-width: 768px) {
+    .search-box {
+        width: 100% !important;
+        max-width: 100%;
+        padding: 0.5rem 1.5rem !important;
+    }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 992px) {
+
+    /* Navbar adjustments */
+    #navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    /* Center listings for smaller screens */
+    .row.row-cols-lg-3.row-cols-md-2.row-cols-sm-1.show-page {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+    }
+
+    .row.row-cols-lg-3.row-cols-md-2.row-cols-sm-1.show-page .listing-link {
+        margin: 0 auto 1rem;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    /* Extra small screens */
+    @media (max-width: 576px) {
+        .row.row-cols-lg-3.row-cols-md-2.row-cols-sm-1.show-page .listing-link {
+            width: 90% !important;
+            max-width: 320px;
+        }
+    }
+
+    /* Search box adjustments */
+    .search-box {
+        width: 100% !important;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Navbar collapse styling */
+    .navbar-collapse {
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+
+    /* Adjust spacing for navbar items */
+    .navbar-nav.ms-auto {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    /* Form styling for search */
+    .navbar-nav form.d-flex {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+    }
+
+    /* Search button adjustments */
+    .search-btn {
+        width: 100%;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 38px;
+        /* Maintain consistent height with desktop version */
+    }
+
+    /* Hamburger menu styling */
+    #navbar .navbar-toggler {
+        border: none;
+        padding: 8px;
+        margin-left: auto;
+    }
+
+    #navbar .navbar-toggler:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* Mobile menu styling */
+    .navbar-collapse .navbar-nav {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    /* Style for dropdown items in mobile view */
+    .dropdown-menu {
+        border: none;
+        box-shadow: none;
+        padding-left: 15px;
+        background-color: #f8f9fa;
+        width: 100%;
+    }
+
+    /* Adjust spacing for mobile menu items */
+    .nav-item.dropdown {
+        margin: 10px 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Make dropdown menu full width on mobile */
+    .dropdown-menu.dropdown-menu-end {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    /* Center align dropdown items */
+    .dropdown-item {
+        text-align: center;
+    }
+
+    /* Adjust the container fluid padding */
+    #navbar2 {
+        padding: 0 15px;
+        width: 100%;
+    }
+
+    /* Ensure proper spacing between navbar elements */
+    .navbar-nav>div,
+    .navbar-nav>form {
+        margin-bottom: 10px;
+    }
+
+    /* Fix nav links in mobile view */
+    #navbar .navbar-nav .nav-link {
+        padding: 10px 0;
+        margin-right: 0;
+        text-align: center;
+    }
 }
 
 .search-btn>i {
@@ -397,9 +554,97 @@ footer {
     margin-left: 1rem;
 }
 
+@media (max-width: 768px) {
+    #filters {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-start;
+        padding: 0 0.5rem;
+        overflow-x: auto;
+    }
+
+    .tx-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    /* Improve filter items display */
+    #filters .filter-data {
+        min-width: auto;
+        margin: 0 0.3rem;
+    }
+
+    /* Ensure filter icons and text are properly sized */
+    #filters>form>.filter-data>label>i {
+        font-size: 1rem;
+    }
+
+    #filters>form>.filter-data>label>p {
+        font-size: 0.75rem;
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    #filters {
+        width: 100%;
+        padding: 0 0.25rem;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    #filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Improve spacing for filter items on very small screens */
+    #filters .filter-data {
+        min-width: auto;
+        margin: 0 0.2rem;
+    }
+
+    /* Adjust tax toggle for small screens */
+    .tax-toggle {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    /* Ensure listing cards are properly sized */
+    .card {
+        width: 100% !important;
+        margin: 0 auto 1rem;
+    }
+}
+
 #filters .filter-data {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    #filters>form {
+        padding: 0.5rem 0;
+        justify-content: flex-start;
+    }
+
+    #filters .filter-data {
+        margin: 0 0.3rem;
+    }
+
+    #filters>form>.filter-data>label>i {
+        font-size: 1.2rem;
+    }
+
+    #filters>form>.filter-data>label>p {
+        font-size: 0.8rem;
+        margin-bottom: 0;
+    }
 }
 
 #about-section {
@@ -733,6 +978,20 @@ main p {
     width: 90%;
 }
 
+@media (max-width: 992px) {
+    .rent-it-container {
+        padding-right: 2rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .rent-it-container {
+        padding-right: 1rem;
+        justify-content: center;
+    }
+}
+
 #rent-it-btn {
     background-color: #28a745;
     color: white;
@@ -779,6 +1038,21 @@ main p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     animation: slideIn 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 85%;
+        padding: 20px;
+        margin: 15% auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
 }
 
 @keyframes slideIn {
@@ -834,6 +1108,27 @@ main p {
     justify-content: space-around;
     margin-bottom: 25px;
     gap: 15px;
+}
+
+@media (max-width: 576px) {
+    .payment-methods {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .payment-method-btn {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-footer button {
+        width: 100%;
+    }
 }
 
 .payment-method-btn {
@@ -911,12 +1206,97 @@ h2 {
     border: 2px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-text {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-right: 2rem !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+}
+
+/* Responsive adjustments for show page */
+@media (max-width: 768px) {
+    .data-show-page {
+        width: 100%;
+        margin: 0;
+        padding: 0 1rem;
+    }
+
+    .card.data-info {
+        width: 100% !important;
+        margin: 0 auto;
+    }
+
+    .card-img-top.show-img {
+        width: 100% !important;
+        margin: 0 auto;
+    }
 
     .card-text {
+        padding-right: 1rem !important;
+        padding-left: 1rem !important;
+        margin: 0 !important;
+    }
+
+    .show-data-title {
+        text-align: center;
+        width: 100%;
+        margin: 1rem auto;
+    }
+
+    .offset-5 {
+        margin-left: 0 !important;
+    }
+
+    .btn-show-page {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .show-btn {
+        margin: 0.5rem !important;
+    }
+
+    /* Fix for the show page layout */
+    .row.col-md-7.col-sm-6.col-6.data-show-page {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0 0.5rem;
+    }
+
+    .card.data-info {
         width: 100% !important;
-        max-width: 100% !important;
-        padding-right: 2rem !important;
-        white-space: normal !important;
-        word-wrap: break-word !important;
+        max-width: 100%;
+    }
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 576px) {
+    .row.col-md-7.col-sm-6.col-6.data-show-page {
+        padding: 0;
+    }
+
+    .card.data-info {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .rent-it-container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    /* Ensure payment modal is properly sized */
+    .modal-content {
+        width: 95%;
+        margin: 0 auto;
+        padding: 1rem;
     }
 }

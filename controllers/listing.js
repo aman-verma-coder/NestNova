@@ -3,6 +3,27 @@ const mbxGeoCoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeoCoding({ accessToken: mapToken });
 
+// Search functionality
+module.exports.searchListings = async (req, res) => {
+    const { q } = req.query;
+    if (!q || q.trim() === "") {
+        return res.redirect("/listings");
+    }
+
+    // Search in title, description, location and country fields
+    const allListings = await Listing.find({
+        $or: [
+            { title: { $regex: q, $options: "i" } },
+            { description: { $regex: q, $options: "i" } },
+            { location: { $regex: q, $options: "i" } },
+            { country: { $regex: q, $options: "i" } },
+            { category: { $regex: q, $options: "i" } }
+        ]
+    });
+
+    res.render("listings/index.ejs", { allListings, searchQuery: q });
+};
+
 function getObjectKey(object) {
     for (let prop in object) {
         if (object.hasOwnProperty(prop)) {

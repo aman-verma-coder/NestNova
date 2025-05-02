@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != 'production') {
 // console.log(process.env) // remove this after you've confirmed it is working
 const express = require("express");
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 const mongoose = require("mongoose");
 // const mongo_url = "mongodb://127.0.0.1:27017/wanderlust";
 const dbURL = process.env.ATLAS_DB_URL;
@@ -139,10 +139,14 @@ const validateReview = (req, res, next) => {
 //     res.send(newUser);
 // })
 
+// Payment route
+const paymentRoute = require('./routes/paymentRoute');
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/review", reviewRouter);
 app.use("/", footerRouter);
 app.use("/", userRouter);
+app.use("/", paymentRoute);
 
 // app.get("/listings", wrapAsync(async (req, res) => {
 //     let allListings = await Listing.find({});
@@ -227,8 +231,8 @@ app.use((err, req, res, next) => {
     // res.status(statusCode).send(message);
 });
 
-app.listen(port, () => {
-    console.log(`Server is listening to ${port}`);
+const server = app.listen(process.env.PORT || 8080, () => {
+    console.log(`Server is listening on port ${server.address().port}`);
 })
 
 module.exports = {

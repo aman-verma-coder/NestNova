@@ -48,86 +48,34 @@
                 <!-- payment -->
                 <div>
                     <% if(currentUser) { %>
-                        <!-- <form class="pay-form">
+                        <form class="pay-form">
                             <input type="hidden" name="name" value="<%= showData.title %>" />
                             <input type="hidden" name="amount" value="<%= showData.price %>" />
                             <input type="hidden" name="description" value="<%= showData.description %>" />
-                            <button type="submit" value="Pay Now" class="btn btn-success mx-auto" id="booking-btn">Rent
-                                It</button> -->
-                        <!-- <input type="submit" value="Pay Now" /> -->
-                        <!-- </form> -->
-                        <div class="rent-it-container">
-                            <button id="rent-it-btn" class="btn-rent-it" disabled
-                                style="opacity: 0.6; cursor: not-allowed;">Rent It</button>
-                        </div>
+                            <input type="hidden" name="listingId" value="<%= showData.id %>" />
+                            <div class="rent-it-container">
+                                <button type="button" class="btn-rent-it" id="booking-btn"
+                                    onclick="initiatePayment(event)">Rent It</button>
+                            </div>
+                        </form>
 
                         <!-- Payment Modal -->
-                        <div id="payment-modal" class="modal">
-                            <div class="modal-content">
-                                <!-- Cancel Payment Button -->
-                                <h2>Payment Form</h2>
-                                <form class="pay-form">
-                                    <input type="hidden" name="name" value="<%= showData.title %>" />
-                                    <input type="hidden" name="amount" value="<%= showData.price %>" />
-                                    <input type="hidden" name="description" value="<%= showData.description %>" />
-
-                                    <!-- Payment Methods -->
-                                    <div class="payment-methods">
-                                        <button type="button" class="payment-method-btn" id="credit-card-btn">Credit
-                                            Card</button>
-                                        <button type="button" class="payment-method-btn" id="debit-card-btn">Debit
-                                            Card</button>
-                                        <button type="button" class="payment-method-btn" id="net-banking-btn">Net
-                                            Banking</button>
-                                        <button type="button" class="payment-method-btn" id="upi-btn">UPI</button>
-                                    </div>
-
-                                    <!-- Credit/Debit Card Details -->
-                                    <div id="card-details" class="payment-details" style="display:none;">
-                                        <label for="card-name">Name on Card:</label>
-                                        <input type="text" id="card-name" name="card-name" class="form-control"
-                                            required />
-                                        <label for="card-number">Card Number:</label>
-                                        <input type="text" id="card-number" name="card-number" class="form-control"
-                                            required />
-                                        <label for="expiry-date">Expiry Date:</label>
-                                        <input type="month" id="expiry-date" name="expiry-date" class="form-control"
-                                            required />
-                                        <label for="cvv">CVV:</label>
-                                        <input type="text" id="cvv" name="cvv" class="form-control" required />
-                                    </div>
-
-                                    <!-- Net Banking Details -->
-                                    <div id="net-banking-details" class="payment-details" style="display:none;">
-                                        <label for="bank-name">Bank Name:</label>
-                                        <input type="text" id="bank-name" name="bank-name" class="form-control"
-                                            required />
-                                        <label for="bank-user-id">User ID:</label>
-                                        <input type="text" id="bank-user-id" name="bank-user-id" class="form-control"
-                                            required />
-                                    </div>
-
-                                    <!-- UPI Details -->
-                                    <div id="upi-details" class="payment-details" style="display:none;">
-                                        <!-- Label for UPI ID -->
-                                        <label for="upi-id">UPI ID:</label>
-                                        <input type="text" id="upi-id" name="upi-id" class="form-control" required />
-
-                                        <!-- QR Code Section -->
-                                        <div class="qr-code">
-                                            <label>Scan QR Code to Pay:</label>
-                                            <img src="https://i.postimg.cc/q7R6PjTR/payQrc.jpg" alt="UPI QR Code"
-                                                width="200" />
-                                        </div>
-                                    </div>
-                                    <!-- Modal Footer with buttons -->
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success pay-now-btn">Pay ₹<%=
-                                                showData.price.toLocaleString("en-IN") %></button>
-                                        <button type="button" id="cancel-payment"
-                                            class="btn btn-danger cancel-payment-btn">Cancel Payment</button>
-                                    </div>
-                                </form>
+                        <div id="payment-modal" class="modal"
+                            style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                            <div class="modal-content"
+                                style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px;">
+                                <span class="close"
+                                    style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+                                <h2>Complete Your Payment</h2>
+                                <p>You're about to book <strong>
+                                        <%= showData.title %>
+                                    </strong> for ₹<%= showData.price.toLocaleString("en-IN") %>/night</p>
+                                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                                    <button id="cancel-payment" class="cancel-payment-btn"
+                                        style="background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Cancel
+                                        Payment</button>
+                                    <!-- The confirm button will be added via JavaScript -->
+                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -211,16 +159,9 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <script>
-        /* Payment functionality commented out
         // Get modal and button elements
-        const rentItBtn = document.getElementById("rent-it-btn");
         const paymentModal = document.getElementById("payment-modal");
-        const closeModal = document.querySelector(".close"); // Assuming you have a close (X) button in your modal
-
-        // Open modal when "Rent It" is clicked
-        rentItBtn.addEventListener("click", () => {
-            paymentModal.style.display = "block";
-        });
+        const closeModal = document.querySelector(".close");
 
         // Close modal when "X" (close button) is clicked
         closeModal?.addEventListener("click", () => {
@@ -231,82 +172,86 @@
         const cancelPaymentButton = document.getElementById("cancel-payment");
 
         // Close the modal when the Cancel Payment button is clicked
-        cancelPaymentButton.addEventListener("click", () => {
+        cancelPaymentButton?.addEventListener("click", () => {
             paymentModal.style.display = "none";
         });
 
-        // Payment Method Button Logic
-        const paymentMethodBtns = document.querySelectorAll('.payment-method-btn');
-        const cardDetails = document.getElementById("card-details");
-        const netBankingDetails = document.getElementById("net-banking-details");
-        const upiDetails = document.getElementById("upi-details");
+        // Function to directly initiate payment without showing modal
+        function initiatePayment(event) {
+            event.preventDefault();
+            let form = $(".pay-form");
+            let formData = form.serialize();
 
-        paymentMethodBtns.forEach(btn => {
-            btn.addEventListener("click", function () {
-                const method = this.id.split('-')[0]; // Get payment method from button ID
+            // Validate required fields
+            if (!form.find('[name="name"]').val() || !form.find('[name="amount"]').val()) {
+                alert('Please fill all required payment fields');
+                return;
+            }
 
-                // Hide all payment details
-                cardDetails.style.display = "none";
-                netBankingDetails.style.display = "none";
-                upiDetails.style.display = "none";
+            $.ajax({
+                url: "/createOrder",
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                success: function (res) {
+                    if (!res?.key_id || !res?.order_id) {
+                        console.error('Invalid server response:', res);
+                        alert('Payment setup failed - missing required parameters');
+                        return;
+                    }
 
-                // Show relevant payment method details
-                if (method === "credit" || method === "debit") {
-                    cardDetails.style.display = "block";
-                } else if (method === "net") {
-                    netBankingDetails.style.display = "block";
-                } else if (method === "upi") {
-                    upiDetails.style.display = "block";
+                    var options = {
+                        key: res.key_id,
+                        amount: res.amount,
+                        currency: "INR",
+                        method: 'upi',
+                        _capture: true,
+                        upi: {
+                            flow: 'qr',
+                            vpa: 'razorpay@upi' // Generic UPI handle for QR
+                        },
+                        name: res.product_name || '<%= showData.title %>',
+                        order_id: res.order_id,
+                        method: 'upi',
+                        notes: {
+                            payment_type: 'upi_qr'
+                        },
+                        handler: function (response) {
+                            if (response.razorpay_payment_id) {
+                                $.post('/payment-success', {
+                                    paymentId: response.razorpay_payment_id,
+                                    orderId: res.order_id,
+                                    listingId: '<%= showData.id %>'
+                                }).then(() => {
+                                    window.location.href = `/listings/<%= showData.id %>?payment_success=1`;
+                                });
+                            }
+                        },
+                        theme: { color: "#2300a3" }
+                    };
+
+                    try {
+                        new Razorpay(options).open();
+                    } catch (err) {
+                        console.error('Razorpay init error:', err);
+                        alert('Payment system error - please try again later');
+                    }
+                },
+                error: function (xhr) {
+                    console.error('Payment error:', xhr.responseText);
+                    alert('Payment processing failed: ' + xhr.statusText);
                 }
             });
-        });
+        }
+
+        // Initialize Razorpay payment
         $(document).ready(function () {
-            $(".pay-form").submit(function (e) {
+            // Prevent form submission
+            $(".pay-form").on("submit", function (e) {
                 e.preventDefault();
-
-                let formData = $(this).serialize();
-
-                $.ajax({
-                    url: "/createOrder",
-                    type: "POST",
-                    data: formData,
-                    success: function (res) {
-                        if (res.success) {
-                            var options = {
-                                key: "" + res.key_id + "",
-                                amount: "" + res.amount + "",
-                                currency: "INR",
-                                name: "" + res.product_name + "",
-                                description: "" + res.description + "",
-                                image: "<%= showData.image.url %>",
-                                order_id: "" + res.order_id + "",
-                                handler: function (response) {
-                                    alert("Payment Succeeded");
-                                    // window.open("/","_self")
-                                },
-                                prefill: {
-                                    contact: "" + res.contact + "",
-                                    name: "" + res.name + "",
-                                    email: "" + res.email + "",
-                                },
-                                notes: {
-                                    description: "" + res.description + "",
-                                },
-                                theme: {
-                                    color: "#2300a3",
-                                },
-                            };
-                            var razorpayObject = new Razorpay(options);
-                            razorpayObject.on("payment.failed", function (response) {
-                                alert("Payment Failed");
-                            });
-                            razorpayObject.open();
-                        } else {
-                            alert(res.msg);
-                        }
-                    },
-                });
+                return false;
             });
+
+            // No longer needed as we're directly initiating payment
         });
-        */
     </script>
