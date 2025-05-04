@@ -7,7 +7,8 @@ module.exports.listingSchema = joi.object({
     price: joi.number().required().min(0),
     location: joi.string().required(),
     country: joi.string().required(),
-    review: [joi.string()]
+    review: [joi.string()],
+    status: joi.string().valid("pending", "approved", "rejected").default("pending")
 });
 
 module.exports.reviewSchema = joi.object({

@@ -45,11 +45,18 @@
                                         <i class="fas fa-user-circle"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                        <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i>
-                                                Log out</a></li>
-                                        <li><a class="dropdown-item" href="/listings/new"><i class="fas fa-plus"></i>
-                                                Add New Home</a></li>
-                                        <!-- <li><a class="dropdown-item"
+                                        <% if (currentUser.isAdmin) { %>
+                                            <li><a class="dropdown-item" href="/admin/dashboard"><i
+                                                        class="fas fa-tachometer-alt"></i>
+                                                    Admin Dashboard</a></li>
+                                            <% } %>
+                                                <li><a class="dropdown-item" href="/logout"><i
+                                                            class="fas fa-sign-out-alt"></i>
+                                                        Log out</a></li>
+                                                <li><a class="dropdown-item" href="/listings/new"><i
+                                                            class="fas fa-plus"></i>
+                                                        Add New Home</a></li>
+                                                <!-- <li><a class="dropdown-item"
                                                 href="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/11/18/17/20241118172958-D0CU3F6N.json"><i
                                                     class="fas fa-robot"></i> Chat with
                                                 AI</a></li> -->

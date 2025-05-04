@@ -41,14 +41,12 @@ const listingSchemes = new schema({
         type: String,
         enum: ["Trending", "Rooms", "Bed & Breakfast", "Beaches", "Pools", "Iconic Cities", "Mountains", "Castles", "Camping", "Farms", "Arctic"],
         required: true
+    },
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
     }
 });
 
-listingSchemes.post("findOneAndDelete", async (listing) => {
-    if (listing) {
-        await Review.deleteMany({ _id: { $in: listing.reviews } });
-    }
-})
-
-const Listing = mongoose.model("Listing", listingSchemes);
-module.exports = Listing;
+module.exports = mongoose.model("Listing", listingSchemes);

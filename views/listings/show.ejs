@@ -1,257 +1,278 @@
 <% layout("/layout/boilerplate") -%>
-    <script>
-        const mapToken = "<%= process.env.MAP_TOKEN %>";
-        const coordinates = <%- JSON.stringify(showData.geometry.coordinates) %>;
-        const location2 = <%- JSON.stringify(showData.location) %>;
-    </script>
 
-    <body>
-        <div class="row col-md-7 col-sm-6 col-6 data-show-page">
-            <div class="col-8 offset-5 mt-4">
-                <h2 class="show-data-title">
-                    <%= showData.title %>
-                </h2>
-            </div>
-            <div class="card data-info" style="width: 100vh;">
-                <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
-                    style="width: 90% !important; height:max-content;">
-                <div class="card-body">
-                    <p class="card-text offset-5"
-                        style="width: 90% !important; max-width: 90% !important; padding-right: 2rem !important; white-space: normal !important; word-wrap: break-word !important;">
-                        <strong>Hosted by</strong>
-                        <%= showData.owner.username %> <br><br>
-                            <strong>Description :</strong>
-                            <%= showData.description %> <br><br>
-                                <strong>Cost :</strong> ₹<%= showData.price.toLocaleString("en-IN") %> / night <br><br>
-                                    <strong>Category :</strong>
-                                    <%= showData.category %> <br><br>
-                                        <strong>Place :</strong> 📍 <%= showData.location %> <br><br>
-                                            <strong>Country :</strong> 🌐 <%= showData.country %>
-                    </p>
-                </div>
-            </div>
+    <% if (showData.status==="pending" ) { %>
+        <div class="alert alert-warning mt-3">
+            <i class="fas fa-exclamation-triangle"></i> This listing is pending approval by an administrator and is not
+            visible to other users yet.
         </div>
-        <% if (currentUser && currentUser._id.equals(showData.owner._id)) { %>
-            <div class="btns btn-show-page">
-                <div class="col-sm-1 col-lg-3 col-md-3 col-sm-3 col-3">
-                    <form method="get" action="/listings/<%= showData.id %>/edit">
-                        <button class="btn btn-dark show-btn mt-4 mb-5 offset-10">Edit</button>
-                    </form>
-                </div>
-                <div class="col-sm-1 col-lg-2 col-md-6 col-sm-8 col-8">
-                    <form method="post" action="/listings/<%= showData.id %>/delete?_method=DELETE">
-                        <button class="btn btn-dark show-btn mt-4 mb-5 offset-2 delbtn">Delete</button>
-                    </form>
-                </div>
+        <% } else if (showData.status==="rejected" ) { %>
+            <div class="alert alert-danger mt-3">
+                <i class="fas fa-ban"></i> This listing has been rejected by an administrator and is not visible to
+                other users.
             </div>
             <% } %>
-                <!-- payment -->
-                <div>
-                    <% if(currentUser) { %>
-                        <form class="pay-form">
-                            <input type="hidden" name="name" value="<%= showData.title %>" />
-                            <input type="hidden" name="amount" value="<%= showData.price %>" />
-                            <input type="hidden" name="description" value="<%= showData.description %>" />
-                            <input type="hidden" name="listingId" value="<%= showData.id %>" />
-                            <div class="rent-it-container">
-                                <button type="button" class="btn-rent-it" id="booking-btn"
-                                    onclick="initiatePayment(event)">Rent It</button>
-                            </div>
-                        </form>
+                <script>
+                    const mapToken = "<%= process.env.MAP_TOKEN %>";
+                    const coordinates = <%- JSON.stringify(showData.geometry.coordinates) %>;
+                    const location2 = <%- JSON.stringify(showData.location) %>;
+                </script>
 
-                        <!-- Payment Modal -->
-                        <div id="payment-modal" class="modal"
-                            style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-                            <div class="modal-content"
-                                style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px;">
-                                <span class="close"
-                                    style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-                                <h2>Complete Your Payment</h2>
-                                <p>You're about to book <strong>
-                                        <%= showData.title %>
-                                    </strong> for ₹<%= showData.price.toLocaleString("en-IN") %>/night</p>
-                                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                                    <button id="cancel-payment" class="cancel-payment-btn"
-                                        style="background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Cancel
-                                        Payment</button>
-                                    <!-- The confirm button will be added via JavaScript -->
-                                </div>
+                <body>
+                    <div class="row col-md-7 col-sm-6 col-6 data-show-page">
+                        <div class="col-8 offset-5 mt-4">
+                            <h2 class="show-data-title">
+                                <%= showData.title %>
+                            </h2>
+                        </div>
+                        <div class="card data-info" style="width: 100vh;">
+                            <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
+                                style="width: 90% !important; height:max-content;">
+                            <div class="card-body">
+                                <p class="card-text offset-5"
+                                    style="width: 90% !important; max-width: 90% !important; padding-right: 2rem !important; white-space: normal !important; word-wrap: break-word !important;">
+                                    <strong>Hosted by</strong>
+                                    <%= showData.owner.username %> <br><br>
+                                        <strong>Description :</strong>
+                                        <%= showData.description %> <br><br>
+                                            <strong>Cost :</strong> ₹<%= showData.price.toLocaleString("en-IN") %> /
+                                                night <br><br>
+                                                <strong>Category :</strong>
+                                                <%= showData.category %> <br><br>
+                                                    <strong>Place :</strong> 📍 <%= showData.location %> <br><br>
+                                                        <strong>Country :</strong> 🌐 <%= showData.country %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (currentUser && currentUser._id.equals(showData.owner._id)) { %>
+                        <div class="btns btn-show-page">
+                            <div class="col-sm-1 col-lg-3 col-md-3 col-sm-3 col-3">
+                                <form method="get" action="/listings/<%= showData.id %>/edit">
+                                    <button class="btn btn-dark show-btn mt-4 mb-5 offset-10">Edit</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-1 col-lg-2 col-md-6 col-sm-8 col-8">
+                                <form method="post" action="/listings/<%= showData.id %>/delete?_method=DELETE">
+                                    <button class="btn btn-dark show-btn mt-4 mb-5 offset-2 delbtn">Delete</button>
+                                </form>
                             </div>
                         </div>
                         <% } %>
-                </div>
-                <!-- payment -->
-                <hr>
-                <% if (currentUser) { %>
-                    <div class="col-8 offset-2">
-                        <h2>Add a review</h2>
-                        <form method="post" action="/listings/<%= showData.id %>/review" novalidate
-                            class="needs-validation">
-                            <input type="hidden" name="id" value="<%= showData.id %>">
-                            <div class="mb-3">
-                                <label for="comment" class="form-label">Comment:</label>
-                                <textarea type="text" name="review[comment]" placeholder="Leave a Review" id="comment"
-                                    class="form-control" required></textarea>
-                                <div class="valid-feedback">Comment valid</div>
-                                <div class="invalid-feedback">Invalid Comment</div>
+                            <!-- payment -->
+                            <div>
+                                <% if(currentUser) { %>
+                                    <form class="pay-form">
+                                        <input type="hidden" name="name" value="<%= showData.title %>" />
+                                        <input type="hidden" name="amount" value="<%= showData.price %>" />
+                                        <input type="hidden" name="description" value="<%= showData.description %>" />
+                                        <input type="hidden" name="listingId" value="<%= showData.id %>" />
+                                        <div class="rent-it-container">
+                                            <button type="button" class="btn-rent-it" id="booking-btn"
+                                                onclick="initiatePayment(event)">Rent It</button>
+                                        </div>
+                                    </form>
+
+                                    <!-- Payment Modal -->
+                                    <div id="payment-modal" class="modal"
+                                        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                                        <div class="modal-content"
+                                            style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px;">
+                                            <span class="close"
+                                                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+                                            <h2>Complete Your Payment</h2>
+                                            <p>You're about to book <strong>
+                                                    <%= showData.title %>
+                                                </strong> for ₹<%= showData.price.toLocaleString("en-IN") %>/night</p>
+                                            <div
+                                                style="display: flex; justify-content: space-between; margin-top: 20px;">
+                                                <button id="cancel-payment" class="cancel-payment-btn"
+                                                    style="background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Cancel
+                                                    Payment</button>
+                                                <!-- The confirm button will be added via JavaScript -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
                             </div>
-                            <!-- <div class="mb-3">
+                            <!-- payment -->
+                            <hr>
+                            <% if (currentUser) { %>
+                                <div class="col-8 offset-2">
+                                    <h2>Add a review</h2>
+                                    <form method="post" action="/listings/<%= showData.id %>/review" novalidate
+                                        class="needs-validation">
+                                        <input type="hidden" name="id" value="<%= showData.id %>">
+                                        <div class="mb-3">
+                                            <label for="comment" class="form-label">Comment:</label>
+                                            <textarea type="text" name="review[comment]" placeholder="Leave a Review"
+                                                id="comment" class="form-control" required></textarea>
+                                            <div class="valid-feedback">Comment valid</div>
+                                            <div class="invalid-feedback">Invalid Comment</div>
+                                        </div>
+                                        <!-- <div class="mb-3">
                                 <label for="rating" class="form-label">Rate It!:</label>
                                 <input type="range" name="review[rating]" class="form-range" min="1" max="5" id="rating"
                                     required>
                                 <div class="valid-feedback">Valid Rating</div>
                                 <div class="invalid-feedback">Invalid Rating</div>
                             </div> -->
-                            <div class="mb-3">
-                                <fieldset class="starability-heartbeat">
-                                    <legend>Rate It!:</legend>
-                                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
-                                        value="1" checked aria-label="No rating." />
-                                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                    <label for="first-rate1" title="Terrible">1 star</label>
-                                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                    <label for="first-rate2" title="Not good">2 stars</label>
-                                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                    <label for="first-rate3" title="Average">3 stars</label>
-                                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                    <label for="first-rate4" title="Very good">4 stars</label>
-                                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                    <label for="first-rate5" title="Amazing">5 stars</label>
-                                </fieldset>
-                            </div><br>
-                            <button type="submit" class="btn btn-outline-success mb-3">Submit</button>
-                        </form>
-                    </div>
-                    <hr>
-                    <% } %>
-                        <% if (showData.review.length) { %>
-                            <div class="cards row">
-                                <h3>Reviews:</h3>
-                                <% for (const review of showData.review) { %>
-                                    <div class=" card col-5 ms-2 review-card" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">@<%= review.author.username %>
-                                            </h5>
-                                            <p class="card-text starability-result" data-rating="<%= review.rating %>">
-                                            </p>
-                                            <p class="card-subtitle mb-2 text-body-secondary">
-                                                <%= review.comment %>
-                                            </p>
-                                            <form method="post"
-                                                action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
-                                                <input type="hidden" name="id" value="<%= showData.id %>">
-                                                <input type="hidden" name="reviewid" value="<%= review.id %>">
-                                                <button type="submit" class="btn btn-sm btn-danger mb-3">Delete</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <% } %>
-                            </div>
-                            <% } %>
-                                <div class="col-8 offset-2 mt-2 mb-4 map">
-                                    <h3>Where you'll be</h3>
-                                    <div id="map"></div>
+                                        <div class="mb-3">
+                                            <fieldset class="starability-heartbeat">
+                                                <legend>Rate It!:</legend>
+                                                <input type="radio" id="no-rate" class="input-no-rate"
+                                                    name="review[rating]" value="1" checked aria-label="No rating." />
+                                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                                <label for="first-rate1" title="Terrible">1 star</label>
+                                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                                <label for="first-rate2" title="Not good">2 stars</label>
+                                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                                <label for="first-rate3" title="Average">3 stars</label>
+                                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                                <label for="first-rate4" title="Very good">4 stars</label>
+                                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                                <label for="first-rate5" title="Amazing">5 stars</label>
+                                            </fieldset>
+                                        </div><br>
+                                        <button type="submit" class="btn btn-outline-success mb-3">Submit</button>
+                                    </form>
                                 </div>
-    </body>
-    <script src="/Js/map.js"></script>
-    <!--------------------- Payment Gateway ------------------>
+                                <hr>
+                                <% } %>
+                                    <% if (showData.review.length) { %>
+                                        <div class="cards row">
+                                            <h3>Reviews:</h3>
+                                            <% for (const review of showData.review) { %>
+                                                <div class=" card col-5 ms-2 review-card" style="width: 18rem;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@<%= review.author.username %>
+                                                        </h5>
+                                                        <p class="card-text starability-result"
+                                                            data-rating="<%= review.rating %>">
+                                                        </p>
+                                                        <p class="card-subtitle mb-2 text-body-secondary">
+                                                            <%= review.comment %>
+                                                        </p>
+                                                        <form method="post"
+                                                            action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
+                                                            <input type="hidden" name="id" value="<%= showData.id %>">
+                                                            <input type="hidden" name="reviewid"
+                                                                value="<%= review.id %>">
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-danger mb-3">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                        </div>
+                                        <% } %>
+                                            <div class="col-8 offset-2 mt-2 mb-4 map">
+                                                <h3>Where you'll be</h3>
+                                                <div id="map"></div>
+                                            </div>
+                </body>
+                <script src="/Js/map.js"></script>
+                <!--------------------- Payment Gateway ------------------>
 
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script>
-        // Get modal and button elements
-        const paymentModal = document.getElementById("payment-modal");
-        const closeModal = document.querySelector(".close");
+                <script>
+                    // Get modal and button elements
+                    const paymentModal = document.getElementById("payment-modal");
+                    const closeModal = document.querySelector(".close");
 
-        // Close modal when "X" (close button) is clicked
-        closeModal?.addEventListener("click", () => {
-            paymentModal.style.display = "none";
-        });
+                    // Close modal when "X" (close button) is clicked
+                    closeModal?.addEventListener("click", () => {
+                        paymentModal.style.display = "none";
+                    });
 
-        // Get the Cancel Payment button
-        const cancelPaymentButton = document.getElementById("cancel-payment");
+                    // Get the Cancel Payment button
+                    const cancelPaymentButton = document.getElementById("cancel-payment");
 
-        // Close the modal when the Cancel Payment button is clicked
-        cancelPaymentButton?.addEventListener("click", () => {
-            paymentModal.style.display = "none";
-        });
+                    // Close the modal when the Cancel Payment button is clicked
+                    cancelPaymentButton?.addEventListener("click", () => {
+                        paymentModal.style.display = "none";
+                    });
 
-        // Function to directly initiate payment without showing modal
-        function initiatePayment(event) {
-            event.preventDefault();
-            let form = $(".pay-form");
-            let formData = form.serialize();
+                    // Function to directly initiate payment without showing modal
+                    function initiatePayment(event) {
+                        event.preventDefault();
+                        let form = $(".pay-form");
+                        let formData = form.serialize();
 
-            // Validate required fields
-            if (!form.find('[name="name"]').val() || !form.find('[name="amount"]').val()) {
-                alert('Please fill all required payment fields');
-                return;
-            }
+                        // Validate required fields
+                        if (!form.find('[name="name"]').val() || !form.find('[name="amount"]').val()) {
+                            alert('Please fill all required payment fields');
+                            return;
+                        }
 
-            $.ajax({
-                url: "/createOrder",
-                type: "POST",
-                data: formData,
-                dataType: 'json',
-                success: function (res) {
-                    if (!res?.key_id || !res?.order_id) {
-                        console.error('Invalid server response:', res);
-                        alert('Payment setup failed - missing required parameters');
-                        return;
-                    }
+                        $.ajax({
+                            url: "/createOrder",
+                            type: "POST",
+                            data: formData,
+                            dataType: 'json',
+                            success: function (res) {
+                                if (!res?.key_id || !res?.order_id) {
+                                    console.error('Invalid server response:', res);
+                                    alert('Payment setup failed - missing required parameters');
+                                    return;
+                                }
 
-                    var options = {
-                        key: res.key_id,
-                        amount: res.amount,
-                        currency: "INR",
-                        method: 'upi',
-                        _capture: true,
-                        upi: {
-                            flow: 'qr',
-                            vpa: 'razorpay@upi' // Generic UPI handle for QR
-                        },
-                        name: res.product_name || '<%= showData.title %>',
-                        order_id: res.order_id,
-                        method: 'upi',
-                        notes: {
-                            payment_type: 'upi_qr'
-                        },
-                        handler: function (response) {
-                            if (response.razorpay_payment_id) {
-                                $.post('/payment-success', {
-                                    paymentId: response.razorpay_payment_id,
-                                    orderId: res.order_id,
-                                    listingId: '<%= showData.id %>'
-                                }).then(() => {
-                                    window.location.href = `/listings/<%= showData.id %>?payment_success=1`;
-                                });
+                                var options = {
+                                    key: res.key_id,
+                                    amount: res.amount,
+                                    currency: "INR",
+                                    method: 'upi',
+                                    _capture: true,
+                                    upi: {
+                                        flow: 'qr',
+                                        vpa: 'razorpay@upi' // Generic UPI handle for QR
+                                    },
+                                    name: res.product_name || '<%= showData.title %>',
+                                    order_id: res.order_id,
+                                    method: 'upi',
+                                    notes: {
+                                        payment_type: 'upi_qr'
+                                    },
+                                    handler: function (response) {
+                                        if (response.razorpay_payment_id) {
+                                            $.post('/payment-success', {
+                                                paymentId: response.razorpay_payment_id,
+                                                orderId: res.order_id,
+                                                listingId: '<%= showData.id %>'
+                                            }).then((response) => {
+                                                if (response.success && response.redirectUrl) {
+                                                    window.location.href = response.redirectUrl;
+                                                } else {
+                                                    window.location.href = `/listings/<%= showData.id %>?payment_success=1`;
+                                                }
+                                            });
+                                        }
+                                    },
+                                    theme: { color: "#2300a3" }
+                                };
+
+                                try {
+                                    new Razorpay(options).open();
+                                } catch (err) {
+                                    console.error('Razorpay init error:', err);
+                                    alert('Payment system error - please try again later');
+                                }
+                            },
+                            error: function (xhr) {
+                                console.error('Payment error:', xhr.responseText);
+                                alert('Payment processing failed: ' + xhr.statusText);
                             }
-                        },
-                        theme: { color: "#2300a3" }
-                    };
-
-                    try {
-                        new Razorpay(options).open();
-                    } catch (err) {
-                        console.error('Razorpay init error:', err);
-                        alert('Payment system error - please try again later');
+                        });
                     }
-                },
-                error: function (xhr) {
-                    console.error('Payment error:', xhr.responseText);
-                    alert('Payment processing failed: ' + xhr.statusText);
-                }
-            });
-        }
 
-        // Initialize Razorpay payment
-        $(document).ready(function () {
-            // Prevent form submission
-            $(".pay-form").on("submit", function (e) {
-                e.preventDefault();
-                return false;
-            });
+                    // Initialize Razorpay payment
+                    $(document).ready(function () {
+                        // Prevent form submission
+                        $(".pay-form").on("submit", function (e) {
+                            e.preventDefault();
+                            return false;
+                        });
 
-            // No longer needed as we're directly initiating payment
-        });
-    </script>
+                        // No longer needed as we're directly initiating payment
+                    });
+                </script>

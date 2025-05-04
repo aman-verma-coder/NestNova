@@ -14,5 +14,7 @@ const paymentController = require('../controllers/paymentController');
 
 payment_route.get('/', paymentController.renderProductPage);
 payment_route.post('/createOrder', paymentController.createOrder);
+payment_route.post('/payment-success', paymentController.handlePaymentSuccess);
+payment_route.get('/booking-success', paymentController.renderBookingSuccess);
 
 module.exports = payment_route;

@@ -64,3 +64,11 @@ module.exports.validateReview = (req, res, next) => {
         next();
     }
 };
+
+module.exports.isAdmin = (req, res, next) => {
+    if (!req.user || !req.user.isAdmin) {
+        req.flash("error", "You don't have permission to access this page");
+        return res.redirect("/listings");
+    }
+    next();
+};

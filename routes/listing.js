@@ -16,6 +16,13 @@ router
     .route("/new")
     .get(isLoggedIn, listingController.renderNewForm)
     .post(isLoggedIn, upload.single('image'), wrapAsync(listingController.postNewListing));
+
+// Ensure new listings are saved with pending status by default
+router.post("/new", isLoggedIn, upload.single('image'), wrapAsync(async (req, res) => {
+    req.body.listing.status = "pending";
+    await listingController.postNewListing(req, res);
+    req.flash('success', 'Your listing has been submitted for admin review and will be visible after approval.');
+}));
 // .post(upload.single('image'), (req, res) => {
 //     res.send(req.file);
 // })

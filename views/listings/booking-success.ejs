@@ -1,0 +1,177 @@
+<% layout("/layout/boilerplate") -%>
+
+    <div class="container-fluid py-3" style="background-color: #f8f9fa;">
+        <div class="container-fluid px-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow w-100"
+                        style="border-radius: 8px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;">
+                        <div class="card-header bg-success text-white py-2">
+                            <h2 class="text-center mb-0"><i class="fas fa-check-circle me-2"></i>Booking Successful!
+                            </h2>
+                        </div>
+                        <div class="card-body p-3">
+                            <div class="text-center mb-3">
+                                <div class="success-animation mb-2">
+                                    <i class="fas fa-check-circle fa-3x text-success"></i>
+                                </div>
+                                <h3 class="fw-bold mb-2">Thank you for your booking!</h3>
+                                <p class="lead mb-2">Your payment has been processed successfully and your reservation
+                                    is confirmed.</p>
+                                <div class="payment-id-box p-2 d-inline-block bg-light rounded-pill mt-1"
+                                    style="border: 1px solid #dee2e6;">
+                                    <p class="mb-0 fw-bold">Payment ID: <strong>
+                                            <%= paymentId %>
+                                        </strong></p>
+                                </div>
+                            </div>
+
+                            <h3 class="border-bottom pb-2 mb-3" style="color: #2c3e50; font-weight: 700;">Your Itinerary
+                            </h3>
+                            <div class="row mt-2 g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 h-100 bg-white rounded-3 shadow-sm"
+                                        style="border-left: 5px solid #1a9988;">
+                                        <h4 class="mb-3">
+                                            <%= listing.title %>
+                                        </h4>
+                                        <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>
+                                            <%= listing.location %>
+                                        </p>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Check-in: <strong>
+                                                        <%= booking.checkIn %>
+                                                    </strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Check-out: <strong>
+                                                        <%= booking.checkOut %>
+                                                    </strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Guests: <strong>
+                                                        <%= booking.guests %>
+                                                    </strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 h-100 bg-white rounded-3 shadow-sm"
+                                        style="border-left: 5px solid #1a9988;">
+                                        <h4 class="mb-3">Payment Details</h4>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-rupee-sign"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Amount Paid: <strong>₹<%=
+                                                            (booking.amount/100).toFixed(2) %></strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-credit-card"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Payment Method: <strong>Razorpay</strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-light p-1 rounded-3 me-2"
+                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-receipt"></i>
+                                            </div>
+                                            <div>
+                                                <p class="mb-0">Order ID: <strong class="text-muted">
+                                                        <%= booking.orderId %>
+                                                    </strong></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 pt-2 bg-white p-3 rounded-3 shadow-sm"
+                                style="border-top: 3px solid #6c757d;">
+                                <h4 class="mb-3"><i class="fas fa-user-circle me-2"></i>Host Information
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-user me-2"></i>Host: <strong>
+                                                <%= listing.owner.username %>
+                                            </strong></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-envelope me-2"></i>Contact: <strong>
+                                                <%= listing.owner.email %>
+                                            </strong></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 pt-2 border-top">
+                                <div class="row">
+                                    <div class="col-12 mb-2">
+                                        <div class="alert alert-info" role="alert">
+                                            <i class="fas fa-info-circle me-2"></i> A confirmation email with your
+                                            booking details has been sent to your registered email address.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+                                    <a href="/listings" class="btn btn-outline-primary px-3 py-2"
+                                        style="border-radius: 30px;">
+                                        <i class="fas fa-search me-2"></i> Browse More Listings
+                                    </a>
+                                    <a href="/listings/<%= listing._id %>/show" class="btn btn-primary px-3 py-2"
+                                        style="border-radius: 30px;">
+                                        <i class="fas fa-eye me-2"></i> View Property
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .btn {
+                transition: all 0.2s ease;
+            }
+
+            .btn:hover {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+
+        <script>
+            // Add to browser history so back button doesn't take user back to payment page
+            if (window.history && window.history.pushState) {
+                window.history.pushState('forward', null, window.location.href);
+                window.onpopstate = function () {
+                    window.history.pushState('forward', null, window.location.href);
+                };
+            }
+        </script>
+    </div>

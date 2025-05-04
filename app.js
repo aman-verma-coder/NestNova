@@ -20,6 +20,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const footerRouter = require("./routes/footer.js");
+const adminRouter = require("./routes/admin.js");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -147,6 +148,7 @@ app.use("/listings/:id/review", reviewRouter);
 app.use("/", footerRouter);
 app.use("/", userRouter);
 app.use("/", paymentRoute);
+app.use("/admin", adminRouter);
 
 // app.get("/listings", wrapAsync(async (req, res) => {
 //     let allListings = await Listing.find({});

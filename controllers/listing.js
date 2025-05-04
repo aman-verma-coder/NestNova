@@ -11,13 +11,19 @@ module.exports.searchListings = async (req, res) => {
     }
 
     // Search in title, description, location and country fields
+    // Only show approved listings in search results
     const allListings = await Listing.find({
-        $or: [
-            { title: { $regex: q, $options: "i" } },
-            { description: { $regex: q, $options: "i" } },
-            { location: { $regex: q, $options: "i" } },
-            { country: { $regex: q, $options: "i" } },
-            { category: { $regex: q, $options: "i" } }
+        $and: [
+            { status: "approved" },
+            {
+                $or: [
+                    { title: { $regex: q, $options: "i" } },
+                    { description: { $regex: q, $options: "i" } },
+                    { location: { $regex: q, $options: "i" } },
+                    { country: { $regex: q, $options: "i" } },
+                    { category: { $regex: q, $options: "i" } }
+                ]
+            }
         ]
     });
 
@@ -31,15 +37,34 @@ function getObjectKey(object) {
         }
     }
 }
+module.exports.postNewListing = async (req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
+    newListing.image = { url, filename };
+    newListing.status = "pending"; // Set status to pending by default
+    await newListing.save();
+    req.flash("success", "New Listing Created! It will be visible after admin approval.");
+    res.redirect("/listings");
+};
+
 module.exports.index = async (req, res) => {
+    // Only show approved listings to regular users
+    // Admin users can see all listings in the admin dashboard
+    const statusFilter = { status: "approved" };
+
     if (getObjectKey(req.query)) {
-        let allListings = await Listing.find({ category: { $in: getObjectKey(req.query) } });
+        let allListings = await Listing.find({
+            category: { $in: getObjectKey(req.query) },
+            ...statusFilter
+        });
         console.log(allListings);
         res.render("listings/index.ejs", { allListings });
         // res.send("All Ok");
     }
     else {
-        let allListings = await Listing.find({});
+        let allListings = await Listing.find(statusFilter);
         res.render("listings/index.ejs", { allListings });
         // res.send("Not Ok");
     }
@@ -80,10 +105,12 @@ module.exports.postNewListing = async (req, res, next) => {
     newListing.owner = req.user._id;
     newListing.image = { url, filename };
     newListing.geometry = response.body.features[0].geometry;
+    newListing.status = "pending"; // Set status to pending by default
     let savedListing = await newListing.save();
     console.log(savedListing);
-    req.flash("success", "New Listing Added");
+    req.flash("success", "New Listing Added! It will be visible after admin approval.");
     res.redirect("/listings");
+
 };
 
 module.exports.renderEditForm = async (req, res) => {
