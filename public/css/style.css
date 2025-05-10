@@ -343,10 +343,13 @@ footer {
     border-radius: 15px;
     opacity: 0.75;
     flex-shrink: 0;
-    margin-right: 1rem;
-    margin-left: 2rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    width: 17.5rem !important;
 }
 
 .tax-toggle:hover {
@@ -360,8 +363,8 @@ footer {
 }
 
 .tax-toggle>div {
-    margin-right: 0.75rem;
-    margin-left: 0.75rem;
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
     height: 1.25rem;
     margin-top: 0.7rem;
     margin-bottom: 0.7rem;
@@ -544,6 +547,8 @@ footer {
 
 #filters {
     display: flex !important;
+    justify-content: center;
+    /* Added centering */
     overflow-x: scroll !important;
     overflow-y: hidden !important;
     align-items: center;
@@ -559,6 +564,7 @@ footer {
         width: 100%;
         margin-left: 0;
         justify-content: flex-start;
+        /* Maintain mobile layout */
         padding: 0 0.5rem;
         overflow-x: auto;
     }
@@ -610,7 +616,7 @@ footer {
 
     /* Adjust tax toggle for small screens */
     .tax-toggle {
-        width: 100%;
+        width: 15rem;
         justify-content: center;
         margin-top: 0.5rem;
     }
@@ -625,6 +631,12 @@ footer {
 #filters .filter-data {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+}
+
+@media(max-width: 350px) {
+    .tax-toggle {
+        width: 15rem !important;
+    }
 }
 
 @media (max-width: 768px) {

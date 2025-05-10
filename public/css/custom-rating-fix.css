@@ -1,0 +1,18 @@
+.card-text.starability-result {
+    /* Fixed width for exactly 5 stars */
+    width: 150px !important;
+    max-width: 150px !important;
+    overflow: hidden;
+    background-repeat: repeat-x;
+    background-size: 30px auto;
+}
+
+/* Ensure the after pseudo-element is also constrained */
+.card-text.starability-result:after {
+    max-width: 150px !important;
+    background-repeat: repeat-x;
+    background-size: 30px auto;
+}
+
+/* Add this to the head section of your HTML files that use star ratings */
+/* <link rel="stylesheet" href="/css/custom-rating-fix.css"> */
