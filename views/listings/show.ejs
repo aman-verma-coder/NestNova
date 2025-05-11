@@ -19,8 +19,8 @@
 
                 <body>
                     <div class="row col-md-7 col-sm-6 col-6 data-show-page">
-                        <div class="col-8 offset-5 mt-4">
-                            <h2 class="show-data-title">
+                        <div class="col-8 offset-5 mt-4" style="text-align: center;">
+                            <h2 class="show-data-title" style="text-align: center;">
                                 <%= showData.title %>
                             </h2>
                         </div>
@@ -66,9 +66,16 @@
                                         <input type="hidden" name="amount" value="<%= showData.price %>" />
                                         <input type="hidden" name="description" value="<%= showData.description %>" />
                                         <input type="hidden" name="listingId" value="<%= showData.id %>" />
-                                        <div class="rent-it-container">
-                                            <button type="button" class="btn-rent-it" id="booking-btn"
-                                                onclick="initiatePayment(event)">Rent It</button>
+                                        <div class="rent-it-container btn-outline-success">
+                                            <button type="button" class="btn-rent-it btn-outline-success"
+                                                id="booking-btn" onclick="initiatePayment(event)" style="padding: 12px 24px;
+                                                   background-color: #28a745;
+                                                   color: white;
+                                                   border-radius: 8px;
+                                                   border: none;
+                                                   transition: all 0.3s ease;
+                                                   margin: 16px auto;
+                                                   display: block;">Rent It</button>
                                         </div>
                                     </form>
 
@@ -169,8 +176,45 @@
                                                 <h3>Where you'll be</h3>
                                                 <div id="map"></div>
                                             </div>
+                                            <div class="rent-it-container btn-outline-success">
+                                                <button type="button" class="btn-rent-it btn-outline-success"
+                                                    id="booking-btn" onclick="initiatePayment(event)" style="padding: 12px 24px;
+                                                       background-color: #28a745;
+                                                       color: white;
+                                                       border-radius: 8px;
+                                                       border: none;
+                                                       transition: all 0.3s ease;
+                                                       margin: 16px auto;
+                                                       display: block;">Rent It</button>
+                                            </div>
                 </body>
                 <script src="/Js/map.js"></script>
+                <style>
+                    #booking-btn {
+                        padding: 12px 24px;
+                        background-color: #28a745;
+                        color: white;
+                        border-radius: 8px;
+                        border: none;
+                        transition: all 0.3s ease;
+                        margin: 16px auto;
+                        display: block;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    }
+
+                    #booking-btn:hover {
+                        background-color: #218838;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    }
+
+                    @media (max-width: 768px) {
+                        #booking-btn {
+                            padding: 10px 20px;
+                            font-size: 14px;
+                        }
+                    }
+                </style>
                 <!--------------------- Payment Gateway ------------------>
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
