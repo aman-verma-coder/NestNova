@@ -1,40 +1,46 @@
 <% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
 
-    <div class="container mt-4">
-        <h1 class="mb-4">Admin Dashboard</h1>
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>Admin Dashboard</h1>
+        </div>
 
-        <div class="card mb-4">
-            <div class="card-header bg-warning text-dark">
-                <h2 class="h5 mb-0">Pending Approvals (<%= pendingListings.length %>)</h2>
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header pending-header">
+                <h2>Pending Approvals (<%= pendingListings.length %>)</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <% if (pendingListings.length===0) { %>
                     <div class="alert alert-info">All listings reviewed</div>
                     <% } else { %>
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                             <% for (const listing of pendingListings) { %>
-                                <div class="card">
-                                    <div class="card-body">
+                                <div class="col">
+                                    <div class="card approval-card">
                                         <% if (listing.image) { %>
-                                            <img src="<%= listing.image.url %>" class="card-img-top mb-3"
-                                                alt="<%= listing.title %>"
-                                                style="max-height: 200px; object-fit: cover;">
+                                            <img src="<%= listing.image.url %>" class="card-img-top"
+                                                alt="<%= listing.title %>">
                                             <% } %>
-                                                <h5 class="card-title">
-                                                    <%= listing.title %>
-                                                </h5>
-                                                <p class="card-text">
-                                                    <%= listing.description %>
-                                                </p>
-                                                <div class="d-flex justify-content-between">
-                                                    <form action="/admin/listings/<%= listing._id %>/approve"
-                                                        method="POST">
-                                                        <button type="submit" class="btn btn-success">Approve</button>
-                                                    </form>
-                                                    <form action="/admin/listings/<%= listing._id %>/reject"
-                                                        method="POST">
-                                                        <button type="submit" class="btn btn-danger">Reject</button>
-                                                    </form>
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title">
+                                                        <%= listing.title %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%= listing.description %>
+                                                    </p>
+                                                    <div class="approval-actions">
+                                                        <form action="/admin/listings/<%= listing._id %>/approve"
+                                                            method="POST" class="w-100">
+                                                            <button type="submit"
+                                                                class="btn btn-success w-100">Approve</button>
+                                                        </form>
+                                                        <form action="/admin/listings/<%= listing._id %>/reject"
+                                                            method="POST" class="w-100">
+                                                            <button type="submit"
+                                                                class="btn btn-danger w-100">Reject</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                     </div>
                                 </div>
@@ -44,18 +50,19 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-header bg-success text-white">
-                <h2 class="h5 mb-0">All Listings</h2>
+        <div class="card admin-card">
+            <div class="admin-card-header listings-header">
+                <h2>All Listings</h2>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table admin-table table-hover">
                         <thead>
                             <tr>
                                 <th>Title</th>
                                 <th>Location</th>
                                 <th>Owner</th>
+                                <th>Email</th>
                                 <th>Category</th>
                                 <th>Status</th>
                             </tr>
@@ -73,12 +80,17 @@
                                         <%= listing.owner.username %>
                                     </td>
                                     <td>
+                                        <span class="owner-email">
+                                            <%= listing.owner.email %>
+                                        </span>
+                                    </td>
+                                    <td>
                                         <%= listing.category %>
                                     </td>
                                     <td>
                                         <% const statusConfig={ approved: ['success', 'Approved' ], rejected:
                                             ['danger', 'Rejected' ], pending: ['warning', 'Pending' ] }; %>
-                                            <span class="badge bg-<%= statusConfig[listing.status][0] %>">
+                                            <span class="status-badge bg-<%= statusConfig[listing.status][0] %>">
                                                 <%= statusConfig[listing.status][1] %>
                                             </span>
                                     </td>

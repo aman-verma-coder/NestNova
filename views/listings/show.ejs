@@ -68,14 +68,9 @@
                                         <input type="hidden" name="listingId" value="<%= showData.id %>" />
                                         <div class="rent-it-container btn-outline-success">
                                             <button type="button" class="btn-rent-it btn-outline-success"
-                                                id="booking-btn" onclick="initiatePayment(event)" style="padding: 12px 24px;
-                                                   background-color: #28a745;
-                                                   color: white;
-                                                   border-radius: 8px;
-                                                   border: none;
-                                                   transition: all 0.3s ease;
-                                                   margin: 16px auto;
-                                                   display: block;">Rent It</button>
+                                                id="booking-btn" onclick="initiatePayment(event)"
+                                                style="padding: 12px 24px; background-color: #28a745; color: white; border-radius: 8px; border: none; transition: all 0.3s ease; margin: 16px auto; display: block;">Rent
+                                                It</button>
                                         </div>
                                     </form>
 
@@ -149,7 +144,7 @@
                                         <div class="cards row">
                                             <h3>Reviews:</h3>
                                             <% for (const review of showData.review) { %>
-                                                <div class=" card col-5 ms-2 review-card" style="width: 18rem;">
+                                                <div class="card review-card">
                                                     <div class="card-body">
                                                         <h5 class="card-title">@<%= review.author.username %>
                                                         </h5>
@@ -176,17 +171,6 @@
                                                 <h3>Where you'll be</h3>
                                                 <div id="map"></div>
                                             </div>
-                                            <div class="rent-it-container btn-outline-success">
-                                                <button type="button" class="btn-rent-it btn-outline-success"
-                                                    id="booking-btn" onclick="initiatePayment(event)" style="padding: 12px 24px;
-                                                       background-color: #28a745;
-                                                       color: white;
-                                                       border-radius: 8px;
-                                                       border: none;
-                                                       transition: all 0.3s ease;
-                                                       margin: 16px auto;
-                                                       display: block;">Rent It</button>
-                                            </div>
                 </body>
                 <script src="/Js/map.js"></script>
                 <style>
@@ -208,10 +192,58 @@
                         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                     }
 
+                    /* Responsive styles for star ratings */
+                    .starability-heartbeat {
+                        min-height: 30px;
+                    }
+
                     @media (max-width: 768px) {
                         #booking-btn {
                             padding: 10px 20px;
                             font-size: 14px;
+                        }
+
+                        .starability-heartbeat {
+                            display: inline-block;
+                            width: 100%;
+                        }
+
+                        .starability-heartbeat>input {
+                            margin-right: 2px;
+                        }
+
+                        .starability-heartbeat>label {
+                            font-size: 0.9em;
+                            width: 25px;
+                            height: 25px;
+                        }
+                    }
+
+                    @media (max-width: 576px) {
+                        .starability-heartbeat {
+                            transform: scale(0.85);
+                            transform-origin: left center;
+                        }
+
+                        .starability-heartbeat>label {
+                            width: 20px;
+                            height: 20px;
+                            background-size: 20px auto;
+                        }
+
+                        /* Review card star ratings */
+                        .review-card .starability-result {
+                            transform: scale(0.8);
+                            transform-origin: left center;
+                            margin-bottom: 5px;
+                        }
+
+                        .cards.row {
+                            margin: 0 10px;
+                        }
+
+                        .review-card {
+                            margin-bottom: 15px;
                         }
                     }
                 </style>

@@ -266,6 +266,7 @@ body {
     border: 1px solid #d1e3f3;
     width: 100%;
     max-width: 800px;
+    box-sizing: border-box;
 }
 
 @media (max-width: 576px) {
@@ -273,12 +274,31 @@ body {
     .card,
     .review-card {
         width: 100% !important;
-        margin: 1rem auto;
+        margin: 0.5rem auto;
+        max-width: 100%;
     }
 
     .card-img-top {
         max-width: 100% !important;
         height: auto;
+    }
+
+    .review-card .card-title {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+
+    .review-card .card-text {
+        font-size: 0.9rem;
+        padding: 0 0.5rem;
+    }
+
+    .cards.row {
+        grid-template-columns: 1fr;
+        width: 100%;
+        max-width: 100%;
+        padding: 0.5rem;
+        gap: 1rem;
     }
 
     .show-data-title {
@@ -310,6 +330,8 @@ body {
     display: flex;
     align-items: center;
     padding: 0 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .review-card .card-title::before {
@@ -325,6 +347,8 @@ body {
     margin: 1rem 0;
     padding: 0 1rem;
     word-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .review-card .card-subtitle {
@@ -341,6 +365,7 @@ body {
     padding: 1rem;
     margin: 0 auto;
     justify-content: center;
+    width: 100%;
 }
 
 .cards.row h3 {
@@ -463,6 +488,30 @@ body {
         width: 100% !important;
         max-width: 100%;
         padding: 0.5rem 1.5rem !important;
+    }
+}
+
+/* Media query for tablets */
+@media (max-width: 992px) and (min-width: 577px) {
+    .cards.row {
+        grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+        max-width: 100%;
+        padding: 0.75rem;
+        gap: 1rem;
+    }
+
+    .review-card {
+        width: 100% !important;
+        margin: 0.5rem auto;
+    }
+
+    .review-card .card-title {
+        font-size: 1rem;
+    }
+
+    .review-card .card-text {
+        font-size: 0.95rem;
+        padding: 0 0.75rem;
     }
 }
 
@@ -734,8 +783,25 @@ body {
 
 @media (max-width: 480px) {
     .tax-toggle {
-        width: 12rem !important;
+        width: 15rem !important;
         padding: 8px 0;
+    }
+}
+
+@media (max-width: 300px) {
+    .tax-toggle {
+        width: 12.25rem !important;
+        padding: 5px 0;
+        font-size: 0.85rem;
+        height: 2.8rem;
+    }
+
+    .tax-toggle>div {
+        margin-right: 0.125rem;
+        margin-left: 0.125rem;
+        height: 1.1rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.6rem;
     }
 }
 
