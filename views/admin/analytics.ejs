@@ -1,0 +1,302 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="stylesheet" href="/css/admin-analytics.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>Analytics Dashboard</h1>
+        </div>
+
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i>
+                Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-outline-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-outline-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-outline-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card admin-card summary-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Listings</h5>
+                        <h2 class="mb-0">
+                            <%= analyticsData.counts.listings.total %>
+                        </h2>
+                        <div class="small text-muted mt-2">
+                            <span class="text-success">
+                                <%= analyticsData.counts.listings.approved %> Approved
+                            </span> |
+                            <span class="text-warning">
+                                <%= analyticsData.counts.listings.pending %> Pending
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card admin-card summary-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Users</h5>
+                        <h2 class="mb-0">
+                            <%= analyticsData.counts.users.total %>
+                        </h2>
+                        <div class="small text-muted mt-2">
+                            <span class="text-info">
+                                <%= analyticsData.counts.users.admin %> Admins
+                            </span> |
+                            <span class="text-success">
+                                <%= analyticsData.counts.users.active %> Active
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card admin-card summary-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Bookings</h5>
+                        <h2 class="mb-0">
+                            <%= analyticsData.counts.bookings.total %>
+                        </h2>
+                        <div class="small text-muted mt-2">
+                            <span class="text-success">
+                                <%= analyticsData.counts.bookings.completed %> Completed
+                            </span> |
+                            <span class="text-danger">
+                                <%= analyticsData.counts.bookings.cancelled %> Cancelled
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card admin-card summary-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Total Revenue</h5>
+                        <h2 class="mb-0">$<%= analyticsData.revenue.toFixed(2) %>
+                        </h2>
+                        <div class="small text-muted mt-2">
+                            From <%= analyticsData.counts.bookings.completed %> completed bookings
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card admin-card">
+                    <div class="admin-card-header">
+                        <h2>Booking Status Distribution</h2>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="bookingStatusChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card admin-card">
+                    <div class="admin-card-header">
+                        <h2>Listing Categories</h2>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="categoryChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header">
+                <h2>Generate Reports</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <a href="/admin/reports/listings" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-file-alt me-2"></i> Listings Report
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="/admin/reports/bookings" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-file-alt me-2"></i> Bookings Report
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="/admin/reports/users" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-file-alt me-2"></i> Users Report
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="/admin/reports/revenue" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-file-alt me-2"></i> Revenue Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card admin-card">
+                    <div class="admin-card-header">
+                        <h2>Recent Bookings</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Listing</th>
+                                        <th>User</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% analyticsData.recentBookings.forEach(booking=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= booking.listing.title %>
+                                            </td>
+                                            <td>
+                                                <%= booking.user.username %>
+                                            </td>
+                                            <td>$<%= booking.totalPrice.toFixed(2) %>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge bg-<%= booking.status === 'confirmed' ? 'success' : (booking.status === 'pending' ? 'warning' : (booking.status === 'completed' ? 'info' : 'danger')) %>">
+                                                    <%= booking.status %>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card admin-card">
+                    <div class="admin-card-header">
+                        <h2>Recent Users</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% analyticsData.recentUsers.forEach(user=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <%= user.email %>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-<%= user.isActive ? 'success' : 'danger' %>">
+                                                    <%= user.isActive ? 'Active' : 'Inactive' %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-<%= user.isAdmin ? 'primary' : 'secondary' %>">
+                                                    <%= user.isAdmin ? 'Admin' : 'User' %>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Booking Status Chart
+        const bookingStatusCtx = document.getElementById('bookingStatusChart').getContext('2d');
+        const bookingStatusChart = new Chart(bookingStatusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Pending', 'Confirmed', 'Cancelled', 'Completed'],
+                datasets: [{
+                    data: [
+                    <%= analyticsData.counts.bookings.pending %>,
+                    <%= analyticsData.counts.bookings.confirmed %>,
+                    <%= analyticsData.counts.bookings.cancelled %>,
+                    <%= analyticsData.counts.bookings.completed %>
+                ],
+                    backgroundColor: [
+                        '#ffc107', // warning - pending
+                        '#28a745', // success - confirmed
+                        '#dc3545', // danger - cancelled
+                        '#17a2b8'  // info - completed
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+
+        // Category Distribution Chart
+        const categoryLabels = [];
+        const categoryData = [];
+    <% analyticsData.categoryDistribution.forEach(category => { %>
+            categoryLabels.push('<%= category._id %>');
+            categoryData.push(<%= category.count %>);
+    <% }) %>
+
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    label: 'Number of Listings',
+                    data: categoryData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    </script>

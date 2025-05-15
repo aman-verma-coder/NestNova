@@ -1,0 +1,379 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-modern.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
+    <link rel="stylesheet" href="/css/admin-analytics.css">
+
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>Audit Logs</h1>
+        </div>
+
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i>
+                Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-outline-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-outline-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header">
+                <h2>System Activity Logs</h2>
+                <div class="header-actions">
+                    <div class="d-flex align-items-center">
+                        <% if (auditData.pagination) { %>
+                            <span class="me-3 text-muted small">
+                                <i class="fas fa-database"></i>
+                                <%= auditData.pagination.total %> logs
+                            </span>
+                            <% } %>
+                                <a href="/admin/dashboard" class="btn btn-sm btn-outline-secondary me-2">
+                                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                                </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="log-filter-form" action="/admin/audit-logs" method="GET">
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-md-3 mb-2">
+                                <select class="form-select" id="log-type-filter" name="resourceType">
+                                    <option value="all">All Activity Types</option>
+                                    <option value="user" <%=auditData.queryParams &&
+                                        auditData.queryParams.resourceType==='user' ? 'selected' : '' %>>User Activity
+                                    </option>
+                                    <option value="listing" <%=auditData.queryParams &&
+                                        auditData.queryParams.resourceType==='listing' ? 'selected' : '' %>>Listing
+                                        Activity</option>
+                                    <option value="booking" <%=auditData.queryParams &&
+                                        auditData.queryParams.resourceType==='booking' ? 'selected' : '' %>>Booking
+                                        Activity</option>
+                                    <option value="review" <%=auditData.queryParams &&
+                                        auditData.queryParams.resourceType==='review' ? 'selected' : '' %>>Review
+                                        Activity</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select class="form-select" id="log-date-filter" name="dateRange">
+                                    <option value="all">All Time</option>
+                                    <option value="today" <%=auditData.queryParams &&
+                                        auditData.queryParams.dateRange==='today' ? 'selected' : '' %>>Today</option>
+                                    <option value="week" <%=auditData.queryParams &&
+                                        auditData.queryParams.dateRange==='week' ? 'selected' : '' %>>This Week</option>
+                                    <option value="month" <%=auditData.queryParams &&
+                                        auditData.queryParams.dateRange==='month' ? 'selected' : '' %>>This Month
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <select class="form-select" id="log-user-filter" name="userType">
+                                    <option value="all">All Users</option>
+                                    <option value="admin" <%=auditData.queryParams &&
+                                        auditData.queryParams.userType==='admin' ? 'selected' : '' %>>Admin Users
+                                    </option>
+                                    <option value="regular" <%=auditData.queryParams &&
+                                        auditData.queryParams.userType==='regular' ? 'selected' : '' %>>Regular Users
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search logs..." id="log-search"
+                                        name="search"
+                                        value="<%= auditData.queryParams && auditData.queryParams.search ? auditData.queryParams.search : '' %>">
+                                    <button class="btn btn-outline-secondary" type="submit"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="/admin/audit-logs" class="btn btn-outline-secondary w-100">Reset Filters</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <% if (auditData.logs && auditData.logs.length> 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Resource Type</th>
+                                    <th>Resource ID</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% auditData.logs.forEach(log=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= new Date(log.timestamp).toLocaleString() %>
+                                        </td>
+                                        <td>
+                                            <%= log.user %>
+                                        </td>
+                                        <td>
+                                            <%= log.action %>
+                                        </td>
+                                        <td>
+                                            <%= log.resourceType %>
+                                        </td>
+                                        <td>
+                                            <%= log.resourceId %>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal"
+                                                data-bs-target="#logDetailsModal" data-log-id="<%= log._id %>"
+                                                data-log-details="<%= JSON.stringify(log.details || {}) %>"
+                                                data-log-changes-before="<%= JSON.stringify(log.changes && log.changes.before || {}) %>"
+                                                data-log-changes-after="<%= JSON.stringify(log.changes && log.changes.after || {}) %>"
+                                                data-log-status="<%= log.status %>">View
+                                                Details</button>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <nav aria-label="Audit log pagination">
+                        <ul class="pagination justify-content-center">
+                            <% if (auditData.pagination && auditData.pagination.hasPrevPage) { %>
+                                <li class="page-item">
+                                    <a class="page-link"
+                                        href="/admin/audit-logs?<%= new URLSearchParams({...auditData.queryParams, page: auditData.pagination.page - 1}).toString() %>"
+                                        tabindex="-1">Previous</a>
+                                </li>
+                                <% } else { %>
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                    <% } %>
+
+                                        <% /* Calculate pagination */ var startPage=1; if (auditData.pagination &&
+                                            auditData.pagination.page) { startPage=Math.max(1, auditData.pagination.page
+                                            - 2); } var endPage=5; if (auditData.pagination &&
+                                            auditData.pagination.totalPages) {
+                                            endPage=Math.min(auditData.pagination.totalPages, startPage + 4); if
+                                            (endPage - startPage < 4 && startPage> 1) {
+                                            startPage = Math.max(1, endPage - 4);
+                                            }
+                                            }
+
+                                            for (var i = startPage; i <= endPage; i++) { %>
+                                                <li
+                                                    class="page-item <%= i === auditData.pagination.page ? 'active' : '' %>">
+                                                    <a class="page-link"
+                                                        href="/admin/audit-logs?<%= new URLSearchParams({...auditData.queryParams, page: i}).toString() %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+                                                <% } %>
+
+                                                    <% if (auditData.pagination && auditData.pagination.hasNextPage) {
+                                                        %>
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                                href="/admin/audit-logs?<%= new URLSearchParams({...auditData.queryParams, page: auditData.pagination.page + 1}).toString() %>">Next</a>
+                                                        </li>
+                                                        <% } else { %>
+                                                            <li class="page-item disabled">
+                                                                <a class="page-link" href="#">Next</a>
+                                                            </li>
+                                                            <% } %>
+                        </ul>
+                    </nav>
+                    <div class="text-center text-muted small mt-2">
+                        Showing <%= auditData.logs.length %> of <%= auditData.pagination.total %> logs |
+                                Page <%= auditData.pagination.page %> of <%= auditData.pagination.totalPages %>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-info">
+                            <p class="mb-0">
+                                <%= auditData.message || "No audit logs found." %>
+                            </p>
+                        </div>
+                        <div class="text-center py-5">
+                            <i class="fas fa-history fa-4x text-muted mb-3"></i>
+                            <h4>Audit Logging System</h4>
+                            <p class="text-muted">The audit logging system will track all important actions in the
+                                application, including:</p>
+                            <ul class="list-unstyled text-muted">
+                                <li>User logins and registrations</li>
+                                <li>Listing creations, updates, and deletions</li>
+                                <li>Booking status changes</li>
+                                <li>Review moderation actions</li>
+                                <li>Admin actions on users and content</li>
+                            </ul>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Details Modal -->
+    <div class="modal fade" id="logDetailsModal" tabindex="-1" aria-labelledby="logDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logDetailsModalLabel">Log Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Timestamp:</strong> <span id="modal-timestamp">-</span></p>
+                            <p><strong>User:</strong> <span id="modal-user">-</span></p>
+                            <p><strong>IP Address:</strong> <span id="modal-ip">-</span></p>
+                            <p><strong>Action:</strong> <span id="modal-action">-</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Resource Type:</strong> <span id="modal-resource-type">-</span></p>
+                            <p><strong>Resource ID:</strong> <span id="modal-resource-id">-</span></p>
+                            <p><strong>Status:</strong> <span id="modal-status">-</span></p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Changes:</h6>
+                        <pre id="modal-changes"
+                            class="bg-light p-3 rounded">No detailed change information available.</pre>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Audit Log Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle log details modal
+            const logDetailsModal = document.getElementById('logDetailsModal');
+            if (logDetailsModal) {
+                logDetailsModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const logId = button.getAttribute('data-log-id');
+
+                    // Find the log in the table
+                    const logRow = button.closest('tr');
+                    const timestamp = logRow.cells[0].textContent.trim();
+                    const user = logRow.cells[1].textContent.trim();
+                    const action = logRow.cells[2].textContent.trim();
+                    const resourceType = logRow.cells[3].textContent.trim();
+                    const resourceId = logRow.cells[4].textContent.trim();
+
+                    const modalTitle = logDetailsModal.querySelector('.modal-title');
+                    const modalBody = logDetailsModal.querySelector('.modal-body');
+
+                    modalTitle.textContent = `${action.charAt(0).toUpperCase() + action.slice(1)} Action Details`;
+
+                    // Create details HTML
+                    let detailsHtml = `
+                        <div class="log-details">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <strong>Timestamp:</strong> ${timestamp}
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>User:</strong> ${user}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <strong>Action:</strong> ${action}
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Status:</strong> <span class="badge bg-success">Success</span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <strong>Resource Type:</strong> ${resourceType}
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Resource ID:</strong> ${resourceId}
+                                </div>
+                            </div>
+                            <hr>
+                            <h6>Additional Details</h6>
+                            <div class="card">
+                                <div class="card-body bg-light">
+                                    <pre class="mb-0" id="log-details-json">Loading...</pre>
+                                </div>
+                            </div>
+                            
+                            <h6 class="mt-3">Changes</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">Before</div>
+                                        <div class="card-body">
+                                            <pre class="mb-0" id="log-before-json">Loading...</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header bg-light">After</div>
+                                        <div class="card-body">
+                                            <pre class="mb-0" id="log-after-json">Loading...</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    modalBody.innerHTML = detailsHtml;
+
+                    // Get the log details from data attributes
+                    try {
+                        const logDetails = JSON.parse(button.getAttribute('data-log-details') || '{}');
+                        const logChangesBefore = JSON.parse(button.getAttribute('data-log-changes-before') || '{}');
+                        const logChangesAfter = JSON.parse(button.getAttribute('data-log-changes-after') || '{}');
+                        const logStatus = button.getAttribute('data-log-status') || 'success';
+
+                        // Update status badge
+                        const statusBadge = modalBody.querySelector('.badge');
+                        if (statusBadge) {
+                            statusBadge.className = `badge bg-${logStatus === 'success' ? 'success' : (logStatus === 'warning' ? 'warning' : 'danger')}`;
+                            statusBadge.textContent = logStatus;
+                        }
+
+                        // Update JSON displays
+                        document.getElementById('log-details-json').textContent =
+                            Object.keys(logDetails).length > 0 ?
+                                JSON.stringify(logDetails, null, 4) :
+                                'No additional details available';
+
+                        document.getElementById('log-before-json').textContent =
+                            Object.keys(logChangesBefore).length > 0 ?
+                                JSON.stringify(logChangesBefore, null, 4) :
+                                'No before state recorded';
+
+                        document.getElementById('log-after-json').textContent =
+                            Object.keys(logChangesAfter).length > 0 ?
+                                JSON.stringify(logChangesAfter, null, 4) :
+                                'No after state recorded';
+                    } catch (error) {
+                        console.error('Error parsing log details:', error);
+                        document.getElementById('log-details-json').textContent = 'Error loading details';
+                        document.getElementById('log-before-json').textContent = 'Error loading details';
+                        document.getElementById('log-after-json').textContent = 'Error loading details';
+                    }
+                });
+            }
+        });
+    </script>

@@ -1,0 +1,109 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-modern.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
+
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>Admin User Management</h1>
+        </div>
+
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i>
+                Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-outline-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-outline-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header users-header">
+                <h2>All Users</h2>
+            </div>
+            <div class="card-body p-4">
+                <% if (users.length===0) { %>
+                    <div class="alert alert-info">No users found</div>
+                    <% } else { %>
+                        <div class="table-responsive">
+                            <table class="table admin-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Admin Status</th>
+                                        <th>Listings</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (const user of users) { %>
+                                        <tr>
+                                            <td>
+                                                <%= user.username %>
+                                            </td>
+                                            <td>
+                                                <%= user.email %>
+                                            </td>
+                                            <td>
+                                                <% if (user.isAdmin) { %>
+                                                    <span class="badge bg-success">Admin</span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-secondary">User</span>
+                                                        <% } %>
+                                            </td>
+                                            <td>
+                                                <%= user.listingCount || 0 %>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <% if (!user.isAdmin) { %>
+                                                        <form action="/admin/users/<%= user._id %>/make-admin"
+                                                            method="POST">
+                                                            <button type="submit" class="btn btn-sm btn-success"
+                                                                onclick="return confirm('Are you sure you want to make this user an admin?')">
+                                                                <i class="fas fa-user-shield"></i>
+                                                            </button>
+                                                        </form>
+                                                        <% } else if (user._id.toString() !==currentUser._id.toString())
+                                                            { %>
+                                                            <form action="/admin/users/<%= user._id %>/remove-admin"
+                                                                method="POST">
+                                                                <button type="submit" class="btn btn-sm btn-warning"
+                                                                    onclick="return confirm('Are you sure you want to remove admin privileges?')">
+                                                                    <i class="fas fa-user-minus"></i>
+                                                                </button>
+                                                            </form>
+                                                            <% } %>
+
+                                                                <% if (user._id.toString()
+                                                                    !==currentUser._id.toString()) { %>
+                                                                    <form
+                                                                        action="/admin/users/<%= user._id %>/toggle-status"
+                                                                        method="POST">
+                                                                        <% if (user.isActive !==false) { %>
+                                                                            <button type="submit"
+                                                                                class="btn btn-sm btn-danger"
+                                                                                onclick="return confirm('Are you sure you want to disable this user?')">
+                                                                                <i class="fas fa-user-slash"></i>
+                                                                            </button>
+                                                                            <% } else { %>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-sm btn-info"
+                                                                                    onclick="return confirm('Are you sure you want to enable this user?')">
+                                                                                    <i class="fas fa-user-check"></i>
+                                                                                </button>
+                                                                                <% } %>
+                                                                    </form>
+                                                                    <% } %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>

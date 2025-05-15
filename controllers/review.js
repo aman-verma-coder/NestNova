@@ -2,12 +2,14 @@ const Listing = require("../models/listings.js");
 const Review = require("../models/review.js");
 
 module.exports.postReview = async (req, res) => {
-    let listingid = req.body.id;;
+    let listingid = req.body.id;
     console.log(listingid);
     let listingData = await Listing.findById(listingid);
     console.log(listingData);
     let newReview = new Review(req.body.review);
-    newReview.author = req.user._id
+    newReview.author = req.user._id;
+    newReview.listingId = listingid; // Save reference to the listing
+    newReview.status = "pending"; // Set status as pending by default
     console.log(newReview);
     listingData.review.push(newReview);
     await newReview.save();
@@ -17,7 +19,7 @@ module.exports.postReview = async (req, res) => {
     // // listingData.save();
     // // console.log(listingData);
     // // console.log(listingData);
-    req.flash("success", "New Review Created");
+    req.flash("success", "Thank you for your review! It will be visible after approval.");
     res.redirect(`/listings/${listingid}/show`);
     // res.send("All Ok");
 };

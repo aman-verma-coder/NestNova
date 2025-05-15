@@ -1,14 +1,29 @@
 <% layout("/layout/boilerplate") -%>
-    <link rel="stylesheet" href="/css/admin-dashboard.css">
+    <link rel="stylesheet" href="/css/admin-modern.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
 
     <div class="admin-dashboard-container">
         <div class="admin-dashboard-header">
             <h1>Admin Dashboard</h1>
         </div>
 
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-primary"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-outline-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-outline-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-outline-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
         <div class="card admin-card mb-4">
             <div class="admin-card-header pending-header">
-                <h2>Pending Approvals (<%= pendingListings.length %>)</h2>
+                <h2>Pending Approvals</h2>
+                <div class="pending-counts">
+                    <span class="badge bg-warning">Listings: <%= pendingListings.length %></span>
+                    <span class="badge bg-warning">Reviews: <%= pendingReviewsCount %></span>
+                    <span class="badge bg-warning">Bookings: <%= pendingBookingsCount %></span>
+                </div>
             </div>
             <div class="card-body p-4">
                 <% if (pendingListings.length===0) { %>

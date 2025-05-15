@@ -1,3 +1,4 @@
+/* Custom fixes for star ratings */
 .card-text.starability-result {
     /* Fixed width for exactly 5 stars */
     width: 150px !important;
@@ -12,6 +13,33 @@
     max-width: 150px !important;
     background-repeat: repeat-x;
     background-size: 30px auto;
+}
+
+/* Fix for rating stars in review form */
+.starability-heartbeat {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    min-height: 30px !important;
+    width: 150px !important;
+    margin-bottom: 10px !important;
+}
+
+.starability-heartbeat>label {
+    margin: 0 !important;
+    float: none !important;
+}
+
+.starability-heartbeat>input {
+    position: absolute !important;
+    margin-right: -100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .starability-heartbeat {
+        transform-origin: left center !important;
+    }
 }
 
 /* Add this to the head section of your HTML files that use star ratings */

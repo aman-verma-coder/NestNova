@@ -1,0 +1,297 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-modern.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
+    <link rel="stylesheet" href="/css/admin-analytics.css">
+
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>
+                <%= reportType.charAt(0).toUpperCase() + reportType.slice(1) %> Report
+            </h1>
+        </div>
+
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i>
+                Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-outline-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-outline-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-outline-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header">
+                <h2>
+                    <%= reportType.charAt(0).toUpperCase() + reportType.slice(1) %> Report
+                </h2>
+                <div class="header-actions">
+                    <button class="btn btn-sm btn-outline-primary" id="export-csv">
+                        <i class="fas fa-file-csv me-1"></i> Export CSV
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary ms-2" id="print-report">
+                        <i class="fas fa-print me-1"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <% if (reportType==='listings' ) { %>
+                    <!-- Listings Report -->
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="listings-report-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                    <th>Category</th>
+                                    <th>Owner</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% reportData.listings.forEach(listing=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= listing.title %>
+                                        </td>
+                                        <td>
+                                            <%= listing.location %>
+                                        </td>
+                                        <td>$<%= listing.price.toFixed(2) %>
+                                        </td>
+                                        <td>
+                                            <%= listing.category %>
+                                        </td>
+                                        <td>
+                                            <%= listing.owner ? listing.owner.username : 'Unknown' %>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="badge bg-<%= listing.status === 'approved' ? 'success' : (listing.status === 'pending' ? 'warning' : 'danger') %>">
+                                                <%= listing.status %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <% } else if (reportType==='bookings' ) { %>
+                        <!-- Bookings Report -->
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="bookings-report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Listing</th>
+                                        <th>User</th>
+                                        <th>Check In</th>
+                                        <th>Check Out</th>
+                                        <th>Guests</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% reportData.bookings.forEach(booking=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= booking.listing ? booking.listing.title : 'Unknown' %>
+                                            </td>
+                                            <td>
+                                                <%= booking.user ? booking.user.username : 'Unknown' %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(booking.checkIn).toLocaleDateString() %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(booking.checkOut).toLocaleDateString() %>
+                                            </td>
+                                            <td>
+                                                <%= booking.guests %>
+                                            </td>
+                                            <td>$<%= booking.totalPrice.toFixed(2) %>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge bg-<%= booking.status === 'confirmed' ? 'success' : (booking.status === 'pending' ? 'warning' : (booking.status === 'completed' ? 'info' : 'danger')) %>">
+                                                    <%= booking.status %>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <% } else if (reportType==='users' ) { %>
+                            <!-- Users Report -->
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="users-report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Admin</th>
+                                            <th>Status</th>
+                                            <th>Joined</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% reportData.users.forEach(user=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= user.username %>
+                                                </td>
+                                                <td>
+                                                    <%= user.email %>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="badge bg-<%= user.isAdmin ? 'primary' : 'secondary' %>">
+                                                        <%= user.isAdmin ? 'Yes' : 'No' %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-<%= user.isActive ? 'success' : 'danger' %>">
+                                                        <%= user.isActive ? 'Active' : 'Inactive' %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <%= new Date(user._id.getTimestamp()).toLocaleDateString() %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <% } else if (reportType==='revenue' ) { %>
+                                <!-- Revenue Report -->
+                                <div class="row mb-4">
+                                    <div class="col-md-4">
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <h5 class="card-title">Total Revenue</h5>
+                                                <h2 class="mb-0">$<%= reportData.totalRevenue.toFixed(2) %>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <canvas id="revenueChart" width="400" height="200"></canvas>
+                                    </div>
+                                </div>
+
+                                <h4 class="mb-3">Revenue by Month</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="revenue-report-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Month</th>
+                                                <th>Revenue</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% Object.entries(reportData.revenueByMonth).forEach(([month, amount])=> {
+                                                %>
+                                                <tr>
+                                                    <td>
+                                                        <%= month %>
+                                                    </td>
+                                                    <td>$<%= amount.toFixed(2) %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <h4 class="mb-3 mt-4">Completed Bookings</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Listing</th>
+                                                <th>User</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% reportData.bookings.forEach(booking=> { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= booking.listing ? booking.listing.title : 'Unknown' %>
+                                                    </td>
+                                                    <td>
+                                                        <%= booking.user ? booking.user.username : 'Unknown' %>
+                                                    </td>
+                                                    <td>
+                                                        <%= new Date(booking.createdAt).toLocaleDateString() %>
+                                                    </td>
+                                                    <td>$<%= booking.totalPrice.toFixed(2) %>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Export to CSV functionality
+            document.getElementById('export-csv').addEventListener('click', function () {
+                alert('Export to CSV functionality will be implemented');
+            });
+
+            // Print functionality
+            document.getElementById('print-report').addEventListener('click', function () {
+                window.print();
+            });
+
+        // Revenue chart (only for revenue report)
+        <% if (reportType === 'revenue') { %>
+            const months = [];
+                const revenues = [];
+
+            <% Object.entries(reportData.revenueByMonth).forEach(([month, amount]) => { %>
+                    months.push('<%= month %>');
+                    revenues.push(<%= amount %>);
+            <% }) %>
+
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+                const revenueChart = new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Revenue by Month',
+                            data: revenues,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function (value) {
+                                        return '$' + value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+        <% } %>
+    });
+    </script>

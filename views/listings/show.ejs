@@ -154,14 +154,18 @@
                                                         <p class="card-subtitle mb-2 text-body-secondary">
                                                             <%= review.comment %>
                                                         </p>
-                                                        <form method="post"
-                                                            action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
-                                                            <input type="hidden" name="id" value="<%= showData.id %>">
-                                                            <input type="hidden" name="reviewid"
-                                                                value="<%= review.id %>">
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-danger mb-3">Delete</button>
-                                                        </form>
+                                                        <% if (currentUser && (currentUser._id.equals(review.author._id)
+                                                            || currentUser.isAdmin)) { %>
+                                                            <form method="post"
+                                                                action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
+                                                                <input type="hidden" name="id"
+                                                                    value="<%= showData.id %>">
+                                                                <input type="hidden" name="reviewid"
+                                                                    value="<%= review.id %>">
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-danger mb-3">Delete</button>
+                                                            </form>
+                                                            <% } %>
                                                     </div>
                                                 </div>
                                                 <% } %>

@@ -22,6 +22,15 @@ const reviewSchema = new schema({
         type: schema.Types.ObjectId,
         ref: "User"
     },
+    listingId: {
+        type: schema.Types.ObjectId,
+        ref: "Listing"
+    },
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    }
 });
 
 const Review = mongoose.model("Review", reviewSchema);

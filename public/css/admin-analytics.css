@@ -1,0 +1,108 @@
+/* Analytics Dashboard Styles */
+
+/* Summary Cards */
+.summary-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card .card-body {
+    padding: 1.5rem;
+}
+
+.summary-card h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.summary-card .card-title {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+/* Chart containers */
+.admin-card canvas {
+    max-width: 100%;
+}
+
+/* Report buttons */
+.admin-card .btn-outline-primary {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.admin-card .btn-outline-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header actions */
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+/* Audit logs */
+.audit-log-filters {
+    margin-bottom: 1.5rem;
+}
+
+/* Report tables */
+#listings-report-table,
+#bookings-report-table,
+#users-report-table,
+#revenue-report-table {
+    width: 100%;
+}
+
+/* Print styles */
+@media print {
+
+    .admin-dashboard-nav,
+    .header-actions,
+    footer {
+        display: none !important;
+    }
+
+    .admin-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd;
+    }
+
+    .admin-dashboard-container {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-dashboard-nav .btn {
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-card h2 {
+        font-size: 2rem;
+    }
+
+    .admin-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-actions {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}

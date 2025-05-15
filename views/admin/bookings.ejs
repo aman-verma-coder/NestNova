@@ -1,0 +1,113 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/admin-modern.css">
+    <link rel="stylesheet" href="/css/admin-navbar.css">
+
+    <div class="admin-dashboard-container">
+        <div class="admin-dashboard-header">
+            <h1>Booking Management</h1>
+        </div>
+
+        <div class="admin-dashboard-nav mb-4">
+            <a href="/admin/dashboard" class="btn btn-outline-primary"><i class="fas fa-tachometer-alt"></i>
+                Dashboard</a>
+            <a href="/admin/reviews" class="btn btn-outline-primary"><i class="fas fa-star"></i> Reviews</a>
+            <a href="/admin/bookings" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Bookings</a>
+            <a href="/admin/users" class="btn btn-outline-primary"><i class="fas fa-users"></i> Users</a>
+            <a href="/admin/analytics" class="btn btn-outline-primary"><i class="fas fa-chart-line"></i> Analytics</a>
+            <a href="/admin/audit-logs" class="btn btn-outline-primary"><i class="fas fa-history"></i> Audit Logs</a>
+        </div>
+
+        <div class="card admin-card mb-4">
+            <div class="admin-card-header">
+                <h2>All Bookings</h2>
+            </div>
+            <div class="card-body p-4">
+                <% if (bookings.length===0) { %>
+                    <div class="alert alert-info">No bookings found</div>
+                    <% } else { %>
+                        <div class="table-responsive">
+                            <table class="table admin-table bookings-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Listing</th>
+                                        <th>User</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>Guests</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (const booking of bookings) { %>
+                                        <tr
+                                            class="<%= booking.status === 'pending' ? 'table-warning' : (booking.status === 'confirmed' ? 'table-success' : (booking.status === 'cancelled' ? 'table-danger' : 'table-info')) %>">
+                                            <td>
+                                                <%= booking._id.toString().substring(0, 8) %>...
+                                            </td>
+                                            <td>
+                                                <%= booking.listing ? booking.listing.title : 'Unknown' %>
+                                            </td>
+                                            <td>
+                                                <%= booking.user ? booking.user.username : 'Unknown' %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(booking.checkIn).toLocaleDateString() %>
+                                            </td>
+                                            <td>
+                                                <%= new Date(booking.checkOut).toLocaleDateString() %>
+                                            </td>
+                                            <td>
+                                                <%= booking.guests %>
+                                            </td>
+                                            <td>$<%= booking.totalPrice.toFixed(2) %>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge <%= booking.status === 'pending' ? 'bg-warning' : (booking.status === 'confirmed' ? 'bg-success' : (booking.status === 'cancelled' ? 'bg-danger' : 'bg-info')) %>">
+                                                    <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1)
+                                                        %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <%= new Date(booking.createdAt).toLocaleDateString() %>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <% if (booking.status==='pending' ) { %>
+                                                        <form action="/admin/bookings/<%= booking._id %>/confirm"
+                                                            method="POST" class="d-inline">
+                                                            <button class="btn btn-sm btn-success me-1"
+                                                                type="submit">Confirm</button>
+                                                        </form>
+                                                        <% } %>
+                                                            <% if (booking.status==='pending' ||
+                                                                booking.status==='confirmed' ) { %>
+                                                                <form action="/admin/bookings/<%= booking._id %>/cancel"
+                                                                    method="POST" class="d-inline">
+                                                                    <button class="btn btn-sm btn-danger me-1"
+                                                                        type="submit">Cancel</button>
+                                                                </form>
+                                                                <% } %>
+                                                                    <% if (booking.status==='confirmed' ) { %>
+                                                                        <form
+                                                                            action="/admin/bookings/<%= booking._id %>/complete"
+                                                                            method="POST" class="d-inline">
+                                                                            <button class="btn btn-sm btn-info"
+                                                                                type="submit">Complete</button>
+                                                                        </form>
+                                                                        <% } %>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>

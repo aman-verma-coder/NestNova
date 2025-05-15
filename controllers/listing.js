@@ -73,7 +73,12 @@ module.exports.index = async (req, res) => {
 module.exports.show = async (req, res) => {
     let { id } = req.params;
     let showData = await Listing.findById(id)
-        .populate({ path: "review", populate: { path: "author" } })
+        .populate({
+            path: "review",
+            // Only show approved reviews to users
+            match: { status: "approved" },
+            populate: { path: "author" }
+        })
         .populate("owner");
     // console.log(`Show Data${showData}`);
     if (!showData) {

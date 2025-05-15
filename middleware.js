@@ -12,6 +12,13 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash("error", "You must be signed in");
         return res.redirect("/login");
     }
+
+    // Check if user is active
+    if (req.user.isActive === false) {
+        req.flash("error", "Your account has been disabled. Please contact an administrator.");
+        return res.redirect("/logout");
+    }
+
     next();
 };
 
