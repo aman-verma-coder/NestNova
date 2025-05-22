@@ -248,7 +248,91 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Export to CSV functionality
             document.getElementById('export-csv').addEventListener('click', function () {
-                alert('Export to CSV functionality will be implemented');
+                const reportType = '<%= reportType %>';
+                let csvContent = '';
+                let filename = reportType + '_report.csv';
+
+                // Function to convert table data to CSV
+                function tableToCSV(tableId) {
+                    const table = document.getElementById(tableId);
+                    if (!table) return '';
+
+                    const rows = table.querySelectorAll('tr');
+                    let csv = [];
+
+                    // Process header row
+                    const headers = [];
+                    const headerCells = rows[0].querySelectorAll('th');
+                    headerCells.forEach(cell => {
+                        headers.push('"' + cell.textContent.trim() + '"');
+                    });
+                    csv.push(headers.join(','));
+
+                    // Process data rows
+                    for (let i = 1; i < rows.length; i++) {
+                        const row = [];
+                        const cells = rows[i].querySelectorAll('td');
+                        cells.forEach(cell => {
+                            // Remove any HTML tags and trim the content
+                            const text = cell.textContent.trim().replace(/\n/g, ' ');
+                            row.push('"' + text + '"');
+                        });
+                        csv.push(row.join(','));
+                    }
+
+                    return csv.join('\n');
+                }
+
+                // Function to download CSV
+                function downloadCSV(csvContent, filename) {
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const link = document.createElement('a');
+                    const url = URL.createObjectURL(blob);
+
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', filename);
+                    link.style.visibility = 'hidden';
+
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+
+                // Generate CSV based on report type
+                if (reportType === 'listings') {
+                    csvContent = tableToCSV('listings-report-table');
+                    filename = 'listings_report.csv';
+                } else if (reportType === 'bookings') {
+                    csvContent = tableToCSV('bookings-report-table');
+                    filename = 'bookings_report.csv';
+                } else if (reportType === 'users') {
+                    csvContent = tableToCSV('users-report-table');
+                    filename = 'users_report.csv';
+                } else if (reportType === 'revenue') {
+                    // For revenue, we have multiple tables, so we'll combine them
+                    let revenueByMonth = tableToCSV('revenue-report-table');
+
+                    // Get the completed bookings table (it doesn't have an ID)
+                    const completedBookingsTable = document.querySelectorAll('.table-responsive table')[1];
+                    if (completedBookingsTable) {
+                        completedBookingsTable.id = 'completed-bookings-table'; // Add temporary ID
+                        let completedBookings = tableToCSV('completed-bookings-table');
+
+                        // Combine both tables with a separator
+                        csvContent = 'REVENUE BY MONTH\n' + revenueByMonth + '\n\nCOMPLETED BOOKINGS\n' + completedBookings;
+                        filename = 'revenue_report.csv';
+                    } else {
+                        csvContent = revenueByMonth;
+                        filename = 'revenue_by_month.csv';
+                    }
+                }
+
+                // Download the CSV file
+                if (csvContent) {
+                    downloadCSV(csvContent, filename);
+                } else {
+                    alert('No data available for export');
+                }
             });
 
             // Print functionality

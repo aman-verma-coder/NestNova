@@ -1,0 +1,500 @@
+/**
+ * NestNova Advanced Animation Styles
+ * Provides enhanced animation and interactive effect styles
+ */
+
+/* Page Transition Effects */
+body.page-transitions {
+    transition: opacity 0.3s ease;
+}
+
+body.page-exit {
+    opacity: 0;
+}
+
+body.page-enter {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ripple Effect */
+.ripple-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: ripple 0.6s linear;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Form Focus Animation */
+.form-group {
+    position: relative;
+}
+
+.input-focused label {
+    color: #fe424d;
+    transform: translateY(-5px) scale(0.9);
+    transform-origin: left top;
+}
+
+.form-group label {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Scroll Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.fade-up-animation {
+    transform: translateY(30px);
+}
+
+.fade-in-animation {
+    opacity: 0;
+}
+
+.slide-in-animation {
+    transform: translateX(-30px);
+}
+
+.scale-in-animation {
+    transform: scale(0.9);
+}
+
+/* Animated Backgrounds */
+.animated-gradient-bg {
+    background: linear-gradient(-45deg, #fe424d, #ff6b6b, #4a89dc, #5d9cec);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.particle-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(254, 66, 77, 0.1);
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+
+    25% {
+        transform: translateY(-30px) translateX(30px);
+    }
+
+    50% {
+        transform: translateY(-60px) translateX(0);
+    }
+
+    75% {
+        transform: translateY(-30px) translateX(-30px);
+    }
+
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(254, 66, 77, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+    z-index: 9999;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: #fe424d;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+    z-index: 9999;
+}
+
+.cursor-hover {
+    width: 60px;
+    height: 60px;
+    border-color: rgba(254, 66, 77, 0.8);
+    background-color: rgba(254, 66, 77, 0.1);
+}
+
+.cursor-dot-hover {
+    width: 12px;
+    height: 12px;
+}
+
+.cursor-click {
+    width: 30px;
+    height: 30px;
+    border-color: rgba(254, 66, 77, 1);
+    background-color: rgba(254, 66, 77, 0.2);
+}
+
+.cursor-dot-click {
+    width: 14px;
+    height: 14px;
+    background-color: rgba(254, 66, 77, 1);
+}
+
+/* Button Hover Effects */
+.btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease !important;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Card Hover Effects */
+.card,
+.listing-card {
+    transition: transform 0.5s ease, box-shadow 0.5s ease !important;
+}
+
+.card:hover,
+.listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Hover Effects */
+.hover-zoom {
+    overflow: hidden;
+}
+
+.hover-zoom img {
+    transition: transform 0.5s ease;
+}
+
+.hover-zoom:hover img {
+    transform: scale(1.1);
+}
+
+/* Animated Icons */
+.animated-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.animated-icon:hover {
+    transform: scale(1.2);
+    color: #fe424d;
+}
+
+/* Notification Badge Animation */
+.badge {
+    transition: transform 0.3s ease;
+}
+
+.badge:not(:empty) {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Loading Spinner Animation */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(254, 66, 77, 0.1);
+    border-radius: 50%;
+    border-top-color: #fe424d;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animated Progress Bar */
+.progress-bar {
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Animated Checkboxes and Radio Buttons */
+.form-check-input {
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-check-input:checked {
+    transform: scale(1.1);
+}
+
+/* Tooltip Animation */
+.tooltip {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.tooltip.show {
+    animation: tooltipFadeIn 0.3s ease forwards;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Animation */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Accordion Animation */
+.accordion-button {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accordion-collapse {
+    transition: height 0.5s ease;
+}
+
+/* Tab Animation */
+.nav-tabs .nav-link {
+    position: relative;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-tabs .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #fe424d;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-tabs .nav-link.active::after,
+.nav-tabs .nav-link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Animated List Items */
+.animated-list li {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.animated-list li:hover {
+    transform: translateX(5px);
+}
+
+/* Animated Breadcrumbs */
+.breadcrumb-item {
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.breadcrumb-item:hover {
+    transform: translateY(-2px);
+    color: #fe424d;
+}
+
+/* Animated Pagination */
+.page-link {
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.page-link:hover {
+    transform: scale(1.1);
+}
+
+/* Animated Search Bar */
+.search-bar {
+    transition: width 0.5s ease, box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Animated Dropdown */
+.dropdown-menu {
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transform-origin: top center;
+}
+
+.dropdown-menu.show {
+    animation: dropdownFadeIn 0.3s ease forwards;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scaleY(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+/* Animated Alerts */
+.alert {
+    animation: alertSlideIn 0.5s ease forwards;
+}
+
+@keyframes alertSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animated Badges */
+.badge {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+}
+
+/* Animated Carousel */
+.carousel-item {
+    transition: opacity 0.5s ease;
+}
+
+/* Animated Testimonials */
+.testimonial {
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}

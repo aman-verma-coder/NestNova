@@ -16,11 +16,14 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
+const { isLoggedIn } = require("./middleware.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const footerRouter = require("./routes/footer.js");
 const adminRouter = require("./routes/admin.js");
+const notificationRouter = require("./routes/notification.js");
+const wishlistRouter = require("./routes/wishlist.js");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -149,6 +152,8 @@ app.use("/", footerRouter);
 app.use("/", userRouter);
 app.use("/", paymentRoute);
 app.use("/admin", adminRouter);
+app.use("/wishlists", wishlistRouter);
+app.use("/notifications", notificationRouter);
 
 // app.get("/listings", wrapAsync(async (req, res) => {
 //     let allListings = await Listing.find({});
@@ -156,17 +161,35 @@ app.use("/admin", adminRouter);
 // }))
 
 // app.get("/listings/:id/show", wrapAsync(async (req, res) => {
+
+// New Quick Links routes
+app.get('/bookings', isLoggedIn, (req, res) => {
+    res.render('bookings/index');
+});
+
+app.get('/messages', isLoggedIn, (req, res) => {
+    res.render('messages/index');
+});
+
+app.get('/saved', isLoggedIn, (req, res) => {
+    res.render('saved/index');
+});
+
+app.post('/users/change-password', isLoggedIn, (req, res) => {
+    // Password change logic here
+});
 //     let { id } = req.params;
 //     let showData = await Listing.findById(id).populate("review");
 //     console.log(showData);
 //     res.render("listings/show.ejs", { showData });
 // }))
 
-// app.get("/listings/new", (req, res) => {
+// These routes are already defined in the router files
+// app.get("/listings/new", isLoggedIn, (req, res) => {
 //     res.render("listings/newListing.ejs");
 // })
 
-// app.post("/listings/new", validateListing, wrapAsync(async (req, res, next) => {
+// app.post("/listings/new", isLoggedIn, validateListing, wrapAsync(async (req, res, next) => {
 //     const newListing = new Listing(req.body);
 //     await newListing.save();
 //     res.redirect("/listings");
@@ -225,17 +248,29 @@ app.use("/admin", adminRouter);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not found"));
-})
+});
 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
     res.render("error.ejs", { statusCode, message });
-    // res.status(statusCode).send(message);
 });
 
-const server = app.listen(process.env.PORT || 8080, () => {
-    console.log(`Server is listening on port ${server.address().port}`);
-})
+const server = app.listen(port)
+    .on('error', (e) => {
+        if (e.code === 'EADDRINUSE') {
+            console.log(`Port ${port} is busy, trying alternative port`);
+            // Try another port
+            const altPort = parseInt(port) + 1;
+            app.listen(altPort, () => {
+                console.log(`Server is listening on alternative port ${altPort}`);
+            });
+        } else {
+            console.error('Server error:', e);
+        }
+    })
+    .on('listening', () => {
+        console.log(`Server is listening on port ${server.address().port}`);
+    });
 
 module.exports = {
     main,

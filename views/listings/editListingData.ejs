@@ -19,25 +19,23 @@
                                         </div>
                                         <div class="mb-3">
                                                 Original Listing Image: <br>
-                                                <img src="<%= originalImageUrl %>"
-                                                        class="card-img-top show-img" alt="#"
+                                                <img src="<%= originalImageUrl %>" class="card-img-top show-img" alt="#"
                                                         style="width: 25% !important; height:max-content;">
                                                 <!-- <label for="original-image" class="form-label">Image:</label>
-                                                <input type="file" name="image" id="original-image" class="form-control"> -->
+                                        <input type="file" name="image" id="original-image" class="form-control"> -->
                                         </div>
                                         <div class="mb-3">
                                                 <label for="edit-image" class="form-label">Upload New Image:</label>
                                                 <input type="file" name="image" id="edit-image" class="form-control">
                                                 <!-- <textarea name="image" id="edit-image"
-                                                        placeholder="Enter Edited Image URL" class="form-control"
-                                                        required><%= editNeeded.image %></textarea> -->
+                                                placeholder="Enter Edited Image URL" class="form-control"
+                                                required><%= editNeeded.image %></textarea> -->
                                                 <div class="valid-feedback">Image is valid</div>
                                                 <!-- <div class="invalid-feedback">Invalid Image Link / URL</div> -->
                                         </div>
                                         <div class="row">
                                                 <div class="mb-3 col-md-4">
-                                                        <label for="price" id="edit-price"
-                                                                class="form-label">Price:</label>
+                                                        <label for="edit-price" class="form-label">Price:</label>
                                                         <input type="number" name="price" id="edit-price"
                                                                 placeholder="Enter Edited Price"
                                                                 value="<%= editNeeded.price %>" class="form-control"
@@ -62,6 +60,56 @@
                                                         value="<%= editNeeded.country %>" class="form-control" required>
                                                 <div class="valid-feedback">Country is valid</div>
                                                 <div class="invalid-feedback">Invalid Country</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                                <label class="form-label">Amenities:</label>
+                                                <div class="row ps-3">
+                                                        <div class="col-md-4 mb-2">
+                                                                <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                value="Wifi" id="wifi" name="amenities"
+                                                                                <%
+                                                                                if(editNeeded.amenities?.includes('Wifi')) { %>checked<% } %>>
+                                                                                <label class="form-check-label"
+                                                                                        for="wifi">Wifi</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-2">
+                                                                <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                value="Kitchen" id="kitchen"
+                                                                                name="amenities" <%
+                                                                                if(editNeeded.amenities?.includes('Kitchen')) { %>checked<% } %>>
+                                                                                <label class="form-check-label"
+                                                                                        for="kitchen">Kitchen</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-2">
+                                                                <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                value="Air Conditioning" id="ac"
+                                                                                name="amenities" <%
+                                                                                if(editNeeded.amenities?.includes('Air Conditioning')) { %>checked<% } %>><label class="form-check-label" for="ac">Air Conditioning</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-2">
+                                                                <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                value="Free Parking" id="parking"
+                                                                                name="amenities" <%
+                                                                                if(editNeeded.amenities?.includes('Free Parking')) { %>checked<% } %>><label class="form-check-label" for="parking">Free Parking</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-2">
+                                                                <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                                value="Swimming Pool" id="pool"
+                                                                                name="amenities" <%
+                                                                                if(editNeeded.amenities?.includes('Swimming Pool')) { %>checked<% } %>><label class="form-check-label" for="pool">Swimming Pool</label>
+                                                                </div>
+                                                        </div>
+                                                </div>
                                         </div>
                                         <button class="btn btn-dark edit-btn mt-4 mb-4">Save</button>
                                 </form>

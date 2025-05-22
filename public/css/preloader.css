@@ -1,0 +1,172 @@
+/**
+ * Page Preloader Styles
+ * Displays an animated loading screen while the page content loads
+ */
+
+#main-preloader.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: none;
+    /* Initially hidden, controlled by JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Preloader Content Container */
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Spinner Animation */
+.preloader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(254, 66, 77, 0.1);
+    border-radius: 50%;
+    border-top-color: #fe424d;
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Pulse Animation for the Logo */
+.preloader-logo {
+    position: relative;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.preloader-logo svg {
+    width: 80px;
+    height: 80px;
+    fill: #fe424d;
+}
+
+/* NestNova Text Animation */
+.preloader-text {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.text-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    color: #fe424d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s forwards, shimmer 2s ease-in-out 1s infinite;
+    background: linear-gradient(90deg, #fe424d, #ff7b85, #fe424d);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-letter:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.text-letter:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.text-letter:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.text-letter:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.text-letter:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.text-letter:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.text-letter:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.text-letter:nth-child(8) {
+    animation-delay: 0.8s;
+}
+
+/* Keyframes Animations */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Fade-in animation for content */
+.content-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.content-container.visible {
+    opacity: 1;
+}

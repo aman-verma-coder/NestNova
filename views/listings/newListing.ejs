@@ -65,11 +65,49 @@
                             <option value="Farms">Farms</option>
                             <option value="Arctic">Arctic</option>
                         </select>
-                        <!-- <label for="country" class="form-label">Country</label>
-                        <input type="text" id="country" name="country" placeholder="Enter Country" class="form-control"
-                            required> -->
-                        <div class="valid-feedback">Country is valid</div>
-                        <div class="invalid-feedback">Invalid Country</div>
+                        <div class="valid-feedback">Category is valid</div>
+                        <div class="invalid-feedback">Invalid Category</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Amenities:</label>
+                        <div class="row ps-3">
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Wifi" id="wifi"
+                                        name="amenities">
+                                    <label class="form-check-label" for="wifi">Wifi</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Kitchen" id="kitchen"
+                                        name="amenities">
+                                    <label class="form-check-label" for="kitchen">Kitchen</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Air Conditioning" id="ac"
+                                        name="amenities">
+                                    <label class="form-check-label" for="ac">Air Conditioning</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Free Parking" id="parking"
+                                        name="amenities">
+                                    <label class="form-check-label" for="parking">Free Parking</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Swimming Pool" id="pool"
+                                        name="amenities">
+                                    <label class="form-check-label" for="pool">Swimming Pool</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button class="btn btn-primary add-btn mt-4 mb-4">Submit</button>
                 </form>

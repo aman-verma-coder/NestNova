@@ -3,7 +3,10 @@ const router = express.Router();
 const User = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const passport = require("passport");
-const { saveRedirectUrl } = require("../middleware.js");
+const { saveRedirectUrl, isLoggedIn } = require("../middleware.js");
+const multer = require("multer");
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 const userController = require("../controllers/user.js");
 
 router
@@ -21,5 +24,17 @@ router
         }), userController.loginPost);
 
 router.get("/logout", userController.logoutPost);
+
+// Profile routes
+router.get("/profile", isLoggedIn, wrapAsync(userController.renderProfile));
+router.post("/users/update-profile", isLoggedIn, upload.single('avatar'), wrapAsync(userController.updateProfile));
+router.get("/users/bookings", isLoggedIn, wrapAsync(userController.renderBookings));
+// Public profile route
+router.get("/users/:username", wrapAsync(userController.viewUserProfile));
+// Change password route
+router.post("/users/change-password", isLoggedIn, wrapAsync(userController.changePassword));
+
+// Update notification preferences
+router.post("/users/update-notifications", isLoggedIn, wrapAsync(userController.updateNotifications));
 
 module.exports = router;

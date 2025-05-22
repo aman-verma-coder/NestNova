@@ -22,18 +22,18 @@
                     <% if (!currentUser) { %>
                         <div class="nav-item dropdown">
                             <button class="btn btn-success dropdown-toggle" type="button" id="userDropdown"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" title="Account options">
                                 <i class="fas fa-user-circle"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="/signup"><i class="fas fa-user-plus"></i> Sign up</a>
+                            <ul class="dropdown-menu dropdown-menu-end animated-dropdown" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="/signup" data-bs-toggle="tooltip" title="Create a new account"><i class="fas fa-user-plus"></i> Sign up</a>
                                 </li>
-                                <li><a class="dropdown-item" href="/login"><i class="fas fa-sign-in-alt"></i> Log in</a>
+                                <li><a class="dropdown-item" href="/login" data-bs-toggle="tooltip" title="Sign in to your account"><i class="fas fa-sign-in-alt"></i> Log in</a>
                                 </li>
-                                <li><a class="dropdown-item" href="/listings/new"><i class="fas fa-plus"></i> Add New
+                                <li><a class="dropdown-item" href="/listings/new" data-bs-toggle="tooltip" title="List your property"><i class="fas fa-plus"></i> Add New
                                         Home</a></li>
                                 <li><a class="dropdown-item"
-                                        href="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/11/18/17/20241118172958-D0CU3F6N.json"><i
+                                        href="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/11/18/17/20241118172958-D0CU3F6N.json" data-bs-toggle="tooltip" title="Get help from our AI assistant"><i
                                             class="fas fa-robot"></i> Chat with AI</a></li>
                             </ul>
                         </div>
@@ -50,6 +50,11 @@
                                                         class="fas fa-tachometer-alt"></i>
                                                     Admin Dashboard</a></li>
                                             <% } %>
+                                                <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i>
+                                                        My Profile</a></li>
+                                                <li><a class="dropdown-item" href="/wishlists"><i
+                                                            class="fas fa-heart"></i>
+                                                        My Wishlists</a></li>
                                                 <li><a class="dropdown-item" href="/logout"><i
                                                             class="fas fa-sign-out-alt"></i>
                                                         Log out</a></li>

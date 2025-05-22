@@ -1,0 +1,136 @@
+<% layout("/layout/boilerplate") -%>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <h1 class="h3 mb-0">Notification Settings</h1>
+                        <a href="/notifications" class="btn btn-outline-primary btn-sm">Back to Notifications</a>
+                    </div>
+                    <div class="card-body">
+                        <form action="/notifications/settings" method="POST">
+                            <h5 class="mb-3">Email Notifications</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications"
+                                    name="emailNotifications" <%=currentUser.notificationPreferences.emailNotifications
+                                    ? 'checked' : '' %>>
+                                <label class="form-check-label" for="emailNotifications">Receive Email
+                                    Notifications</label>
+                                <small class="form-text text-muted d-block">Get important notifications delivered to
+                                    your email address.</small>
+                            </div>
+
+                            <hr class="my-4">
+                            <h5 class="mb-3">Notification Types</h5>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="bookingUpdates"
+                                    name="bookingUpdates" <%=currentUser.notificationPreferences.bookingUpdates
+                                    ? 'checked' : '' %>>
+                                <label class="form-check-label" for="bookingUpdates">Booking Updates</label>
+                                <small class="form-text text-muted d-block">Notifications about your bookings, including
+                                    confirmations, changes, and reminders.</small>
+                            </div>
+
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="reviewNotifications"
+                                    name="reviewNotifications"
+                                    <%=currentUser.notificationPreferences.reviewNotifications ? 'checked' : '' %>>
+                                <label class="form-check-label" for="reviewNotifications">Review Notifications</label>
+                                <small class="form-text text-muted d-block">Get notified when someone leaves a review on
+                                    your listings or responds to your reviews.</small>
+                            </div>
+
+                            <div class="form-check form-switch mb-4 notification-toggle">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-envelope me-2 text-primary"></i>
+                                    <input class="form-check-input" type="checkbox" id="messageNotifications"
+                                        name="messageNotifications" data-bs-toggle="tooltip"
+                                        title="Toggle message notifications"
+                                        <%=currentUser.notificationPreferences.messageNotifications ? 'checked' : '' %>>
+                                    <label class="form-check-label ms-2 fw-bold" for="messageNotifications">Message
+                                        Notifications</label>
+                                </div>
+                                <small class="form-text text-muted d-block ms-4">Get notified when you receive new
+                                    messages
+                                    from other users.</small>
+                                <div class="notification-preview ms-4 mt-2 p-2 rounded"
+                                    style="background-color: #f8f9fa; display: none;">
+                                    <div class="d-flex align-items-center">
+                                        <div class="notification-icon bg-primary text-white rounded-circle p-2 me-2">
+                                            <i class="fas fa-envelope"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0"><strong>New Message</strong></p>
+                                            <p class="mb-0 text-muted">You have received a new message from User123</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check form-switch mb-4 notification-toggle">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-bell me-2 text-warning"></i>
+                                    <input class="form-check-input" type="checkbox" id="systemNotifications"
+                                        name="systemNotifications" data-bs-toggle="tooltip"
+                                        title="Toggle system notifications"
+                                        <%=currentUser.notificationPreferences.systemNotifications ? 'checked' : '' %>>
+                                    <label class="form-check-label ms-2 fw-bold" for="systemNotifications">System
+                                        Notifications</label>
+                                </div>
+                                <small class="form-text text-muted d-block ms-4">Important updates about your account
+                                    and the
+                                    platform.</small>
+                                <div class="notification-preview ms-4 mt-2 p-2 rounded"
+                                    style="background-color: #f8f9fa; display: none;">
+                                    <div class="d-flex align-items-center">
+                                        <div class="notification-icon bg-warning text-white rounded-circle p-2 me-2">
+                                            <i class="fas fa-bell"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0"><strong>System Update</strong></p>
+                                            <p class="mb-0 text-muted">Your account settings have been updated</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+                            <h5 class="mb-3">Marketing Communications</h5>
+
+                            <div class="form-check form-switch mb-4 notification-toggle">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-paper-plane me-2 text-success"></i>
+                                    <input class="form-check-input" type="checkbox" id="marketingEmails"
+                                        name="marketingEmails" data-bs-toggle="tooltip" title="Toggle marketing emails"
+                                        <%=currentUser.notificationPreferences.marketingEmails ? 'checked' : '' %>>
+                                    <label class="form-check-label ms-2 fw-bold" for="marketingEmails">Marketing Emails</label>
+                                </div>
+                                <small class="form-text text-muted d-block ms-4">Receive promotional offers, newsletters, and
+                                    updates about new features.</small>
+                                <div class="notification-preview ms-4 mt-2 p-2 rounded" style="background-color: #f8f9fa; display: none;">
+                                    <div class="d-flex align-items-center">
+                                        <div class="notification-icon bg-success text-white rounded-circle p-2 me-2">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0"><strong>Special Offer</strong></p>
+                                            <p class="mb-0 text-muted">Discover new listings in your favorite locations</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Preferences</button>
+                            </div>
+                            
+                            <!-- Include notification settings script -->
+                            <script src="/Js/notification-settings.js"></script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

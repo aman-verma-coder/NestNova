@@ -42,6 +42,11 @@ const listingSchemes = new schema({
         enum: ["Trending", "Rooms", "Bed & Breakfast", "Beaches", "Pools", "Iconic Cities", "Mountains", "Castles", "Camping", "Farms", "Arctic"],
         required: true
     },
+    amenities: {
+        type: [String],
+        enum: ["Wifi", "Kitchen", "Air Conditioning", "Free Parking", "Swimming Pool"],
+        default: []
+    },
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],

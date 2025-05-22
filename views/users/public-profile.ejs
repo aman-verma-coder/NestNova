@@ -1,0 +1,159 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/public-profile.css">
+
+    <div class="container mt-5 mb-5 profile-container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-9">
+                <div class="card mb-4 profile-header">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-4">
+                            <% if (profileUser.avatar) { %>
+                                <img src="<%= profileUser.avatar %>" alt="<%= profileUser.username %>'s avatar"
+                                    class="rounded-circle me-3 profile-avatar"
+                                    style="width: 80px; height: 80px; object-fit: cover;">
+                                <% } else { %>
+                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-3 profile-avatar"
+                                        style="width: 80px; height: 80px;">
+                                        <i class="fas fa-user fa-2x text-white"></i>
+                                    </div>
+                                    <% } %>
+                                        <div>
+                                            <h2 class="mb-1 profile-username">
+                                                <%= profileUser.username %>
+                                            </h2>
+                                            <p class="text-muted mb-0">
+                                                <i class="fas fa-user-circle me-1"></i> Member since <%=
+                                                    profileUser.createdAt ? new
+                                                    Date(profileUser.createdAt).toLocaleDateString() : 'N/A' %>
+                                            </p>
+                                        </div>
+                        </div>
+
+                        <% if (profileUser.bio) { %>
+                            <div class="mb-4 profile-bio">
+                                <h5>About</h5>
+                                <p>
+                                    <%= profileUser.bio %>
+                                </p>
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+
+                <!-- User Statistics Section -->
+                <div class="card mb-4 user-stats-section">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>User Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-3 mb-md-0">
+                                <div class="stat-item">
+                                    <div class="stat-icon mb-2">
+                                        <i class="fas fa-home fa-2x text-primary"></i>
+                                    </div>
+                                    <h3 class="stat-value">
+                                        <%= listings ? listings.length : 0 %>
+                                    </h3>
+                                    <p class="stat-label">Total Listings</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center mb-3 mb-md-0">
+                                <div class="stat-item">
+                                    <div class="stat-icon mb-2">
+                                        <i class="fas fa-medal fa-2x text-warning"></i>
+                                    </div>
+                                    <h3 class="stat-value">
+                                        <% if (profileUser.createdAt) { %>
+                                            <%= Math.floor((new Date() - new Date(profileUser.createdAt)) / (1000 * 60 *
+                                                60 * 24 * 30)) %>
+                                                <% } else { %>0<% } %>
+                                    </h3>
+                                    <p class="stat-label">Months as Member</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="stat-item">
+                                    <div class="stat-icon mb-2">
+                                        <i class="fas fa-star fa-2x text-success"></i>
+                                    </div>
+                                    <h3 class="stat-value">4.8</h3>
+                                    <p class="stat-label">Avg. Rating</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User's Public Listings -->
+                <div class="card listings-section">
+                    <div class="card-header bg-white listings-header">
+                        <h5 class="mb-0">
+                            <%= profileUser.username %>'s Listings
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (listings && listings.length> 0) { %>
+                            <div class="row row-cols-1 row-cols-md-2 g-4">
+                                <% listings.forEach(listing=> { %>
+                                    <div class="col col-lg-12 col-md-12 row-cols-md-12">
+                                        <div class="card h-100 listing-card">
+                                            <% if (listing.image) { %>
+                                                <img src="<%= listing.image.url %>" alt="<%= listing.title %>"
+                                                    class="card-img-top listing-img"
+                                                    style="height: 200px; object-fit: cover;">
+                                                <% } else { %>
+                                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center listing-img"
+                                                        style="height: 200px;">
+                                                        <i class="fas fa-image fa-3x text-secondary"></i>
+                                                    </div>
+                                                    <% } %>
+                                                        <div class="card-body">
+                                                            <h5 class="card-title listing-title">
+                                                                <%= listing.title %>
+                                                            </h5>
+                                                            <p class="card-text text-muted">
+                                                                <i class="fas fa-map-marker-alt me-1"></i>
+                                                                <%= listing.location %>
+                                                            </p>
+                                                            <p class="card-text listing-price">
+                                                                <strong>₹<%= listing.price %></strong> / night
+                                                            </p>
+                                                            <div class="d-flex justify-content-between">
+                                                                <a href="/listings/<%= listing._id %>"
+                                                                    class="btn btn-primary view-details-btn">
+                                                                    <i class="fas fa-info-circle me-1"></i> View Details
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                            <% } else { %>
+                                <div class="alert alert-info no-listings">
+                                    <i class="fas fa-info-circle me-2"></i> This user doesn't have any public listings
+                                    yet.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-md-3 col-lg-3">
+                <div class="card mb-4 contact-sidebar">
+                    <div class="card-header bg-white contact-header">
+                        <h5 class="mb-0">Contact</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fas fa-envelope me-2"></i> Contact via NestNova</p>
+                        <a href="/listings" class="btn btn-outline-primary w-100 back-btn">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Listings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

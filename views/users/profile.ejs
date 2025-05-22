@@ -1,0 +1,541 @@
+<% layout("/layout/boilerplate") -%>
+    <link rel="stylesheet" href="/css/profile.css">
+
+    <div class="container-fluid mt-4">
+        <div class="row d-flex prodiv">
+            <!-- Profile Sidebar -->
+            <div class="col-md-3 col-lg-3 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <% if(currentUser.avatar) { %>
+                            <img src="<%= currentUser.avatar %>" alt="Profile Picture"
+                                class="rounded-circle img-fluid mb-3"
+                                style="width: 150px; height: 150px; object-fit: cover;">
+                            <% } else { %>
+                                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mx-auto mb-3"
+                                    style="width: 150px; height: 150px;">
+                                    <i class="fas fa-user fa-4x text-white"></i>
+                                </div>
+                                <% } %>
+                                    <h4>
+                                        <%= currentUser.username %>
+                                    </h4>
+                                    <p class="text-muted">
+                                        <%= currentUser.email %>
+                                    </p>
+                                    <button class="btn btn-outline-primary btn-sm" id="editProfileBtn"
+                                        data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                        <i class="fas fa-edit"></i> Edit Profile
+                                    </button>
+                    </div>
+                </div>
+
+                <!-- Simplified Navigation -->
+                <div class="list-group mt-4">
+                    <a href="#my-bookings" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                        <i class="fas fa-calendar-check me-2"></i> My Bookings
+                    </a>
+                    <a href="#my-listings" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-home me-2"></i> My Listings
+                    </a>
+                    <a href="#recommendations" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-star me-2"></i> Recommended for You
+                    </a>
+                    <a href="#settings" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+                </div>
+
+                <!-- Recommendations Preview -->
+                <div class="card mt-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0"><i class="fas fa-star text-warning me-2"></i>Personalized Picks</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <% if(recommendations && recommendations.length> 0) { %>
+                            <div class="recommendations-preview">
+                                <% recommendations.slice(0, 2).forEach(listing=> { %>
+                                    <div class="recommendation-item col-12">
+                                        <img src="<%= listing.image.url %>" alt="<%= listing.title %>"
+                                            class="recommendation-img">
+                                        <div class="recommendation-content">
+                                            <a href="/listings/<%= listing._id %>/show" class="recommendation-title">
+                                                <%= listing.title %>
+                                            </a>
+                                            <div class="recommendation-price">₹<%= listing.price %>/night</div>
+                                            <div class="recommendation-location">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <%= listing.location %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                        <div class="text-center mt-2 mb-2">
+                                            <a href="#recommendations" class="btn btn-sm btn-outline-primary"
+                                                data-bs-toggle="list">View All</a>
+                                        </div>
+                            </div>
+                            <% } else { %>
+                                <div class="p-3 text-center">
+                                    <i class="fas fa-search text-muted mb-2"></i>
+                                    <p class="text-muted mb-0">Browse more listings to get personalized recommendations!
+                                    </p>
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-6 col-lg-6 flex-grow-1">
+                <div class="tab-content">
+                    <!-- My Bookings Tab -->
+                    <div class="tab-pane fade show active" id="my-bookings">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">My Bookings</h5>
+                            </div>
+                            <div class="card-body">
+                                <% if(bookings && bookings.length> 0) { %>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Listing</th>
+                                                    <th>Check In</th>
+                                                    <th>Check Out</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% bookings.forEach(booking=> { %>
+                                                    <tr>
+                                                        <td>
+                                                            <% if(booking.listing) { %>
+                                                                <a href="/listings/<%= booking.listing._id %>">
+                                                                    <%= booking.listing.title %>
+                                                                </a>
+                                                                <% } else { %>
+                                                                    Listing no longer available
+                                                                    <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <%= booking.checkIn.toLocaleDateString() %>
+                                                        </td>
+                                                        <td>
+                                                            <%= booking.checkOut.toLocaleDateString() %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(booking.status==='confirmed' ) { %>
+                                                                <span class="badge bg-success">Confirmed</span>
+                                                                <% } else if(booking.status==='pending' ) { %>
+                                                                    <span
+                                                                        class="badge bg-warning text-dark">Pending</span>
+                                                                    <% } else if(booking.status==='cancelled' ) { %>
+                                                                        <span class="badge bg-danger">Cancelled</span>
+                                                                        <% } else if(booking.status==='completed' ) { %>
+                                                                            <span class="badge bg-info">Completed</span>
+                                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/bookings/<%= booking._id %>"
+                                                                class="btn btn-sm btn-outline-primary">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle me-2"></i> You don't have any bookings
+                                            yet.
+                                        </div>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- My Listings Tab -->
+                    <div class="tab-pane fade w-100" id="my-listings">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">My Listings</h5>
+                            </div>
+                            <div class="card-body">
+                                <% if(listings && listings.length> 0) { %>
+                                    <div class="row">
+                                        <% listings.forEach(listing=> { %>
+                                            <div class="col-md-6 mb-4">
+                                                <div class="card h-100">
+                                                    <img src="<%= listing.image.url %>" class="card-img-top"
+                                                        alt="<%= listing ? listing.title : 'Listing' %>"
+                                                        style="height: 200px; object-fit: cover;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <%= listing ? listing.title : 'Untitled Listing' %>
+                                                        </h5>
+                                                        <p class="card-text text-muted"><i
+                                                                class="fas fa-map-marker-alt"></i>
+                                                            <%= listing && listing.location ? listing.location
+                                                                : 'No location' %>
+                                                        </p>
+                                                        <p class="card-text"><strong>$<%= listing && listing.price ?
+                                                                    listing.price : '0' %></strong> /
+                                                            night</p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <a href="/listings/<%= listing && listing._id ? listing._id : '#' %>/show"
+                                                                class="btn btn-sm btn-outline-primary">
+                                                                <i class="fas fa-eye"></i> View
+                                                            </a>
+                                                            <a href="/listings/<%= listing && listing._id ? listing._id : '#' %>/edit"
+                                                                class="btn btn-sm btn-outline-secondary">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle me-2"></i> You don't have any listings yet.
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <a href="/listings/new" class="btn btn-primary">
+                                                <i class="fas fa-plus me-2"></i> Create New Listing
+                                            </a>
+                                        </div>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations Tab -->
+                    <div class="tab-pane fade" id="recommendations">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0"><i class="fas fa-star text-warning me-2"></i>Recommended for You</h5>
+                                <p class="text-muted small mb-0">Personalized recommendations based on your browsing
+                                    history and preferences</p>
+                            </div>
+                            <div class="card-body">
+                                <% if(recommendations && recommendations.length> 0) { %>
+                                    <div class="row">
+                                        <% recommendations.forEach(listing=> { %>
+                                            <div class="col-md-12 col-lg-12 mb-4">
+                                                <div class="card h-100 listing-card">
+                                                    <div class="position-relative">
+                                                        <img src="<%= listing.image.url %>" class="card-img-top"
+                                                            alt="<%= listing.title %>">
+                                                        <span
+                                                            class="position-absolute top-0 end-0 m-2 badge bg-dark bg-opacity-75 px-3 py-2">
+                                                            <i class="fas fa-tag me-1"></i>₹<%= listing.price %>/night
+                                                        </span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <%= listing.title %>
+                                                        </h5>
+                                                        <p class="card-text text-muted">
+                                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                                            <%= listing.location %>
+                                                        </p>
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
+                                                            <span class="badge bg-info">
+                                                                <%= listing.category %>
+                                                            </span>
+                                                            <div class="text-warning">
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star-half-alt"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer bg-white">
+                                                        <a href="/listings/<%= listing._id %>/show"
+                                                            class="btn btn-sm btn-primary w-100"><i
+                                                                class="fas fa-eye me-2"></i>View Details</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <% } else { %>
+                                        <div class="text-center py-5">
+                                            <div class="empty-state-icon mb-4">
+                                                <i class="fas fa-search fa-3x text-muted"></i>
+                                            </div>
+                                            <h5 class="fw-bold mb-3">No recommendations yet</h5>
+                                            <p class="text-muted mx-auto" style="max-width: 400px;">Browse more listings
+                                                to get personalized
+                                                recommendations tailored to your preferences!</p>
+                                            <a href="/listings" class="btn btn-primary mt-3 px-4 py-2">
+                                                <i class="fas fa-compass me-2"></i>Explore Listings
+                                            </a>
+                                        </div>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-pane fade" id="settings">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Account Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Personal Information Section -->
+                                <h6 class="mb-3">Personal Information</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-4 fw-bold">Username</div>
+                                    <div class="col-md-8">
+                                        <%= currentUser.username %>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4 fw-bold">Email</div>
+                                    <div class="col-md-8">
+                                        <%= currentUser.email %>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-4 fw-bold">Phone</div>
+                                    <div class="col-md-8">
+                                        <%= currentUser.phone || 'Not provided' %>
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <!-- Change Password Section -->
+                                <h6 class="mb-3">Change Password</h6>
+                                <form action="/users/change-password" method="POST">
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword"
+                                            name="currentPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirm New
+                                            Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword"
+                                            name="confirmPassword" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-key me-1"></i> Change Password
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-md-3 col-lg-3">
+
+                <!-- Quick Links -->
+                <div class="card" id="quick-links">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Quick Links</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row row-cols-2 g-3">
+                            <div class="col-12 mb-3">
+                                <a href="/listings/new"
+                                    class="btn btn-outline-success w-100 h-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-plus-circle me-2"></i> Create Listing
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/users/bookings"
+                                    class="btn btn-outline-primary w-100 h-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-calendar-check me-2"></i> Bookings
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <button type="button"
+                                    class="btn btn-outline-info w-100 h-100 py-3 d-flex align-items-center justify-content-center gap-2"
+                                    data-bs-toggle="modal" data-bs-target="#messagesModal">
+                                    <i class="fas fa-envelope me-2"></i> Messages
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <a href="/wishlists"
+                                    class="btn btn-outline-warning w-100 h-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-bookmark me-2"></i> Saved
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/contact"
+                                    class="btn btn-outline-secondary w-100 h-100 py-3 d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-question-circle me-2"></i> Help Center
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer or additional content can be added here if needed -->
+
+    <!-- Include profile interactive script -->
+    <script src="/Js/profile-interactive.js"></script>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/users/update-profile" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="avatar" class="form-label"><i class="fas fa-camera me-2"></i>Profile
+                                Picture</label>
+                            <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*"
+                                data-bs-toggle="tooltip" title="Upload a new profile picture">
+                            <small class="form-text text-muted">Recommended size: 300x300 pixels</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label"><i class="fas fa-user me-2"></i>Username</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                value="<%= currentUser.username %>" required data-bs-toggle="tooltip"
+                                title="Your display name on the platform">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label"><i class="fas fa-envelope me-2"></i>Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="<%= currentUser.email %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                value="<%= currentUser.phone || '' %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" name="bio"
+                                rows="3"><%= currentUser.bio || '' %></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-1"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- No right sidebar in simplified layout -->
+
+        </div>
+    </div>
+
+
+
+    <!-- Messages Modal -->
+    <div class="modal fade" id="messagesModal" tabindex="-1" aria-labelledby="messagesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messagesModalLabel">Messages</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                        <% if (typeof messages !=='undefined' && messages && messages.length> 0) { %>
+                            <% messages.forEach(message=> { %>
+                                <div class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">
+                                            <%= message.sender ? message.sender.username : 'Unknown User' %>
+                                        </h6>
+                                        <small class="text-muted">
+                                            <%= message.createdAt ? new Date(message.createdAt).toLocaleString()
+                                                : 'Unknown date' %>
+                                        </small>
+                                    </div>
+                                    <p class="mb-1">
+                                        <%= message.content %>
+                                    </p>
+                                    <% if (message.listing) { %>
+                                        <small class="text-muted">Re: <a href="/listings/<%= message.listing._id %>">
+                                                <%= message.listing.title %>
+                                            </a></small>
+                                        <% } %>
+                                </div>
+                                <% }) %>
+                                    <% } else { %>
+                                        <div class="alert alert-info mb-0">
+                                            <i class="fas fa-info-circle me-2"></i> You don't have any messages yet.
+                                        </div>
+                                        <% } %>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Activate tab based on hash in URL
+        document.addEventListener('DOMContentLoaded', function () {
+            const hash = window.location.hash;
+            if (hash) {
+                const tab = document.querySelector(`a[href="${hash}"]`);
+                if (tab) {
+                    tab.click();
+                }
+            }
+
+            // Add click handlers for quick links
+            document.querySelectorAll('#quick-links a, #quick-links button').forEach(link => {
+                if (link.getAttribute('data-bs-toggle') === 'modal') {
+                    // These already have handlers
+                    return;
+                }
+
+                // For links to tabs (including those with javascript:void(0) href)
+                const onClickAttr = link.getAttribute('onclick');
+                if (!onClickAttr && link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const tabId = this.getAttribute('href');
+                        const tab = document.querySelector(`a[href="${tabId}"]`);
+                        if (tab) {
+                            bootstrap.Tab.getOrCreateInstance(tab).show();
+                        }
+                    });
+                }
+            });
+
+            // Ensure all tab navigation works properly with Bootstrap
+            document.querySelectorAll('a[data-bs-toggle="list"]').forEach(tabEl => {
+                tabEl.addEventListener('shown.bs.tab', function (e) {
+                    // Update URL hash when tab changes
+                    history.replaceState(null, null, e.target.getAttribute('href'));
+                });
+            });
+        });
+    </script>

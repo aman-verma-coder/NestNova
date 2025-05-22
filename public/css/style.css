@@ -707,6 +707,49 @@ body {
     margin-left: 1rem;
 }
 
+/* Filter Button Styles */
+.filter-button-container {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.filter-button-container .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.filter-button-container .btn.active,
+.filter-button-container .btn:hover {
+    background-color: #f8f9fa;
+    border-color: #6c757d;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Filter Panel Styles */
+.filter-panel {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 0.5rem;
+}
+
+.filter-panel h5 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.price-range-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 @media (max-width: 768px) {
     #filters {
         width: 100%;
@@ -740,6 +783,19 @@ body {
         margin-bottom: 0;
         white-space: nowrap;
     }
+
+    /* Mobile styles for filter button and panel */
+    .filter-button-container {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filter-panel .row {
+        flex-direction: column;
+    }
+
 }
 
 @media (max-width: 480px) {

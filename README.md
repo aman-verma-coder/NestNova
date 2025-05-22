@@ -8,6 +8,7 @@ NestNova is a comprehensive property listing and booking platform that connects 
 - **Browse Listings**: Explore properties with detailed descriptions, high-resolution images, amenities, pricing, and availability calendars
 - **Advanced Search**: Find perfect accommodations using powerful search filters by title, description, location, country, price range, or amenities
 - **Category Filtering**: Discover properties by categories like Trending, Beaches, Pools, Mountains, Iconic Cities, Countryside, Luxury, and Budget-friendly options
+- **Personalized Recommendations**: Receive tailored property suggestions based on your browsing history, previous bookings, and preferences
 - **User Authentication**: Create an account, log in securely, manage your profile, and track your booking history
 - **Wishlist Creation**: Save favorite properties to revisit later during your planning process
 - **Reviews & Ratings**: Leave detailed reviews and ratings for properties you've stayed at to help other travelers
@@ -40,16 +41,21 @@ NestNova is a comprehensive property listing and booking platform that connects 
 - **Responsive Design**: Mobile-first approach ensuring compatibility across all devices
 
 ### Authentication System
-- **Passport.js Integration**: Secure local authentication strategy
-- **Session Management**: Persistent sessions with express-session
+- **Passport.js Integration**: Secure local authentication strategy with passport-local-mongoose
+- **Session Management**: Persistent sessions with express-session and connect-mongo
 - **Role-Based Access Control**: Different permission levels for travelers, hosts, and admins
-- **Password Security**: Bcrypt hashing for secure password storage
+- **Password Security**: Secure password storage and authentication
 
 ### Search & Filter System
-- **MongoDB Aggregation**: Powerful query pipeline for complex searches
-- **Geospatial Queries**: Location-based search functionality
+- **MongoDB Queries**: Powerful query capabilities for complex searches
+- **Geospatial Queries**: Location-based search functionality with Mapbox integration
 - **Text Search**: Full-text search capabilities for listing content
 - **Filter Combinations**: Multiple filter criteria can be combined for precise results
+
+### Notification System
+- **User Preferences**: Customizable notification settings
+- **Event Triggers**: Automated notifications for bookings, reviews, and messages
+- **Multi-channel Delivery**: Email and in-app notifications
 
 ## Technologies Used
 
@@ -60,11 +66,11 @@ NestNova is a comprehensive property listing and booking platform that connects 
 - **Passport.js**: Authentication middleware for Node.js with various strategies
 - **Joi**: Schema validation for request data validation and sanitization
 - **Multer & Cloudinary**: Image upload handling and cloud storage for property photos
-- **Express-session**: Session management for user authentication state
+- **Express-session & Connect-mongo**: Session management with MongoDB storage
 
 ### Frontend
-- **EJS**: Embedded JavaScript templates for dynamic server-side rendering
-- **Bootstrap 5**: Frontend CSS framework for responsive and modern UI components
+- **EJS & EJS-mate**: Embedded JavaScript templates for dynamic server-side rendering
+- **Bootstrap**: Frontend CSS framework for responsive and modern UI components
 - **JavaScript**: Client-side interactivity and form validation
 - **Mapbox GL JS**: Interactive maps for property locations with custom markers
 - **AJAX**: Asynchronous requests for seamless user experience
@@ -77,13 +83,14 @@ NestNova is a comprehensive property listing and booking platform that connects 
 - **Git & GitHub**: Version control and collaborative development
 - **Environment Variables**: Configuration management for different environments
 - **Error Handling**: Comprehensive error logging and monitoring
+- **Nodemon**: Development server with auto-restart capability
 
 ## Installation & Setup
 
 ### Prerequisites
 - Node.js (v20.7.0 recommended)
 - MongoDB (local or Atlas)
-- npm or yarn package manager
+- npm package manager
 - Accounts for third-party services (Cloudinary, Mapbox, Razorpay)
 
 ### Environment Variables
@@ -95,7 +102,7 @@ SECRET=your_session_secret
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_KEY=your_cloudinary_key
 CLOUDINARY_SECRET=your_cloudinary_secret
-MAPBOX_TOKEN=your_mapbox_token
+MAP_TOKEN=your_mapbox_token
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_SECRET=your_razorpay_secret
 PORT=8080
@@ -131,44 +138,57 @@ The application will automatically connect to your MongoDB instance using the co
 
 ```
 ├── controllers/       # Route controllers for handling business logic
-│   ├── listings.js    # Listing-related controllers
-│   ├── users.js       # User authentication and profile controllers
-│   ├── reviews.js     # Review management controllers
-│   └── admin.js       # Admin panel controllers
-├── models/           # Database models and schemas
-│   ├── listing.js     # Listing schema and methods
+│   ├── listing.js     # Listing-related controllers
+│   ├── user.js        # User authentication and profile controllers
+│   ├── review.js      # Review management controllers
+│   ├── admin.js       # Admin panel controllers
+│   ├── notification.js # Notification management
+│   ├── wishlist.js    # Wishlist functionality
+│   └── paymentController.js # Payment processing
+├── models/            # Database models and schemas
+│   ├── listings.js    # Listing schema and methods
 │   ├── user.js        # User schema with authentication
 │   ├── review.js      # Review schema and validation
-│   └── booking.js     # Booking schema and payment integration
-├── public/           # Static assets (CSS, JS, images)
+│   ├── booking.js     # Booking schema and payment integration
+│   ├── notification.js # Notification schema
+│   ├── wishlist.js    # Wishlist schema
+│   └── auditLog.js    # Audit logging functionality
+├── public/            # Static assets (CSS, JS, images)
 │   ├── css/           # Stylesheets
-│   ├── js/            # Client-side JavaScript
+│   ├── Js/            # Client-side JavaScript
 │   └── images/        # Static images and icons
-├── routes/           # Application routes
-│   ├── listings.js    # Listing routes
-│   ├── users.js       # Authentication routes
-│   ├── reviews.js     # Review routes
-│   └── admin.js       # Admin panel routes
-├── utils/            # Utility functions and helpers
-│   ├── middleware.js  # Custom middleware functions
-│   ├── validators.js  # Input validation helpers
-│   └── helpers.js     # Miscellaneous helper functions
-├── views/            # EJS templates
-│   ├── layouts/       # Page layouts and partials
+├── routes/            # Application routes
+│   ├── listing.js     # Listing routes
+│   ├── user.js        # Authentication routes
+│   ├── review.js      # Review routes
+│   ├── admin.js       # Admin panel routes
+│   ├── notification.js # Notification routes
+│   ├── wishlist.js    # Wishlist routes
+│   ├── paymentRoute.js # Payment processing routes
+│   └── footer.js      # Footer page routes
+├── utils/             # Utility functions and helpers
+│   ├── ExpressError.js # Custom error handling
+│   ├── wrapAsync.js   # Async function wrapper
+│   └── auditLogger.js # Audit logging utility
+├── views/             # EJS templates
+│   ├── layout/        # Page layouts and partials
 │   ├── listings/      # Listing-related views
 │   ├── users/         # User profile and authentication views
-│   └── admin/         # Admin panel views
-├── app.js            # Main application file
-├── cloudConfig.js    # Cloudinary configuration
-├── middleware.js     # Custom middleware
-├── schema.js         # Joi validation schemas
-└── package.json      # Project dependencies
+│   ├── admin/         # Admin panel views
+│   ├── includes/      # Reusable view components
+│   ├── partials/      # Partial view components
+│   └── pages/         # Static pages (About, Privacy, T&C)
+├── app.js             # Main application file
+├── cloudConfig.js     # Cloudinary configuration
+├── middleware.js      # Custom middleware
+├── schema.js          # Joi validation schemas
+└── package.json       # Project dependencies
 ```
 
 ## API Endpoints
 
 ### Authentication
-- `POST /signup`: Register a new user with email verification
+- `POST /signup`: Register a new user
 - `POST /login`: Log in an existing user with secure session management
 - `GET /logout`: Log out the current user and clear session
 - `GET /profile`: View user profile information
@@ -198,37 +218,30 @@ The application will automatically connect to your MongoDB instance using the co
 
 ### Admin
 - `GET /admin/dashboard`: Admin dashboard with statistics
-- `GET /admin/listings`: View all listings for approval
-- `POST /admin/listings/:id/approve`: Approve a listing
-- `POST /admin/listings/:id/reject`: Reject a listing with feedback
+- `GET /admin/listings`: Manage all listings
+- `PUT /admin/listings/:id/approve`: Approve a pending listing
+- `PUT /admin/listings/:id/reject`: Reject a listing with feedback
 - `GET /admin/users`: Manage user accounts
-- `GET /admin/bookings`: View all bookings platform-wide
+
+### Wishlist
+- `POST /wishlist/add`: Add a listing to wishlist
+- `GET /wishlist`: View all wishlist items
+- `DELETE /wishlist/remove`: Remove a listing from wishlist
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Coding Standards
-- Follow ESLint configuration
-- Write meaningful commit messages
-- Include tests for new features
-- Update documentation as needed
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the ISC License - see the LICENSE file for details.
 
 ## Acknowledgements
 
-- [Express.js](https://expressjs.com/) - Web framework for Node.js
-- [MongoDB](https://www.mongodb.com/) - NoSQL database
-- [Mongoose](https://mongoosejs.com/) - MongoDB object modeling
-- [Bootstrap](https://getbootstrap.com/) - Frontend framework
-- [Mapbox](https://www.mapbox.com/) - Maps and location data
-- [Cloudinary](https://cloudinary.com/) - Cloud-based image management
-- [Razorpay](https://razorpay.com/) - Payment gateway solution
-- [Passport.js](http://www.passportjs.org/) - Authentication middleware
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Mapbox](https://www.mapbox.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [Razorpay](https://razorpay.com/)

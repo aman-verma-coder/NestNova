@@ -15,4 +15,10 @@ router.get("/rnc", (req, res) => {
 router.get("/contact", (req, res) => {
     res.render("./pages/contact.ejs");
 });
+router.get("/sitemap", (req, res) => {
+    res.render("./pages/sitemap.ejs");
+});
+router.get("/blog", (req, res) => {
+    res.render("./pages/blog.ejs");
+});
 module.exports = router;

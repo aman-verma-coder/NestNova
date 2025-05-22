@@ -1,0 +1,46 @@
+<% layout("/layout/boilerplate") -%>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Create New Wishlist</h1>
+                        <form action="/wishlists" method="POST" novalidate class="needs-validation">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Wishlist Name</label>
+                                <input type="text" class="form-control" id="name" name="wishlist[name]" required>
+                                <div class="invalid-feedback">Please provide a name for your wishlist.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description (Optional)</label>
+                                <textarea class="form-control" id="description" name="wishlist[description]"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success">Create Wishlist</button>
+                                <a href="/wishlists" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>

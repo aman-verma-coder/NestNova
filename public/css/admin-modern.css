@@ -3,10 +3,10 @@
 :root {
     --primary-color: #15B5B0;
     --secondary-color: #fe424d;
-    --accent-color: #4361ee;
-    --success-color: #10b981;
+    --accent-color: #15B5B0;
+    --success-color: #15B5B0;
     --warning-color: #ff9800;
-    --danger-color: #f44336;
+    --danger-color: #fe424d;
     --light-color: #f8f9fa;
     --dark-color: #343a40;
     --text-primary: #333333;
@@ -140,7 +140,7 @@
 
 /* Section headers */
 .pending-header {
-    background: linear-gradient(135deg, var(--warning-color), #e65100);
+    background: linear-gradient(135deg, var(--secondary-color), #e63e47);
     color: #fff;
     padding: 1.5rem;
     font-weight: 700;
@@ -199,7 +199,7 @@
     font-size: 0.85rem;
     letter-spacing: 0.5px;
     padding: 1rem;
-    border-bottom: 2px solid rgba(21, 181, 176, 0.2);
+    border-bottom: 2px solid rgba(21, 181, 176, 0.3);
 }
 
 .admin-table td {
@@ -209,7 +209,7 @@
 }
 
 .admin-table tbody tr:hover {
-    background-color: var(--hover-bg);
+    background-color: rgba(21, 181, 176, 0.05);
 }
 
 /* Status badges */
@@ -225,14 +225,17 @@
 
 .bg-success {
     background-color: var(--success-color);
+    box-shadow: 0 2px 6px rgba(21, 181, 176, 0.2);
 }
 
 .bg-warning {
     background-color: var(--warning-color);
+    box-shadow: 0 2px 6px rgba(255, 152, 0, 0.2);
 }
 
 .bg-danger {
     background-color: var(--danger-color);
+    box-shadow: 0 2px 6px rgba(254, 66, 77, 0.2);
 }
 
 /* Approval cards */
@@ -291,8 +294,9 @@
 }
 
 .approval-actions .btn-success:hover {
-    background-color: #0ca975;
+    background-color: #0e9a96;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(21, 181, 176, 0.3);
 }
 
 .approval-actions .btn-danger {
@@ -301,8 +305,9 @@
 }
 
 .approval-actions .btn-danger:hover {
-    background-color: #e53935;
+    background-color: #e63e47;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(254, 66, 77, 0.3);
 }
 
 /* Responsive adjustments */
@@ -350,6 +355,8 @@
     padding: 5px 10px;
     border-radius: 50px;
     font-weight: 600;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 6px rgba(254, 66, 77, 0.2);
 }
 
 /* Owner email styling */
@@ -369,7 +376,7 @@
 
 .summary-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 20px rgba(21, 181, 176, 0.15);
 }
 
 .summary-card .card-title {

@@ -1,0 +1,229 @@
+<% layout('/layout/boilerplate') -%>
+
+    <div class="container my-5">
+        <section id="blog-section">
+            <div class="blog-container">
+                <h1 class="blog-title text-center mb-5">NestNova Blog</h1>
+
+                <!-- Featured Post -->
+                <div class="featured-post mb-5">
+                    <div class="card shadow">
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                    class="img-fluid rounded-start" alt="Featured post image"
+                                    style="height: 100%; object-fit: cover;">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card-body d-flex flex-column h-100">
+                                    <span class="badge bg-primary mb-2">Featured</span>
+                                    <h2 class="card-title">Finding Your Perfect Vacation Home</h2>
+                                    <p class="card-text">Discover the secrets to finding the ideal vacation rental that
+                                        meets all your needs and preferences. From beachfront properties to mountain
+                                        retreats, we've got you covered.</p>
+                                    <p class="card-text"><small class="text-muted">Published on May 15, 2023</small></p>
+                                    <a href="#" class="btn btn-outline-primary mt-auto">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="blog-categories mb-5">
+                    <h3 class="section-title mb-4">Categories</h3>
+                    <div class="row">
+                        <div class="col-6 col-md-3 mb-3">
+                            <a href="#" class="category-card">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-home fa-2x mb-3 text-primary"></i>
+                                        <h5 class="card-title">Travel Tips</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <a href="#" class="category-card">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-utensils fa-2x mb-3 text-success"></i>
+                                        <h5 class="card-title">Local Cuisine</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <a href="#" class="category-card">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-map-marked-alt fa-2x mb-3 text-danger"></i>
+                                        <h5 class="card-title">Destinations</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-3 mb-3">
+                            <a href="#" class="category-card">
+                                <div class="card text-center h-100">
+                                    <div class="card-body">
+                                        <i class="fas fa-suitcase fa-2x mb-3 text-warning"></i>
+                                        <h5 class="card-title">Hosting Tips</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Posts -->
+                <div class="recent-posts mb-5">
+                    <h3 class="section-title mb-4">Recent Posts</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                    class="card-img-top" alt="Blog post image">
+                                <div class="card-body">
+                                    <span class="badge bg-info mb-2">Travel Tips</span>
+                                    <h5 class="card-title">10 Essential Items for Your Next Trip</h5>
+                                    <p class="card-text">Don't forget these crucial items when packing for your next
+                                        adventure.</p>
+                                </div>
+                                <div class="card-footer bg-white border-top-0">
+                                    <small class="text-muted">Published on June 2, 2023</small>
+                                    <a href="#" class="btn btn-link float-end p-0">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                    class="card-img-top" alt="Blog post image">
+                                <div class="card-body">
+                                    <span class="badge bg-success mb-2">Local Cuisine</span>
+                                    <h5 class="card-title">Must-Try Dishes in Popular Destinations</h5>
+                                    <p class="card-text">Explore the culinary delights that make each destination
+                                        unique.</p>
+                                </div>
+                                <div class="card-footer bg-white border-top-0">
+                                    <small class="text-muted">Published on May 28, 2023</small>
+                                    <a href="#" class="btn btn-link float-end p-0">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                    class="card-img-top" alt="Blog post image">
+                                <div class="card-body">
+                                    <span class="badge bg-warning text-dark mb-2">Hosting Tips</span>
+                                    <h5 class="card-title">How to Become a Superhost</h5>
+                                    <p class="card-text">Learn the strategies that successful hosts use to earn top
+                                        ratings.</p>
+                                </div>
+                                <div class="card-footer bg-white border-top-0">
+                                    <small class="text-muted">Published on May 20, 2023</small>
+                                    <a href="#" class="btn btn-link float-end p-0">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Signup -->
+                <div class="newsletter-signup mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body p-4 text-center">
+                            <h3 class="mb-3">Subscribe to Our Newsletter</h3>
+                            <p class="mb-4">Stay updated with our latest travel tips, destination guides, and hosting
+                                advice.</p>
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <form class="d-flex">
+                                        <input type="email" class="form-control me-2" placeholder="Your email address">
+                                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <style>
+        .blog-title {
+            color: #fe424d;
+            font-weight: 700;
+        }
+
+        .section-title {
+            color: #15B5B0;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #fe424d;
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .category-card:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card .card {
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .card {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-link {
+            color: #fe424d;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            color: #15B5B0;
+            text-decoration: none;
+        }
+
+        .featured-post .card {
+            overflow: hidden;
+        }
+
+        @media (max-width: 767.98px) {
+            .featured-post .card-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>

@@ -18,237 +18,338 @@
                 </script>
 
                 <body>
-                    <div class="row col-md-7 col-sm-6 col-6 data-show-page">
-                        <div class="col-8 offset-5 mt-4" style="text-align: center;">
-                            <h2 class="show-data-title" style="text-align: center;">
+                    <div class="row data-show-page mx-0">
+                        <div class="col-12 mt-4 d-flex justify-content-center">
+                            <h2 class="show-data-title text-center">
                                 <%= showData.title %>
                             </h2>
                         </div>
-                        <div class="card data-info" style="width: 100vh;">
-                            <img src="<%= showData.image.url %>" class="card-img-top show-img offset-5" alt="#"
-                                style="width: 90% !important; height:max-content;">
-                            <div class="card-body">
-                                <p class="card-text offset-5"
-                                    style="width: 90% !important; max-width: 90% !important; padding-right: 2rem !important; white-space: normal !important; word-wrap: break-word !important;">
+                        <div class="card data-info mx-auto" style="width: 100%; max-width: 1200px;">
+                            <img src="<%= showData.image.url %>" class="card-img-top show-img" alt="#"
+                                style="width: 100% !important; height:auto; object-fit: cover; max-height: 600px;">
+                            <div class="card-body text-center">
+                                <p class="card-text mx-auto"
+                                    style="width: 100% !important; max-width: 100% !important; padding: 0 15px !important; white-space: normal !important; word-wrap: break-word !important;">
                                     <strong>Hosted by</strong>
-                                    <%= showData.owner.username %> <br><br>
-                                        <strong>Description :</strong>
-                                        <%= showData.description %> <br><br>
-                                            <strong>Cost :</strong> ₹<%= showData.price.toLocaleString("en-IN") %> /
-                                                night <br><br>
-                                                <strong>Category :</strong>
-                                                <%= showData.category %> <br><br>
-                                                    <strong>Place :</strong> 📍 <%= showData.location %> <br><br>
-                                                        <strong>Country :</strong> 🌐 <%= showData.country %>
+                                    <a href="/users/<%= showData.owner.username %>" class="text-decoration-none">
+                                        <%= showData.owner.username %>
+                                    </a> <br><br>
+                                    <strong>Description :</strong>
+                                    <%= showData.description %> <br><br>
+                                        <strong>Cost :</strong> ₹<%= showData.price.toLocaleString("en-IN") %> /
+                                            night <br><br>
+                                            <strong>Category :</strong>
+                                            <%= showData.category %> <br><br>
+                                                <strong>Place :</strong> 📍 <%= showData.location %> <br><br>
+                                                    <strong>Country :</strong> 🌐 <%= showData.country %>
                                 </p>
-                            </div>
-                        </div>
-                    </div>
-                    <% if (currentUser && currentUser._id.equals(showData.owner._id)) { %>
-                        <div class="btns btn-show-page">
-                            <div class="col-sm-1 col-lg-3 col-md-3 col-sm-3 col-3">
-                                <form method="get" action="/listings/<%= showData.id %>/edit">
-                                    <button class="btn btn-dark show-btn mt-4 mb-5 offset-10">Edit</button>
-                                </form>
-                            </div>
-                            <div class="col-sm-1 col-lg-2 col-md-6 col-sm-8 col-8">
-                                <form method="post" action="/listings/<%= showData.id %>/delete?_method=DELETE">
-                                    <button class="btn btn-dark show-btn mt-4 mb-5 offset-2 delbtn">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                        <% } %>
-                            <!-- payment -->
-                            <div>
-                                <% if(currentUser) { %>
-                                    <form class="pay-form">
-                                        <input type="hidden" name="name" value="<%= showData.title %>" />
-                                        <input type="hidden" name="amount" value="<%= showData.price %>" />
-                                        <input type="hidden" name="description" value="<%= showData.description %>" />
-                                        <input type="hidden" name="listingId" value="<%= showData.id %>" />
-                                        <div class="rent-it-container btn-outline-success">
-                                            <button type="button" class="btn-rent-it btn-outline-success"
-                                                id="booking-btn" onclick="initiatePayment(event)"
-                                                style="padding: 12px 24px; background-color: #28a745; color: white; border-radius: 8px; border: none; transition: all 0.3s ease; margin: 16px auto; display: block;">Rent
-                                                It</button>
-                                        </div>
-                                    </form>
 
-                                    <!-- Payment Modal -->
-                                    <div id="payment-modal" class="modal"
-                                        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
-                                        <div class="modal-content"
-                                            style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px;">
-                                            <span class="close"
-                                                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
-                                            <h2>Complete Your Payment</h2>
-                                            <p>You're about to book <strong>
-                                                    <%= showData.title %>
-                                                </strong> for ₹<%= showData.price.toLocaleString("en-IN") %>/night</p>
-                                            <div
-                                                style="display: flex; justify-content: space-between; margin-top: 20px;">
-                                                <button id="cancel-payment" class="cancel-payment-btn"
-                                                    style="background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Cancel
-                                                    Payment</button>
-                                                <!-- The confirm button will be added via JavaScript -->
-                                            </div>
+                                <% if (showData.amenities && showData.amenities.length> 0) { %>
+                                    <div class="card-text amenities-container text-center mx-auto"
+                                        style="width: 100% !important; max-width: 100% !important; padding: 0 15px !important; white-space: normal !important; word-wrap: break-word !important;">
+                                        <strong>Amenities :</strong><br>
+                                        <div class="amenities-badges-container justify-content-center">
+                                            <% showData.amenities.forEach(amenity=> { %>
+                                                <span class="badge bg-primary">
+                                                    <%= amenity %>
+                                                </span>
+                                                <% }) %>
                                         </div>
                                     </div>
                                     <% } %>
                             </div>
-                            <!-- payment -->
-                            <hr>
-                            <% if (currentUser) { %>
-                                <div class="col-8 offset-2">
-                                    <h2>Add a review</h2>
-                                    <form method="post" action="/listings/<%= showData.id %>/review" novalidate
-                                        class="needs-validation">
-                                        <input type="hidden" name="id" value="<%= showData.id %>">
-                                        <div class="mb-3">
-                                            <label for="comment" class="form-label">Comment:</label>
-                                            <textarea type="text" name="review[comment]" placeholder="Leave a Review"
-                                                id="comment" class="form-control" required></textarea>
-                                            <div class="valid-feedback">Comment valid</div>
-                                            <div class="invalid-feedback">Invalid Comment</div>
+                        </div>
+                    </div>
+                    <!-- Action Buttons Container -->
+                    <div class="action-buttons-container mx-auto mt-4 mb-4" style="max-width: 1200px;">
+                        <!-- Rent It and Wishlist Buttons (for all logged in users) -->
+                        <% if(currentUser) { %>
+                            <div class="row">
+                                <div class="col-12 col-md-8 mx-auto">
+                                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-3">
+                                        <form class="pay-form">
+                                            <input type="hidden" name="name" value="<%= showData.title %>" />
+                                            <input type="hidden" name="amount" value="<%= showData.price %>" />
+                                            <input type="hidden" name="description"
+                                                value="<%= showData.description %>" />
+                                            <input type="hidden" name="listingId" value="<%= showData.id %>" />
+                                            <button type="button" class="action-btn rent-btn" id="booking-btn"
+                                                onclick="initiatePayment(event)">
+                                                <i class="fas fa-key me-2"></i>Rent It
+                                            </button>
+                                        </form>
+
+                                        <!-- Wishlist Button -->
+                                        <form action="/wishlists/quick-add/<%= showData.id %>" method="POST"
+                                            class="d-inline">
+                                            <button type="submit" class="action-btn wishlist-btn">
+                                                <i class="fas fa-heart me-2"></i>Save to Wishlist
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+
+                                <!-- Edit and Delete Buttons (only for owner) -->
+                                <% if (currentUser && currentUser._id.equals(showData.owner._id)) { %>
+                                    <div class="row mt-3">
+                                        <div class="col-12 col-md-8 mx-auto">
+                                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                                                <form method="get" action="/listings/<%= showData.id %>/edit">
+                                                    <button class="action-btn edit-btn"
+                                                        style="background-color: #28a745 !important;">
+                                                        <i class="fas fa-edit me-2"></i>Edit
+                                                    </button>
+                                                </form>
+                                                <form method="post"
+                                                    action="/listings/<%= showData.id %>/delete?_method=DELETE">
+                                                    <button class="action-btn delete-btn"
+                                                        style="background-color: red;">
+                                                        <i class="fas fa-trash-alt me-2"></i>Delete
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <!-- <div class="mb-3">
+                                    </div>
+                                    <% } %>
+                    </div>
+                    <!-- payment -->
+
+                    <!-- Payment Modal -->
+                    <div id="payment-modal" class="modal"
+                        style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+                        <div class="modal-content"
+                            style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px;">
+                            <span class="close"
+                                style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+                            <h2>Complete Your Payment</h2>
+                            <p>You're about to book <strong>
+                                    <%= showData.title %>
+                                </strong> for ₹<%= showData.price.toLocaleString("en-IN") %>/night</p>
+                            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                                <button id="cancel-payment" class="cancel-payment-btn"
+                                    style="background-color: #f44336; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer;">Cancel
+                                    Payment</button>
+                                <!-- The confirm button will be added via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- payment -->
+                    <hr>
+                    <% if (currentUser) { %>
+                        <div class="col-12 mx-auto" style="max-width: 1200px; padding: 0;">
+                            <h2>Add a review</h2>
+                            <form method="post" action="/listings/<%= showData.id %>/review" novalidate
+                                class="needs-validation">
+                                <input type="hidden" name="id" value="<%= showData.id %>">
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label">Comment:</label>
+                                    <textarea type="text" name="review[comment]" placeholder="Leave a Review"
+                                        id="comment" class="form-control" required></textarea>
+                                    <div class="valid-feedback">Comment valid</div>
+                                    <div class="invalid-feedback">Invalid Comment</div>
+                                </div>
+                                <!-- <div class="mb-3">
                                 <label for="rating" class="form-label">Rate It!:</label>
                                 <input type="range" name="review[rating]" class="form-range" min="1" max="5" id="rating"
                                     required>
                                 <div class="valid-feedback">Valid Rating</div>
                                 <div class="invalid-feedback">Invalid Rating</div>
                             </div> -->
-                                        <div class="mb-3">
-                                            <fieldset class="starability-heartbeat">
-                                                <legend>Rate It!:</legend>
-                                                <input type="radio" id="no-rate" class="input-no-rate"
-                                                    name="review[rating]" value="1" checked aria-label="No rating." />
-                                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                                <label for="first-rate1" title="Terrible">1 star</label>
-                                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                                <label for="first-rate2" title="Not good">2 stars</label>
-                                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                                <label for="first-rate3" title="Average">3 stars</label>
-                                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                                <label for="first-rate4" title="Very good">4 stars</label>
-                                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                                <label for="first-rate5" title="Amazing">5 stars</label>
-                                            </fieldset>
-                                        </div><br>
-                                        <button type="submit" class="btn btn-outline-success mb-3">Submit</button>
-                                    </form>
-                                </div>
-                                <hr>
-                                <% } %>
-                                    <% if (showData.review.length) { %>
-                                        <div class="cards row">
-                                            <h3>Reviews:</h3>
-                                            <% for (const review of showData.review) { %>
-                                                <div class="card review-card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">@<%= review.author.username %>
-                                                        </h5>
-                                                        <p class="card-text starability-result"
-                                                            data-rating="<%= review.rating %>">
-                                                        </p>
-                                                        <p class="card-subtitle mb-2 text-body-secondary">
-                                                            <%= review.comment %>
-                                                        </p>
-                                                        <% if (currentUser && (currentUser._id.equals(review.author._id)
-                                                            || currentUser.isAdmin)) { %>
-                                                            <form method="post"
-                                                                action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
-                                                                <input type="hidden" name="id"
-                                                                    value="<%= showData.id %>">
-                                                                <input type="hidden" name="reviewid"
-                                                                    value="<%= review.id %>">
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-danger mb-3">Delete</button>
-                                                            </form>
-                                                            <% } %>
-                                                    </div>
-                                                </div>
-                                                <% } %>
+                                <div class="mb-3">
+                                    <fieldset class="starability-heartbeat">
+                                        <legend>Rate It!:</legend>
+                                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]"
+                                            value="1" checked aria-label="No rating." />
+                                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                        <label for="first-rate1" title="Terrible">1 star</label>
+                                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                        <label for="first-rate2" title="Not good">2 stars</label>
+                                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                        <label for="first-rate3" title="Average">3 stars</label>
+                                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                        <label for="first-rate4" title="Very good">4 stars</label>
+                                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                        <label for="first-rate5" title="Amazing">5 stars</label>
+                                    </fieldset>
+                                </div><br>
+                                <button type="submit" class="btn btn-outline-success mb-3">Submit</button>
+                            </form>
+                        </div>
+                        <hr>
+                        <% } %>
+                            <% if (showData.review.length) { %>
+                                <div class="cards row mx-auto px-0" style="max-width: 1200px;">
+                                    <h3>Reviews:</h3>
+                                    <% for (const review of showData.review) { %>
+                                        <div class="card review-card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <a href="/users/<%= review.author.username %>"
+                                                        class="text-decoration-none">@<%= review.author.username %></a>
+                                                </h5>
+                                                <p class="card-text starability-result"
+                                                    data-rating="<%= review.rating %>">
+                                                </p>
+                                                <p class="card-subtitle mb-2 text-body-secondary">
+                                                    <%= review.comment %>
+                                                </p>
+                                                <% if (currentUser && (currentUser._id.equals(review.author._id) ||
+                                                    currentUser.isAdmin)) { %>
+                                                    <form method="post"
+                                                        action="/listings/<%= showData.id %>/review/<%= review.id %>?_method=DELETE">
+                                                        <input type="hidden" name="id" value="<%= showData.id %>">
+                                                        <input type="hidden" name="reviewid" value="<%= review.id %>">
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-danger mb-3">Delete</button>
+                                                    </form>
+                                                    <% } %>
+                                            </div>
                                         </div>
                                         <% } %>
-                                            <div class="col-8 offset-2 mt-2 mb-4 map">
-                                                <h3>Where you'll be</h3>
-                                                <div id="map"></div>
-                                            </div>
+                                </div>
+                                <% } %>
+                                    <div class="col-12 mx-auto mt-2 mb-4 map" style="max-width: 1200px; padding: 0;">
+                                        <h3>Where you'll be</h3>
+                                        <div id="map"></div>
+                                    </div>
                 </body>
                 <script src="/Js/map.js"></script>
                 <style>
-                    #booking-btn {
+                    /* Main layout styling */
+                    .data-show-page {
+                        margin: 0 auto;
+                        max-width: 1200px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        padding: 0;
+                    }
+
+                    .data-info {
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                        border-radius: 12px;
+                        overflow: hidden;
+                        text-align: center;
+                    }
+
+                    /* Amenities badge styling */
+                    .badge.bg-primary {
+                        --bs-bg-opacity: 0.9;
+                        background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+                        box-shadow: var(--bs-box-shadow-sm);
+                    }
+
+                    .data-info {
+                        box-shadow: var(--bs-box-shadow-lg);
+                        border-radius: var(--bs-border-radius-xl);
+                    }
+
+                    .action-btn:hover {
+                        transform: translateY(-2px);
+                        box-shadow: var(--bs-box-shadow);
+                        filter: brightness(1.05);
+                    }
+
+                    .amenities-badges-container {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 12px;
+                        margin-top: 10px;
+                        align-items: center;
+                    }
+
+                    .amenities-container {
+                        margin-top: 15px;
+                        padding-bottom: 10px;
+                    }
+
+                    /* Action buttons styling */
+                    .action-buttons-container {
+                        padding: 0 15px;
+                    }
+
+                    .action-btn {
                         padding: 12px 24px;
-                        background-color: #28a745;
-                        color: white;
                         border-radius: 8px;
                         border: none;
                         transition: all 0.3s ease;
-                        margin: 16px auto;
-                        display: block;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        font-weight: 600;
+                        font-size: 1rem;
+                        min-width: 160px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
 
-                    #booking-btn:hover {
-                        background-color: #218838;
-                        transform: translateY(-2px);
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    /* Rent It button - Gradient green style */
+                    .rent-btn {
+                        background: linear-gradient(135deg, #2ecc71, #27ae60);
+                        color: white;
+                        border-radius: 12px;
                     }
 
-                    /* Responsive styles for star ratings */
-                    .starability-heartbeat {
-                        min-height: 30px;
+                    .rent-btn:hover {
+                        background: linear-gradient(135deg, #27ae60, #2ecc71);
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 15px rgba(46, 204, 113, 0.3);
                     }
 
-                    @media (max-width: 768px) {
-                        #booking-btn {
-                            padding: 10px 20px;
-                            font-size: 14px;
-                        }
-
-                        .starability-heartbeat {
-                            display: inline-block;
-                            width: 100%;
-                        }
-
-                        .starability-heartbeat>input {
-                            margin-right: 2px;
-                        }
-
-                        .starability-heartbeat>label {
-                            font-size: 0.9em;
-                            width: 25px;
-                            height: 25px;
-                        }
+                    /* Wishlist button - Soft pink with heart theme */
+                    .wishlist-btn {
+                        background-color: #ff758c;
+                        color: white;
+                        border-radius: 12px;
                     }
 
-                    @media (max-width: 576px) {
-                        .starability-heartbeat {
-                            transform: scale(0.85);
-                            transform-origin: left center;
-                        }
+                    .wishlist-btn:hover {
+                        background-color: #ff8da1;
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 15px rgba(255, 117, 140, 0.3);
+                    }
 
-                        .starability-heartbeat>label {
-                            width: 20px;
-                            height: 20px;
-                            background-size: 20px auto;
-                        }
+                    .wishlist-btn i {
+                        color: white;
+                        margin-right: 8px;
+                    }
 
-                        /* Review card star ratings */
-                        .review-card .starability-result {
-                            transform: scale(0.8);
-                            transform-origin: left center;
-                            margin-bottom: 5px;
-                        }
+                    /* Edit button - Professional blue style */
+                    .edit-btn {
+                        background-color: #3498db;
+                        color: white;
+                        border-radius: 12px;
+                    }
 
-                        .cards.row {
-                            margin: 0 10px;
-                        }
+                    .edit-btn:hover {
+                        background-color: #2980b9;
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 15px rgba(52, 152, 219, 0.3);
+                    }
 
-                        .review-card {
-                            margin-bottom: 15px;
-                        }
+                    .edit-btn i {
+                        color: white;
+                        margin-right: 8px;
+                    }
+
+                    /* Delete button - Bold red style */
+                    .delete-btn {
+                        background-color: #e74c3c;
+                        color: white;
+                        border-radius: 12px;
+                    }
+
+                    .delete-btn:hover {
+                        background-color: #c0392b;
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 15px rgba(231, 76, 60, 0.3);
+                    }
+
+                    .delete-btn i {
+                        color: white;
+                        margin-right: 8px;
                     }
                 </style>
                 <!--------------------- Payment Gateway ------------------>
@@ -300,25 +401,64 @@
                                 var options = {
                                     key: res.key_id,
                                     amount: res.amount,
-                                    currency: "INR",
-                                    method: 'upi',
-                                    _capture: true,
+                                    currency: res.currency,
+                                    description: res.description || 'Booking Payment',
+                                    image: '/images/logo.png',
+                                    prefill: {
+                                        name: res.customer_name || '',
+                                        email: res.customer_email || '',
+                                        contact: res.customer_phone || ''
+                                    },
+                                    config: {
+                                        display: {
+                                            blocks: {
+                                                banks: {
+                                                    name: 'Pay via UPI or Cards',
+                                                    instruments: [
+                                                        { method: 'upi' },
+                                                        { method: 'card' },
+                                                        { method: 'netbanking' }
+                                                    ],
+                                                },
+                                            },
+                                            sequence: ["block.banks"],
+                                            preferences: {
+                                                show_default_blocks: false
+                                            }
+                                        }
+                                    },
                                     upi: {
                                         flow: 'qr',
                                         vpa: 'razorpay@upi' // Generic UPI handle for QR
                                     },
                                     name: res.product_name || '<%= showData.title %>',
                                     order_id: res.order_id,
-                                    method: 'upi',
+                                    theme: {
+                                        color: "#2300a3"
+                                    },
+                                    modal: {
+                                        ondismiss: function () {
+                                            console.log('Payment modal closed');
+                                        },
+                                        confirm_close: true,
+                                        escape: true
+                                    },
                                     notes: {
                                         payment_type: 'upi_qr'
                                     },
                                     handler: function (response) {
                                         if (response.razorpay_payment_id) {
-                                            $.post('/payment-success', {
-                                                paymentId: response.razorpay_payment_id,
-                                                orderId: res.order_id,
-                                                listingId: '<%= showData.id %>'
+                                            // Payment successful, send to server for verification
+                                            fetch('/verify-payment', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json',
+                                                },
+                                                body: JSON.stringify({
+                                                    paymentId: response.razorpay_payment_id,
+                                                    orderId: res.order_id,
+                                                    listingId: '<%= showData.id %>'
+                                                })
                                             }).then((response) => {
                                                 if (response.success && response.redirectUrl) {
                                                     window.location.href = response.redirectUrl;
@@ -345,14 +485,11 @@
                         });
                     }
 
-                    // Initialize Razorpay payment
-                    $(document).ready(function () {
-                        // Prevent form submission
-                        $(".pay-form").on("submit", function (e) {
-                            e.preventDefault();
-                            return false;
-                        });
-
-                        // No longer needed as we're directly initiating payment
+                    // Prevent form submission
+                    $(".pay-form").on("submit", function (e) {
+                        e.preventDefault();
+                        return false;
                     });
+
+                    // No longer needed as we're directly initiating payment
                 </script>

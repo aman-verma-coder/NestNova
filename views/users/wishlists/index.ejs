@@ -1,0 +1,46 @@
+<% layout("/layout/boilerplate") -%>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>My Wishlists</h1>
+                    <a href="/wishlists/new" class="btn btn-success"><i class="fas fa-plus"></i> Create New Wishlist</a>
+                </div>
+
+                <% if (wishlists.length===0) { %>
+                    <div class="alert alert-info">
+                        <p>You don't have any wishlists yet. Create one to start saving your favorite places!</p>
+                    </div>
+                    <% } else { %>
+                        <div class="row">
+                            <% for(let wishlist of wishlists) { %>
+                                <div class="col-md-6 mb-4">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= wishlist.name %>
+                                            </h5>
+                                            <p class="card-text">
+                                                <%= wishlist.description %>
+                                            </p>
+                                            <p class="card-text"><small class="text-muted">
+                                                    <%= wishlist.listings.length %> listings
+                                                </small></p>
+                                        </div>
+                                        <div class="card-footer bg-white d-flex justify-content-between">
+                                            <a href="/wishlists/<%= wishlist._id %>"
+                                                class="btn btn-sm btn-primary">View</a>
+                                            <form action="/wishlists/<%= wishlist._id %>?_method=DELETE" method="POST"
+                                                class="d-inline">
+                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
