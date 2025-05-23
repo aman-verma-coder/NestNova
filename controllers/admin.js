@@ -330,7 +330,6 @@ module.exports.processRefund = async (req, res) => {
         if (booking.paymentId) {
             await razorpayInstance.payments.refund(booking.paymentId, {
                 amount: refundAmount,
-                speed: 'optimum',
                 notes: {
                     bookingId: booking._id.toString(),
                     reason: 'Cancellation refund - 50% of booking amount'
