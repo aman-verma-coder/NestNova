@@ -1,24 +1,31 @@
 <% layout("/layout/boilerplate") -%>
 
-    <div class="container-fluid py-3" style="background-color: #f8f9fa;">
+    <div class="container-fluid py-5" style="background-color: #f8f9fa;">
         <div class="container-fluid px-4">
             <div class="row">
                 <div class="col-12">
-                    <div class="card shadow w-100"
-                        style="border-radius: 8px; overflow: hidden; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;">
-                        <div class="card-header bg-success text-white py-2">
-                            <h2 class="text-center mb-0"><i class="fas fa-check-circle me-2"></i>Booking Successful!
-                            </h2>
+                    <div class="card shadow mx-auto"
+                        style="width: 95%; max-width: 1200px; border-radius: 12px; overflow: hidden; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;">
+                        <!-- Success Header with Animation -->
+                        <div class="card-header bg-success text-white py-3">
+                            <h2 class="text-center mb-0"><i class="fas fa-check-circle me-2"></i>Booking Confirmed!</h2>
                         </div>
-                        <div class="card-body p-3">
-                            <div class="text-center mb-3">
-                                <div class="success-animation mb-2">
-                                    <i class="fas fa-check-circle fa-3x text-success"></i>
+
+                        <div class="card-body p-4">
+                            <!-- Success Animation -->
+                            <div class="text-center mb-4">
+                                <div class="success-checkmark">
+                                    <div class="check-icon">
+                                        <span class="icon-line line-tip"></span>
+                                        <span class="icon-line line-long"></span>
+                                        <div class="icon-circle"></div>
+                                        <div class="icon-fix"></div>
+                                    </div>
                                 </div>
-                                <h3 class="fw-bold mb-2">Thank you for your booking!</h3>
-                                <p class="lead mb-2">Your payment has been processed successfully and your reservation
+                                <h3 class="fw-bold mb-2">Thank you for your booking, <%= currentUser.username %>!</h3>
+                                <p class="lead mb-3">Your payment has been processed successfully and your reservation
                                     is confirmed.</p>
-                                <div class="payment-id-box p-2 d-inline-block bg-light rounded-pill mt-1"
+                                <div class="payment-id-box p-2 d-inline-block bg-light rounded-pill mt-1 mb-2"
                                     style="border: 1px solid #dee2e6;">
                                     <p class="mb-0 fw-bold">Payment ID: <strong>
                                             <%= paymentId %>
@@ -26,124 +33,288 @@
                                 </div>
                             </div>
 
-                            <h3 class="border-bottom pb-2 mb-3" style="color: #2c3e50; font-weight: 700;">Your Itinerary
-                            </h3>
-                            <div class="row mt-2 g-3">
-                                <div class="col-md-6">
-                                    <div class="p-3 h-100 bg-white rounded-3 shadow-sm"
-                                        style="border-left: 5px solid #1a9988;">
-                                        <h4 class="mb-3">
-                                            <%= listing.title %>
-                                        </h4>
-                                        <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>
-                                            <%= listing.location %>
-                                        </p>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-calendar-alt"></i>
+                            <!-- Booking Summary Card -->
+                            <div class="booking-summary-card p-4 mb-4 bg-white rounded-4 shadow-sm"
+                                style="border-left: 5px solid #28a745;">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h3 class="mb-3" style="color: #2c3e50; font-weight: 700;">Your Booking Summary
+                                        </h3>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div
+                                                        class="icon-box bg-success bg-opacity-10 text-success rounded-circle me-3">
+                                                        <i class="fas fa-calendar-check"></i>
+                                                    </div>
+                                                    <div>
+                                                        <small class="text-muted d-block">Booking Date</small>
+                                                        <strong>
+                                                            <%= new Date().toLocaleDateString('en-IN', { weekday: 'long'
+                                                                , year: 'numeric' , month: 'long' , day: 'numeric' }) %>
+                                                        </strong>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="mb-0">Check-in: <strong>
-                                                        <%= booking.checkIn %>
-                                                    </strong></p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-calendar-alt"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Check-out: <strong>
-                                                        <%= booking.checkOut %>
-                                                    </strong></p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-user"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Guests: <strong>
-                                                        <%= booking.guests %>
-                                                    </strong></p>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div
+                                                        class="icon-box bg-success bg-opacity-10 text-success rounded-circle me-3">
+                                                        <i class="fas fa-tag"></i>
+                                                    </div>
+                                                    <div>
+                                                        <small class="text-muted d-block">Booking Status</small>
+                                                        <span class="badge bg-success">Confirmed</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="p-3 h-100 bg-white rounded-3 shadow-sm"
-                                        style="border-left: 5px solid #1a9988;">
-                                        <h4 class="mb-3">Payment Details</h4>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-rupee-sign"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Amount Paid: <strong>₹<%=
-                                                            (booking.amount/100).toFixed(2) %></strong></p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center mb-3">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-credit-card"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Payment Method: <strong>Razorpay</strong></p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <div class="bg-light p-1 rounded-3 me-2"
-                                                style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                <i class="fas fa-receipt"></i>
-                                            </div>
-                                            <div>
-                                                <p class="mb-0">Order ID: <strong class="text-muted">
-                                                        <%= booking.orderId %>
-                                                    </strong></p>
+                                    <div class="col-md-4 text-md-end">
+                                        <div class="qr-code bg-white p-2 d-inline-block rounded shadow-sm"
+                                            style="border: 1px dashed #28a745;">
+                                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=BOOKING:<%= paymentId %>"
+                                                alt="Booking QR Code" class="img-fluid"
+                                                style="width: 100px; height: 100px;">
+                                            <div class="text-center mt-1">
+                                                <small class="text-muted">Scan for details</small>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mt-3 pt-2 bg-white p-3 rounded-3 shadow-sm"
+                            <!-- Itinerary Section -->
+                            <h3 class="border-bottom pb-2 mb-3" style="color: #2c3e50; font-weight: 700;">Your Itinerary
+                            </h3>
+                            <div class="row mt-3 g-4">
+                                <!-- Property Details -->
+                                <div class="col-md-6">
+                                    <div class="p-4 h-100 bg-white rounded-4 shadow-sm"
+                                        style="border-left: 5px solid #1a9988;">
+                                        <h4 class="mb-3 d-flex align-items-center">
+                                            <i class="fas fa-home text-primary me-2"></i>
+                                            Property Details
+                                        </h4>
+                                        <h5 class="mb-3">
+                                            <%= listing.title %>
+                                        </h5>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-map-marker-alt text-danger"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Location</small>
+                                                <strong>
+                                                    <%= listing.location %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-calendar-alt text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Check-in</small>
+                                                <strong>
+                                                    <%= new Date(booking.checkIn).toLocaleDateString('en-IN', {
+                                                        weekday: 'short' , month: 'short' , day: 'numeric' ,
+                                                        year: 'numeric' }) %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-calendar-alt text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Check-out</small>
+                                                <strong>
+                                                    <%= new Date(booking.checkOut).toLocaleDateString('en-IN', {
+                                                        weekday: 'short' , month: 'short' , day: 'numeric' ,
+                                                        year: 'numeric' }) %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-user text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Guests</small>
+                                                <strong>
+                                                    <%= booking.guests %>
+                                                        <%= booking.guests> 1 ? 'people' : 'person' %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-bed text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Property Type</small>
+                                                <strong>
+                                                    <%= listing.category || 'Standard' %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Payment Details -->
+                                <div class="col-md-6">
+                                    <div class="p-4 h-100 bg-white rounded-4 shadow-sm"
+                                        style="border-left: 5px solid #1a9988;">
+                                        <h4 class="mb-3 d-flex align-items-center">
+                                            <i class="fas fa-credit-card text-primary me-2"></i>
+                                            Payment Details
+                                        </h4>
+                                        <div class="payment-summary p-3 mb-3 bg-light rounded-3">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Base Price:</span>
+                                                <span>₹<%= (booking.amount/100).toFixed(2) %></span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Taxes & Fees:</span>
+                                                <span>Included</span>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex justify-content-between fw-bold">
+                                                <span>Total Amount:</span>
+                                                <span>₹<%= (booking.amount/100).toFixed(2) %></span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-rupee-sign text-success"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Amount Paid</small>
+                                                <strong>₹<%= (booking.amount/100).toFixed(2) %></strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-credit-card text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Payment Method</small>
+                                                <strong>Razorpay</strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-receipt text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Order ID</small>
+                                                <strong class="text-muted">
+                                                    <%= booking.orderId %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-calendar text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Payment Date</small>
+                                                <strong>
+                                                    <%= new Date().toLocaleDateString('en-IN', { day: 'numeric' ,
+                                                        month: 'short' , year: 'numeric' }) %>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Host Information -->
+                            <div class="mt-4 pt-3 bg-white p-4 rounded-4 shadow-sm"
                                 style="border-top: 3px solid #6c757d;">
-                                <h4 class="mb-3"><i class="fas fa-user-circle me-2"></i>Host Information
+                                <h4 class="mb-3"><i class="fas fa-user-circle text-primary me-2"></i>Host Information
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p><i class="fas fa-user me-2"></i>Host: <strong>
-                                                <%= listing.owner.username %>
-                                            </strong></p>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="host-avatar me-3 bg-light rounded-circle d-flex align-items-center justify-content-center"
+                                                style="width: 50px; height: 50px;">
+                                                <i class="fas fa-user fa-lg text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Host Name</small>
+                                                <strong>
+                                                    <%= listing.owner.username %>
+                                                </strong>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <p><i class="fas fa-envelope me-2"></i>Contact: <strong>
-                                                <%= listing.owner.email %>
-                                            </strong></p>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="icon-box bg-light rounded-circle me-3">
+                                                <i class="fas fa-envelope text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted d-block">Contact Email</small>
+                                                <strong>
+                                                    <%= listing.owner.email %>
+                                                </strong>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="mt-3 pt-2 border-top">
+                            <!-- Important Notes -->
+                            <div class="mt-4 pt-3 bg-white p-4 rounded-4 shadow-sm"
+                                style="border-top: 3px solid #ffc107;">
+                                <h4 class="mb-3"><i class="fas fa-exclamation-circle text-warning me-2"></i>Important
+                                    Notes</h4>
                                 <div class="row">
-                                    <div class="col-12 mb-2">
+                                    <div class="col-md-12">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item bg-transparent px-0">
+                                                <i class="fas fa-check-circle text-success me-2"></i> Check-in time
+                                                starts at 2:00 PM on your arrival date.
+                                            </li>
+                                            <li class="list-group-item bg-transparent px-0">
+                                                <i class="fas fa-check-circle text-success me-2"></i> Check-out time is
+                                                11:00 AM on your departure date.
+                                            </li>
+                                            <li class="list-group-item bg-transparent px-0">
+                                                <i class="fas fa-check-circle text-success me-2"></i> Please contact the
+                                                host directly for any special requests.
+                                            </li>
+                                            <li class="list-group-item bg-transparent px-0">
+                                                <i class="fas fa-check-circle text-success me-2"></i> A confirmation
+                                                email has been sent to your registered email address.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="row">
+                                    <div class="col-12 mb-3">
                                         <div class="alert alert-info" role="alert">
                                             <i class="fas fa-info-circle me-2"></i> A confirmation email with your
                                             booking details has been sent to your registered email address.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
-                                    <a href="/listings" class="btn btn-outline-primary px-3 py-2"
+                                <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                                    <a href="/users/bookings" class="btn btn-outline-primary px-4 py-2"
+                                        style="border-radius: 30px;">
+                                        <i class="fas fa-list-alt me-2"></i> View My Bookings
+                                    </a>
+                                    <a href="/listings" class="btn btn-outline-secondary px-4 py-2"
                                         style="border-radius: 30px;">
                                         <i class="fas fa-search me-2"></i> Browse More Listings
                                     </a>
-                                    <a href="/listings/<%= listing._id %>/show" class="btn btn-primary px-3 py-2"
+                                    <a href="/listings/<%= listing._id %>/show" class="btn btn-primary px-4 py-2"
                                         style="border-radius: 30px;">
                                         <i class="fas fa-eye me-2"></i> View Property
                                     </a>
@@ -156,12 +327,194 @@
         </div>
 
         <style>
+            /* Success Checkmark Animation */
+            .success-checkmark {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 20px;
+                position: relative;
+            }
+
+            .success-checkmark .check-icon {
+                width: 80px;
+                height: 80px;
+                position: relative;
+                border-radius: 50%;
+                box-sizing: content-box;
+                border: 4px solid #28a745;
+            }
+
+            .success-checkmark .check-icon::before {
+                top: 3px;
+                left: -2px;
+                width: 30px;
+                transform-origin: 100% 50%;
+                border-radius: 100px 0 0 100px;
+            }
+
+            .success-checkmark .check-icon::after {
+                top: 0;
+                left: 30px;
+                width: 60px;
+                transform-origin: 0 50%;
+                border-radius: 0 100px 100px 0;
+                animation: rotate-circle 4.25s ease-in;
+            }
+
+            .success-checkmark .check-icon::before,
+            .success-checkmark .check-icon::after {
+                content: '';
+                height: 100px;
+                position: absolute;
+                background: #f8f9fa;
+                transform: rotate(-45deg);
+            }
+
+            .success-checkmark .check-icon .icon-line {
+                height: 5px;
+                background-color: #28a745;
+                display: block;
+                border-radius: 2px;
+                position: absolute;
+                z-index: 10;
+            }
+
+            .success-checkmark .check-icon .icon-line.line-tip {
+                top: 46px;
+                left: 14px;
+                width: 25px;
+                transform: rotate(45deg);
+                animation: icon-line-tip 0.75s;
+            }
+
+            .success-checkmark .check-icon .icon-line.line-long {
+                top: 38px;
+                right: 8px;
+                width: 47px;
+                transform: rotate(-45deg);
+                animation: icon-line-long 0.75s;
+            }
+
+            .success-checkmark .check-icon .icon-circle {
+                top: -4px;
+                left: -4px;
+                z-index: 10;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                position: absolute;
+                box-sizing: content-box;
+                border: 4px solid #28a745;
+            }
+
+            .success-checkmark .check-icon .icon-fix {
+                top: 8px;
+                width: 5px;
+                left: 26px;
+                z-index: 1;
+                height: 85px;
+                position: absolute;
+                transform: rotate(-45deg);
+                background-color: #f8f9fa;
+            }
+
+            @keyframes rotate-circle {
+                0% {
+                    transform: rotate(-45deg);
+                }
+
+                5% {
+                    transform: rotate(-45deg);
+                }
+
+                12% {
+                    transform: rotate(-405deg);
+                }
+
+                100% {
+                    transform: rotate(-405deg);
+                }
+            }
+
+            @keyframes icon-line-tip {
+                0% {
+                    width: 0;
+                    left: 1px;
+                    top: 19px;
+                }
+
+                54% {
+                    width: 0;
+                    left: 1px;
+                    top: 19px;
+                }
+
+                70% {
+                    width: 50px;
+                    left: -8px;
+                    top: 37px;
+                }
+
+                84% {
+                    width: 17px;
+                    left: 21px;
+                    top: 48px;
+                }
+
+                100% {
+                    width: 25px;
+                    left: 14px;
+                    top: 46px;
+                }
+            }
+
+            @keyframes icon-line-long {
+                0% {
+                    width: 0;
+                    right: 46px;
+                    top: 54px;
+                }
+
+                65% {
+                    width: 0;
+                    right: 46px;
+                    top: 54px;
+                }
+
+                84% {
+                    width: 55px;
+                    right: 0px;
+                    top: 35px;
+                }
+
+                100% {
+                    width: 47px;
+                    right: 8px;
+                    top: 38px;
+                }
+            }
+
+            /* Other Styles */
             .btn {
-                transition: all 0.2s ease;
+                transition: all 0.3s ease;
             }
 
             .btn:hover {
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .icon-box {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .rounded-4 {
+                border-radius: 0.75rem !important;
             }
         </style>
 

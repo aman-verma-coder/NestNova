@@ -449,7 +449,7 @@
                                     handler: function (response) {
                                         if (response.razorpay_payment_id) {
                                             // Payment successful, send to server for verification
-                                            fetch('/verify-payment', {
+                                            fetch(window.location.origin + '/payment-success', {
                                                 method: 'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json',
@@ -459,13 +459,23 @@
                                                     orderId: res.order_id,
                                                     listingId: '<%= showData.id %>'
                                                 })
-                                            }).then((response) => {
-                                                if (response.success && response.redirectUrl) {
-                                                    window.location.href = response.redirectUrl;
-                                                } else {
-                                                    window.location.href = `/listings/<%= showData.id %>?payment_success=1`;
+                                            }).then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error(`HTTP error! status: ${response.status}`);
                                                 }
-                                            });
+                                                return response.json();
+                                            })
+                                                .then(data => {
+                                                    if (data.success && data.redirectUrl) {
+                                                        window.location.href = data.redirectUrl;
+                                                    } else {
+                                                        throw new Error('No redirect URL provided or success flag is false');
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error:', error);
+                                                    alert('Payment verification failed. Please contact support.');
+                                                });
                                         }
                                     },
                                     theme: { color: "#2300a3" }

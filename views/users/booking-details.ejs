@@ -1,0 +1,103 @@
+<% layout('/layout/boilerplate') -%>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Booking Details #<%= booking._id %>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Listing:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.listing.title %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Location:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.listing.location %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Check-in Date:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.checkIn.toDateString() %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Check-out Date:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.checkOut.toDateString() %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Guests:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.guests %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Total Price:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                Rs <%= booking.totalPrice.toFixed(2) %>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <strong>Status:</strong>
+                            </div>
+                            <div class="col-md-8">
+                                <%= booking.status %>
+                            </div>
+                        </div>
+                        <% if (booking.paymentId) { %>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <strong>Payment ID:</strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <%= booking.paymentId %>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% if (booking.orderId) { %>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <strong>Order ID:</strong>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <%= booking.orderId %>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <div class="mt-4 text-center">
+                                            <a href="/users/bookings" class="btn btn-secondary">Back to Bookings</a>
+                                            <% if (booking.status==='pending' || booking.status==='confirmed' ) { %>
+                                                <form action="/users/bookings/<%= booking._id %>/cancel?_method=POST"
+                                                    method="POST" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('Are you sure you want to cancel this booking? A 50% refund will be processed.');">Cancel
+                                                        Booking</button>
+                                                </form>
+                                                <% } %>
+                                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

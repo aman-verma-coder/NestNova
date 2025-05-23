@@ -37,4 +37,8 @@ router.post("/users/change-password", isLoggedIn, wrapAsync(userController.chang
 // Update notification preferences
 router.post("/users/update-notifications", isLoggedIn, wrapAsync(userController.updateNotifications));
 
+// Booking routes
+router.get("/users/bookings/:id", isLoggedIn, wrapAsync(userController.renderBookingDetails));
+router.post("/users/bookings/:id/cancel", isLoggedIn, wrapAsync(userController.cancelBooking));
+
 module.exports = router;

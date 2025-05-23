@@ -40,6 +40,10 @@ const bookingSchema = new Schema({
     orderId: {
         type: String
     },
+    refundProcessed: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: Date.now

@@ -4,6 +4,7 @@ const User = require("../models/user.js");
 const Booking = require("../models/booking.js");
 const analyticsController = require("./analytics.js");
 const auditLogger = require("../utils/auditLogger.js");
+const Razorpay = require("razorpay");
 
 // Render admin dashboard with pending listings and reviews
 module.exports.renderDashboard = async (req, res) => {
@@ -63,13 +64,9 @@ module.exports.approveListing = async (req, res) => {
     // Find the pending listing
     const listing = await Listing.findById(id);
 
-    // Create a copy in the main database
-    const approvedListing = new Listing(listing.toObject());
-    approvedListing.status = "approved";
-    await approvedListing.save();
-
-    // Remove from pending database
-    await Listing.findByIdAndDelete(id);
+    // Update the listing status directly instead of creating a new one
+    listing.status = "approved";
+    await listing.save();
 
     // Log the approval action
     await auditLogger.log({
@@ -271,6 +268,121 @@ module.exports.renderBookings = async (req, res) => {
     }).sort({ createdAt: -1 });
 
     res.render("admin/bookings.ejs", { bookings });
+};
+
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    const { id } = req.params;
+
+    // Get the booking with populated listing and user information
+    const booking = await Booking.findById(id).populate({
+        path: "listing",
+        select: "title price location image"
+    }).populate({
+        path: "user",
+        select: "username email createdAt"
+    });
+
+    if (!booking) {
+        req.flash("error", "Booking not found");
+        return res.redirect("/admin/bookings");
+    }
+
+    res.render("admin/booking-details.ejs", { booking });
+};
+
+// Render cancellations management page
+module.exports.renderCancellations = async (req, res) => {
+    // Get all cancelled bookings with populated listing and user information
+    const cancellations = await Booking.find({ status: "cancelled" }).populate({
+        path: "listing",
+        select: "title price location"
+    }).populate({
+        path: "user",
+        select: "username email"
+    }).sort({ updatedAt: -1 });
+
+    res.render("admin/cancellations.ejs", { cancellations });
+};
+
+// Process refund for a cancelled booking
+module.exports.processRefund = async (req, res) => {
+    const { id } = req.params;
+
+    const booking = await Booking.findById(id);
+
+    if (!booking || booking.status !== "cancelled") {
+        req.flash("error", "Booking not found or is not cancelled");
+        return res.redirect("/admin/cancellations");
+    }
+
+    try {
+        // Calculate 50% refund amount in paise (Razorpay uses paise)
+        const refundAmount = Math.round(booking.totalPrice * 0.5 * 100);
+
+        // Initialize Razorpay instance
+        const razorpayInstance = new Razorpay({
+            key_id: process.env.RAZORPAY_ID_KEY,
+            key_secret: process.env.RAZORPAY_SECRET_KEY
+        });
+
+        // Process the refund if payment ID exists
+        if (booking.paymentId) {
+            await razorpayInstance.payments.refund(booking.paymentId, {
+                amount: refundAmount,
+                speed: 'optimum',
+                notes: {
+                    bookingId: booking._id.toString(),
+                    reason: 'Cancellation refund - 50% of booking amount'
+                }
+            });
+
+            // Update the booking to mark refund as processed
+            await Booking.findByIdAndUpdate(id, { refundProcessed: true });
+
+            // Log the refund processing action with amount details
+            await auditLogger.log({
+                user: req.user.username,
+                action: "process_refund",
+                resourceType: "booking",
+                resourceId: id,
+                ipAddress: req.ip,
+                status: "success",
+                changes: {
+                    before: { refundProcessed: false },
+                    after: { refundProcessed: true, refundAmount: (refundAmount / 100).toFixed(2) }
+                }
+            });
+
+            req.flash("success", `Refund of ₹${(refundAmount / 100).toFixed(2)} (50% of booking amount) has been processed successfully`);
+        } else {
+            // No payment ID found, just mark as processed
+            await Booking.findByIdAndUpdate(id, { refundProcessed: true });
+
+            // Log the action
+            await auditLogger.log({
+                user: req.user.username,
+                action: "process_refund",
+                resourceType: "booking",
+                resourceId: id,
+                ipAddress: req.ip,
+                status: "warning",
+                changes: {
+                    before: { refundProcessed: false },
+                    after: { refundProcessed: true }
+                },
+                notes: "No payment ID found for this booking"
+            });
+
+            req.flash("warning", "Booking marked as refunded, but no payment ID was found to process actual refund");
+        }
+
+        res.redirect("/admin/cancellations");
+    } catch (error) {
+        console.error("Refund processing error:", error);
+        req.flash("error", `Failed to process refund: ${error.message}`);
+        res.redirect("/admin/cancellations");
+    }
 };
 
 // Confirm a booking

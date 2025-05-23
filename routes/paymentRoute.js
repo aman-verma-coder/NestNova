@@ -16,5 +16,6 @@ payment_route.get('/', paymentController.renderProductPage);
 payment_route.post('/createOrder', paymentController.createOrder);
 payment_route.post('/payment-success', paymentController.handlePaymentSuccess);
 payment_route.get('/booking-success', paymentController.renderBookingSuccess);
+payment_route.post('/users/bookings/:id/cancel', paymentController.cancelBooking);
 
 module.exports = payment_route;

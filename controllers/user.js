@@ -38,6 +38,31 @@ module.exports.signupPost = async (req, res) => {
     }
 };
 
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
 module.exports.renderLoginForm = (req, res) => {
     res.render("users/login.ejs");
 };
@@ -111,6 +136,31 @@ module.exports.renderProfile = async (req, res) => {
     }
 };
 
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
 module.exports.updateProfile = async (req, res) => {
     try {
         const { username, email, phone, bio } = req.body;
@@ -148,6 +198,31 @@ module.exports.updateProfile = async (req, res) => {
     }
 };
 
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
 
 module.exports.changePassword = async (req, res) => {
     try {
@@ -180,6 +255,31 @@ module.exports.changePassword = async (req, res) => {
         res.redirect("/listings");
     }
 };
+
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
 
 module.exports.updateNotifications = async (req, res) => {
     try {
@@ -224,6 +324,31 @@ module.exports.updateNotifications = async (req, res) => {
     }
 };
 
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
 
 // View another user's profile
 module.exports.viewUserProfile = async (req, res) => {
@@ -254,6 +379,31 @@ module.exports.viewUserProfile = async (req, res) => {
     }
 };
 
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
 
 module.exports.renderBookings = async (req, res) => {
     try {
@@ -266,5 +416,77 @@ module.exports.renderBookings = async (req, res) => {
     } catch (error) {
         req.flash("error", "Unable to fetch bookings.");
         res.redirect("/profile");
+    }
+};
+
+// Cancel a booking
+module.exports.cancelBooking = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id);
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to cancel this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the booking is already cancelled or completed
+        if (booking.status === 'cancelled' || booking.status === 'completed') {
+            req.flash('error', `Booking is already ${booking.status}. Cannot cancel.`);
+            return res.redirect('/users/bookings');
+        }
+
+        // Update booking status to cancelled
+        booking.status = 'cancelled';
+        await booking.save();
+
+        // Log the booking cancellation action
+        await auditLogger.log({
+            user: req.user.username,
+            action: "cancel",
+            resourceType: "booking",
+            resourceId: booking._id.toString(),
+            ipAddress: req.ip,
+            status: "success",
+            details: { before: { status: "pending or confirmed" }, after: { status: "cancelled" } }
+        });
+
+        req.flash('success', 'Booking cancelled successfully.');
+        res.redirect('/users/bookings');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Failed to cancel booking: ' + error.message);
+        res.redirect('/users/bookings');
+    }
+};
+
+
+// Render booking details page
+module.exports.renderBookingDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const booking = await Booking.findById(id).populate('listing');
+
+        if (!booking) {
+            req.flash('error', 'Booking not found');
+            return res.redirect('/users/bookings');
+        }
+
+        // Check if the logged-in user is the owner of the booking
+        if (!booking.user.equals(req.user._id)) {
+            req.flash('error', 'You are not authorized to view this booking');
+            return res.redirect('/users/bookings');
+        }
+
+        res.render('users/booking-details.ejs', { booking });
+    } catch (error) {
+        req.flash('error', 'Failed to load booking details: ' + error.message);
+        res.redirect('/users/bookings');
     }
 };
