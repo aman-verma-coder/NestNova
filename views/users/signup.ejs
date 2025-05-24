@@ -1,35 +1,165 @@
 <% layout("/layout/boilerplate") -%>
 
+    <!-- Include auth.css for enhanced styling -->
+    <link rel="stylesheet" href="/css/auth.css">
+
     <body>
         <div class="container mt-3">
-            <div class="row">
-                <div class="col-6 offset-3">
-                    <h2>Signup on NestNova</h2>
-                    <form action="/signup" method="post" class="needs-validation" novalidate>
-                        <div class="form-group mt-2">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                placeholder="Enter Username" required>
-                            <div class="valid-feedback">Looks Good!</div>
-                            <div class="invalid-feedback">This field can't be empty!</div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="auth-card">
+                        <!-- Decorative elements -->
+                        <div class="auth-decoration auth-decoration-1"></div>
+                        <div class="auth-decoration auth-decoration-2"></div>
+
+                        <!-- Auth header -->
+                        <div class="auth-header">
+                            <h2>Create Account</h2>
+                            <p>Join NestNova and start your journey</p>
                         </div>
-                        <div class="form-group mt-2">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email"
-                                required>
-                            <div class="valid-feedback">Looks Good!</div>
-                            <div class="invalid-feedback">This field can't be empty!</div>
+
+                        <!-- Auth form -->
+                        <form action="/signup" method="post" class="auth-form needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Choose a username" required>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please choose a username</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter your email" required>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please enter a valid email address</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Create a password" required>
+                                <div class="valid-feedback">Looks good!</div>
+                                <div class="invalid-feedback">Please create a password</div>
+                                <div class="password-strength-meter">
+                                    <div class="strength-value"></div>
+                                    <div class="strength-text">Password strength: Too weak</div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="auth-btn">Sign Up</button>
+                        </form>
+
+                        <!-- Alternative signup options -->
+                        <div class="alt-login">
+                            <span>Or sign up with</span>
+                            <div class="social-login">
+                                <a href="/auth/google" class="social-btn" title="Google">
+                                    <i class="fab fa-google"></i>
+                                </a>
+                                <a href="/auth/facebook" class="social-btn" title="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="/auth/twitter" class="social-btn" title="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="form-group mt-2">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter Password" required>
-                            <div class="valid-feedback">Looks Good!</div>
-                            <div class="invalid-feedback">This field can't be empty!</div>
+
+                        <!-- Switch to login -->
+                        <div class="auth-switch">
+                            Already have an account? <a href="/login">Sign in</a>
                         </div>
-                        <button type="submit" class="btn btn-default btn-success mt-4">Signup</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Add JavaScript for animations and validation -->
+        <script src="/Js/auth-animations.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Password strength meter
+                const passwordInput = document.querySelector('#password');
+                const strengthMeter = document.querySelector('.password-strength-meter');
+                const strengthValue = document.querySelector('.strength-value');
+                const strengthText = document.querySelector('.strength-text');
+
+                if (passwordInput && strengthMeter && strengthValue && strengthText) {
+                    passwordInput.addEventListener('input', function () {
+                        const val = this.value;
+                        let strength = 0;
+                        let status = '';
+
+                        if (val.length >= 8) strength += 1;
+                        if (val.match(/[a-z]+/)) strength += 1;
+                        if (val.match(/[A-Z]+/)) strength += 1;
+                        if (val.match(/[0-9]+/)) strength += 1;
+                        if (val.match(/[^a-zA-Z0-9]+/)) strength += 1;
+
+                        switch (strength) {
+                            case 0:
+                                strengthValue.style.width = '0%';
+                                strengthValue.style.backgroundColor = '#dc3545';
+                                status = 'Too weak';
+                                break;
+                            case 1:
+                                strengthValue.style.width = '20%';
+                                strengthValue.style.backgroundColor = '#dc3545';
+                                status = 'Weak';
+                                break;
+                            case 2:
+                                strengthValue.style.width = '40%';
+                                strengthValue.style.backgroundColor = '#ffc107';
+                                status = 'Fair';
+                                break;
+                            case 3:
+                                strengthValue.style.width = '60%';
+                                strengthValue.style.backgroundColor = '#fd7e14';
+                                status = 'Good';
+                                break;
+                            case 4:
+                                strengthValue.style.width = '80%';
+                                strengthValue.style.backgroundColor = '#20c997';
+                                status = 'Strong';
+                                break;
+                            case 5:
+                                strengthValue.style.width = '100%';
+                                strengthValue.style.backgroundColor = '#198754';
+                                status = 'Very strong';
+                                break;
+                        }
+
+                        strengthText.textContent = `Password strength: ${status}`;
+                        strengthText.style.color = strengthValue.style.backgroundColor;
+
+                        // Animate the meter
+                        strengthMeter.classList.add('active');
+                    });
+                }
+
+                // Form validation
+                const form = document.querySelector('.auth-form');
+                if (form) {
+                    form.addEventListener('submit', function (e) {
+                        if (!this.checkValidity()) {
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            // Add shake animation to invalid fields
+                            const invalidInputs = this.querySelectorAll(':invalid');
+                            invalidInputs.forEach(input => {
+                                input.classList.add('shake-animation');
+                                setTimeout(() => {
+                                    input.classList.remove('shake-animation');
+                                }, 500);
+                            });
+                        }
+
+                        this.classList.add('was-validated');
+                    });
+                }
+            });
+        </script>
     </body>

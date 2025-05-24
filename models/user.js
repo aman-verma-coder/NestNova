@@ -24,6 +24,16 @@ const userSchema = new Schema({
     phone: {
         type: String
     },
+    // Social authentication fields
+    googleId: {
+        type: String
+    },
+    facebookId: {
+        type: String
+    },
+    twitterId: {
+        type: String
+    },
     notificationPreferences: {
         emailNotifications: {
             type: Boolean,

@@ -24,6 +24,7 @@ const footerRouter = require("./routes/footer.js");
 const adminRouter = require("./routes/admin.js");
 const notificationRouter = require("./routes/notification.js");
 const wishlistRouter = require("./routes/wishlist.js");
+const authRouter = require("./routes/auth.js");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -100,6 +101,11 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Configure passport strategies
+require('./config/passport-config')();
+
+// Local strategy is still needed for regular login
 passport.use(new LocaStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
@@ -151,6 +157,7 @@ app.use("/listings/:id/review", reviewRouter);
 app.use("/", footerRouter);
 app.use("/", userRouter);
 app.use("/", paymentRoute);
+app.use("/", authRouter);
 app.use("/admin", adminRouter);
 app.use("/wishlists", wishlistRouter);
 app.use("/notifications", notificationRouter);
