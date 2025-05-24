@@ -1,0 +1,247 @@
+<% layout("/layout/boilerplate") -%>
+
+    <style>
+        .deletion-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .deletion-header {
+            background: linear-gradient(135deg, #4a89dc 0%, #5e72e4 100%);
+            border-radius: 10px 10px 0 0;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(94, 114, 228, 0.3);
+        }
+
+        .deletion-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .deletion-header h2 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin: 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .deletion-body {
+            padding: 2.5rem;
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f1f9fe 0%, #dcf0fd 100%);
+            border-left: 5px solid #4a89dc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-box h5 {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .info-box ul {
+            padding-left: 1.5rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e6ed;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #5e72e4;
+            box-shadow: 0 0 0 0.25rem rgba(94, 114, 228, 0.25);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #f5365c 0%, #f56036 100%);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(245, 54, 92, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(245, 54, 92, 0.4);
+        }
+
+        .deletion-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 1.5rem;
+            border-radius: 0 0 10px 10px;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .success-animation {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #f8f9fa;
+            box-shadow: 0 0 0 15px rgba(40, 167, 69, 0.1);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .success-icon i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="deletion-container">
+                    <div class="deletion-header">
+                        <h2><i class="fas fa-shield-alt mr-2"></i> Data Deletion Request</h2>
+                    </div>
+                    <div class="deletion-body">
+                        <p class="lead">At NestNova, we respect your privacy and data rights. You can request deletion
+                            of your personal data by submitting this form.</p>
+
+                        <div class="info-box">
+                            <h5><i class="fas fa-info-circle"></i> What happens when you request data deletion?</h5>
+                            <ul>
+                                <li>All your personal information will be permanently removed from our systems</li>
+                                <li>Your account will be deactivated</li>
+                                <li>Your booking history will be anonymized</li>
+                                <li>Your reviews will be anonymized or removed based on your preference</li>
+                            </ul>
+                        </div>
+
+                        <form id="data-deletion-form" class="mt-4">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="form-text">Please provide the email associated with your account</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="reason" class="form-label">Reason for deletion</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-question-circle"></i></span>
+                                        <select class="form-select" id="reason">
+                                            <option value="">Select a reason (optional)</option>
+                                            <option value="privacy">Privacy concerns</option>
+                                            <option value="unused">No longer using the service</option>
+                                            <option value="experience">Unsatisfactory experience</option>
+                                            <option value="other">Other reason</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="comments" class="form-label">Additional comments</label>
+                                <textarea class="form-control" id="comments" rows="4"
+                                    placeholder="Please provide any additional information that might help us process your request..."></textarea>
+                            </div>
+
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input" id="confirm" required>
+                                <label class="form-check-label" for="confirm">I understand that this action cannot be
+                                    undone and all my data will be permanently deleted</label>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-delete btn-lg"><i
+                                        class="fas fa-trash-alt me-2"></i> Request Data Deletion</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="deletion-footer">
+                        <p class="mb-0">We will process your request within 30 days as required by applicable privacy
+                            laws. You will receive a confirmation email once your data has been deleted.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('data-deletion-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Here you would normally send the form data to your server
+            // For now, we'll just show a success message
+
+            const formContainer = document.querySelector('.deletion-body');
+            var successHtml = '<div class="text-center py-5 success-animation">' +
+                '<div class="success-icon">' +
+                '<i class="fas fa-check-circle text-success" style="font-size: 3rem;"></i>' +
+                '</div>' +
+                '<h3 class="mt-4 fw-bold">Request Submitted Successfully</h3>' +
+                '<p class="lead">We have received your data deletion request. Our team will process it within 30 days and send a confirmation to your email.</p>' +
+                '<a href="/" class="btn btn-primary btn-lg mt-3"><i class="fas fa-home me-2"></i> Return to Homepage</a>' +
+                '</div>';
+            formContainer.innerHTML = successHtml;
+
+            // Scroll to top of success message
+            window.scrollTo({
+                top: formContainer.offsetTop - 100,
+                behavior: 'smooth'
+            });
+        });
+    </script>
