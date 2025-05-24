@@ -379,7 +379,7 @@ module.exports.processRefund = async (req, res) => {
         res.redirect("/admin/cancellations");
     } catch (error) {
         console.error("Refund processing error:", error);
-        req.flash("error", `Failed to process refund: ${error.message}`);
+        req.flash("error", `Failed to process refund: ${error.error.description}`);
         res.redirect("/admin/cancellations");
     }
 };

@@ -80,7 +80,7 @@
                 <div class="card admin-card summary-card">
                     <div class="card-body text-center">
                         <h5 class="card-title">Total Revenue</h5>
-                        <h2 class="mb-0">$<%= analyticsData.revenue.toFixed(2) %>
+                        <h2 class="mb-0">₹<%= analyticsData.revenue.toFixed(2) %>
                         </h2>
                         <div class="small text-muted mt-2">
                             From <%= analyticsData.counts.bookings.completed %> completed bookings
@@ -172,7 +172,7 @@
                                             <td>
                                                 <%= booking.user.username %>
                                             </td>
-                                            <td>$<%= booking.totalPrice.toFixed(2) %>
+                                            <td>₹<%= booking.totalPrice.toFixed(2) %>
                                             </td>
                                             <td>
                                                 <span
