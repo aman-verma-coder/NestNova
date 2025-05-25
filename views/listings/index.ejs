@@ -187,60 +187,58 @@
                 </form>
             </div>
         </div>
-        <%= success %>
-            <% if(typeof searchQuery !=="undefined" ) { %>
-                <h2 class="show-page mt-4 mb-4">Search results for "<%= searchQuery %>"</h2>
-                <% if(allListings.length===0) { %>
-                    <div class="alert alert-info">No listings found matching your search. <a href="/listings">View all
-                            listings</a></div>
-                    <% } %>
-                        <% } else { %>
-                            <h2 class="show-page mt-4 mb-4">All listings</h2>
-                            <% } %>
-                                <!-- <form method="get" action="/listings/new">
+        <% if(typeof searchQuery !=="undefined" ) { %>
+            <h2 class="show-page mt-4 mb-4">Search results for "<%= searchQuery %>"</h2>
+            <% if(allListings.length===0) { %>
+                <div class="alert alert-info">No listings found matching your search. <a href="/listings">View all
+                        listings</a></div>
+                <% } %>
+                    <% } else { %>
+                        <h2 class="show-page mt-4 mb-4">All listings</h2>
+                        <% } %>
+                            <!-- <form method="get" action="/listings/new">
             <button>Add New Listing</button>
         </form><br> -->
-                                <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 show-page">
-                                    <% for (const listing of allListings) { %>
-                                        <a href="/listings/<%= listing._id %>/show" class="listing-link"
-                                            style="width: 20rem;">
-                                            <div class="card col" style="width: 100%;">
-                                                <div class="position-relative">
-                                                    <img src="<%= listing.image.url %>" class="card-img-top" alt="..."
-                                                        style="height: 20rem;">
-                                                    <% if(currentUser) { %>
-                                                        <form action="/wishlists/quick-add/<%= listing._id %>"
-                                                            method="POST" class="position-absolute"
-                                                            style="top: 10px; right: 10px;">
-                                                            <button type="submit"
-                                                                class="btn btn-sm btn-light rounded-circle p-2"
-                                                                title="Save to Wishlist">
-                                                                <i class="fas fa-heart text-danger"></i>
-                                                            </button>
-                                                        </form>
-                                                        <% } %>
-                                                </div>
-                                                <div class="card-img-overlay"></div>
-                                                <div class="card-body">
-                                                    <p class="card-text">
-                                                        <b>
-                                                            <%= listing.title %>
-                                                        </b><br>
-                                                        ₹<%= listing.price.toLocaleString("en-IN") %>/night
-                                                            <i class="taxInfo"> &nbsp; &nbsp; +18% GST </i>
-                                                    </p>
-                                                </div>
+                            <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 show-page">
+                                <% for (const listing of allListings) { %>
+                                    <a href="/listings/<%= listing._id %>/show" class="listing-link"
+                                        style="width: 20rem;">
+                                        <div class="card col" style="width: 100%;">
+                                            <div class="position-relative">
+                                                <img src="<%= listing.image.url %>" class="card-img-top" alt="..."
+                                                    style="height: 20rem;">
+                                                <% if(currentUser) { %>
+                                                    <form action="/wishlists/quick-add/<%= listing._id %>" method="POST"
+                                                        class="position-absolute" style="top: 10px; right: 10px;">
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-light rounded-circle p-2"
+                                                            title="Save to Wishlist">
+                                                            <i class="fas fa-heart text-danger"></i>
+                                                        </button>
+                                                    </form>
+                                                    <% } %>
                                             </div>
-                                        </a>
-                                        <% } %>
-                                </div>
-                                <!-- <% for (const listing of allListings) { %>
+                                            <div class="card-img-overlay"></div>
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    <b>
+                                                        <%= listing.title %>
+                                                    </b><br>
+                                                    ₹<%= listing.price.toLocaleString("en-IN") %>/night
+                                                        <i class="taxInfo"> &nbsp; &nbsp; +18% GST </i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <% } %>
+                            </div>
+                            <!-- <% for (const listing of allListings) { %>
             <p>Title:
                 <a href="/listings/<%= listing._id %>/show">
                     <%= listing.title %>
                 </a>
             </p>
             <% } %> -->
-                                <!-- <script src="Js/listingfunctionality.js"></script> -->
-                                <script src="Js/listingfunctionality.js"></script>
+                            <!-- <script src="Js/listingfunctionality.js"></script> -->
+                            <script src="Js/listingfunctionality.js"></script>
     </body>

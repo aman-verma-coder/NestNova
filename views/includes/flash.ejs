@@ -1,13 +1,51 @@
 <% if (success && success.length) { %>
-    <div class="alert alert-success alert-dismissible col-6 offset-3" role="alert">
+    <div class="alert alert-success alert-dismissible fade show fixed-top mx-auto mt-4"
+        style="width: 80%; z-index: 1050;" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <%= success %>
     </div>
     <% } %>
 
         <% if (error && error.length) { %>
-            <div class="alert alert-danger alert-dismissible col-6 offset-3" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show fixed-top mx-auto mt-4"
+                style="width: 80%; z-index: 1050;" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 <%= error %>
             </div>
             <% } %>
+
+                <script>
+                    // Auto-dismiss flash messages after 5 seconds
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const flashMessages = document.querySelectorAll('.alert');
+
+                        // Function to dismiss a message
+                        const dismissMessage = function (message) {
+                            // Add fade-out animation
+                            message.classList.remove('show');
+                            message.classList.add('fade');
+
+                            // Remove from DOM after animation completes
+                            setTimeout(function () {
+                                if (message.parentNode) {
+                                    message.parentNode.removeChild(message);
+                                }
+                            }, 500);
+                        };
+
+                        // Set timeout for each message
+                        flashMessages.forEach(function (message) {
+                            setTimeout(function () {
+                                dismissMessage(message);
+                            }, 10000);
+
+                            // Also dismiss when close button is clicked
+                            const closeButton = message.querySelector('.btn-close');
+                            if (closeButton) {
+                                closeButton.addEventListener('click', function () {
+                                    dismissMessage(message);
+                                });
+                            }
+                        });
+                    });
+                </script>
