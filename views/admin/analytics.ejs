@@ -167,10 +167,10 @@
                                     <% analyticsData.recentBookings.forEach(booking=> { %>
                                         <tr>
                                             <td>
-                                                <%= booking.listing.title %>
+                                                <%= booking.listing ? booking.listing.title : 'Deleted Listing' %>
                                             </td>
                                             <td>
-                                                <%= booking.user.username %>
+                                                <%= booking.user ? booking.user.username : 'Unknown User' %>
                                             </td>
                                             <td>₹<%= booking.totalPrice.toFixed(2) %>
                                             </td>
