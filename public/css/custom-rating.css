@@ -1,0 +1,271 @@
+.custom-rating-input {
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+    padding: 10px;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.custom-rating-input:hover {
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.15);
+    transform: translateY(-2px);
+}
+
+.custom-rating-input>input {
+    display: none;
+}
+
+.custom-rating-input>label {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    cursor: pointer;
+    color: #ddd;
+    font-size: 2.2em;
+    transition: color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        text-shadow 0.3s ease;
+    margin: 0 2px;
+}
+
+.custom-rating-input>label:hover,
+.custom-rating-input>label:hover~label,
+.custom-rating-input>input:checked~label {
+    transform: scale(1.3) rotate(5deg);
+    color: #ffcc00;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.7),
+        0 0 20px rgba(255, 204, 0, 0.5),
+        0 0 30px rgba(255, 204, 0, 0.3);
+}
+
+/* Add a different animation for each star position */
+.custom-rating-input>label:nth-child(2) {
+    transition-delay: 0.05s;
+}
+
+.custom-rating-input>label:nth-child(4) {
+    transition-delay: 0.1s;
+}
+
+.custom-rating-input>label:nth-child(6) {
+    transition-delay: 0.15s;
+}
+
+.custom-rating-input>label:nth-child(8) {
+    transition-delay: 0.2s;
+}
+
+.custom-rating-input>label:nth-child(10) {
+    transition-delay: 0.25s;
+}
+
+/* Add a pulse animation when a star is selected */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1.3);
+    }
+}
+
+.custom-rating-input>input:checked+label {
+    animation: pulse 0.5s ease-in-out;
+    color: #ffcc00;
+}
+
+.custom-rating-display {
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+    font-size: 2em;
+    color: #ffcc00;
+    position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+.custom-rating-display::before {
+    content: '★★★★★';
+    display: block;
+}
+
+.custom-rating-display::after {
+    content: '★★★★★';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--rating-width, 0%);
+    overflow: hidden;
+    color: #ddd;
+    direction: ltr;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Add a subtle floating animation for the display stars */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Add a sparkle effect for the stars */
+@keyframes sparkle {
+    0% {
+        text-shadow: 0 0 4px rgba(255, 204, 0, 0.3);
+    }
+
+    25% {
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.5),
+            0 0 20px rgba(255, 204, 0, 0.3);
+    }
+
+    50% {
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.8),
+            0 0 25px rgba(255, 204, 0, 0.5),
+            0 0 35px rgba(255, 204, 0, 0.3);
+    }
+
+    75% {
+        text-shadow: 0 0 10px rgba(255, 204, 0, 0.5),
+            0 0 20px rgba(255, 204, 0, 0.3);
+    }
+
+    100% {
+        text-shadow: 0 0 4px rgba(255, 204, 0, 0.3);
+    }
+}
+
+/* Apply sparkle animation to selected stars */
+.custom-rating-input>input:checked~label {
+    animation: sparkle 1.5s infinite;
+}
+
+/* Add a wave effect when hovering over the rating input */
+@keyframes wave {
+    0% {
+        transform: scale(1.3) rotate(5deg);
+    }
+
+    50% {
+        transform: scale(1.3) rotate(-5deg);
+    }
+
+    100% {
+        transform: scale(1.3) rotate(5deg);
+    }
+}
+
+/* Add a pop effect when hovering */
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(1.3);
+    }
+}
+
+.custom-rating-input:hover>label {
+    animation: wave 1.5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.custom-rating-input>label:hover {
+    animation: pop 0.3s ease-out forwards, wave 1.5s ease-in-out 0.3s infinite;
+    animation-play-state: running;
+}
+
+/* Add title tooltip styling */
+.custom-rating-input>label::after {
+    content: attr(title);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.custom-rating-input>label:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* Rating container styling */
+.rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+/* Rating text styling */
+.rating-text {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Update rating text based on hover/selection */
+.custom-rating-input>input:checked~.rating-text,
+.custom-rating-input>label:hover~.rating-text {
+    color: #ffcc00;
+    font-weight: 600;
+    opacity: 1;
+}
+
+/* Pulse effect for the rating container when a rating is selected */
+@keyframes container-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 204, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 204, 0, 0);
+    }
+}
+
+.pulse-effect {
+    animation: container-pulse 0.5s ease-out;
+}
