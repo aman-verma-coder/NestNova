@@ -13,8 +13,8 @@
             <% } %>
                 <script>
                     const mapToken = "<%= process.env.MAP_TOKEN %>";
-                    const coordinates = <% - JSON.stringify(showData.geometry.coordinates) %>;
-                    const location2 = <% - JSON.stringify(showData.location) %>;
+                    const coordinates = <%- JSON.stringify(showData.geometry.coordinates) %>;
+                    const location2 = <%- JSON.stringify(showData.location) %>;
                 </script>
 
                 <body>
