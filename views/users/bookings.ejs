@@ -27,7 +27,7 @@
                             </div>
                             <div class="card-body p-4">
                                 <h5 class="card-title mb-3">
-                                    <%= booking.listing.title %>
+                                    <%= booking.listing ? booking.listing.title : 'Deleted Listing' %>
                                 </h5>
 
                                 <div class="booking-details">
@@ -38,7 +38,7 @@
                                         <div>
                                             <small class="text-muted d-block">Location</small>
                                             <strong>
-                                                <%= booking.listing.location %>
+                                                <%= booking.listing ? booking.listing.location : 'Unknown Location' %>
                                             </strong>
                                         </div>
                                     </div>

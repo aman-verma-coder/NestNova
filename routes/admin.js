@@ -43,4 +43,7 @@ router.get("/bookings/:id/details", isLoggedIn, isAdmin, wrapAsync(adminControll
 router.get("/cancellations", isLoggedIn, isAdmin, wrapAsync(adminController.renderCancellations));
 router.post("/bookings/:id/process-refund", isLoggedIn, isAdmin, wrapAsync(adminController.processRefund));
 
+// Reports generation routes
+router.get("/reports/:reportType", isLoggedIn, isAdmin, wrapAsync(adminController.generateReport));
+
 module.exports = router;

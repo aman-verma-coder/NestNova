@@ -14,7 +14,7 @@
                                 <strong>Listing:</strong>
                             </div>
                             <div class="col-md-8">
-                                <%= booking.listing.title %>
+                                <%= booking.listing ? booking.listing.title : 'Deleted Listing' %>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -22,7 +22,7 @@
                                 <strong>Location:</strong>
                             </div>
                             <div class="col-md-8">
-                                <%= booking.listing.location %>
+                                <%= booking.listing ? booking.listing.location : 'Unknown Location' %>
                             </div>
                         </div>
                         <div class="row mb-3">

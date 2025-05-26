@@ -407,6 +407,8 @@ module.exports.renderBookingDetails = async (req, res) => {
 
 module.exports.renderBookings = async (req, res) => {
     try {
+        // Populate listing even if some listings might be null
+        // The null check is handled in the template
         const bookings = await Booking.find({ user: req.user._id }).populate({
             path: "listing",
             select: "title price location"
