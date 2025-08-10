@@ -2,6 +2,8 @@
 
 NestNova is a comprehensive property listing and booking platform that connects travelers with unique accommodations around the world. Similar to Airbnb, it allows hosts to list their properties and travelers to discover and book stays based on their preferences. The platform features a robust admin approval system to ensure quality listings and a seamless user experience for both hosts and travelers.
 
+**Original Repository:** [Wanderlust](https://github.com/aman-verma-coder/Wanderlust)
+
 ## Features
 
 ### For Travelers
